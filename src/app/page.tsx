@@ -1,4 +1,5 @@
 import Header from ' <prefix>/components/Header';
+import Sidebar from ' <prefix>/components/Sidebar';
 import Image from 'next/image';
 
 export default function Home() {
@@ -9,17 +10,7 @@ export default function Home() {
       {/* メインコンテンツ */}
       <div className='flex flex-1 overflow-hidden'>
         {/* サイドバー */}
-        <aside className='w-48 bg-gray-200 p-4 space-y-2'>
-          <button className='w-full text-left px-2 py-1 bg-blue-500 text-white rounded'>
-            受信箱
-          </button>
-          <button className='w-full text-left px-2 py-1'>下書き</button>
-          <button className='w-full text-left px-2 py-1'>送信済み</button>
-          <button className='w-full text-left px-2 py-1'>迷惑メール</button>
-          <button className='w-full text-left px-2 py-1'>ごみ箱</button>
-          <button className='w-full text-left px-2 py-1'>Deleted M...</button>
-        </aside>
-
+        <Sidebar />
         {/* メールリスト */}
         <main className='flex-1 p-4'>
           <div className='bg-white shadow rounded'>
@@ -65,18 +56,6 @@ export default function Home() {
           </div>
         </main>
       </div>
-
-      {/* フッター */}
-      <footer className='bg-gray-300 p-2 flex justify-between items-center'>
-        <div className='flex items-center'>
-          <Image src='/gear-icon.png' alt='Settings' width={20} height={20} />
-          <span className='ml-2'>3% 使用中</span>
-        </div>
-        <div className='flex items-center space-x-2'>
-          <button className='bg-gray-400 px-2 py-1 rounded'>選択</button>
-          <button className='bg-gray-400 px-2 py-1 rounded'>スレッド</button>
-        </div>
-      </footer>
     </div>
   );
 }
