@@ -25,7 +25,7 @@ const ICON_CLASS = 'w-4 h-4 mr-2';
 // mr-2: 右マージンを2単位に設定
 
 // ヘッダーコンポーネントの定義
-export default function Header() {
+const Header = () => {
   return (
     // ヘッダー全体のスタイリング
     <header className='bg-gray-800 text-white p-2 flex items-center justify-between'>
@@ -87,4 +87,6 @@ export default function Header() {
       </div>
     </header>
   );
-}
+};
+
+export default Header;
