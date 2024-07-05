@@ -1,8 +1,11 @@
-import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import "./globals.css";
+import type { Metadata } from 'next';
+import { Inter } from 'next/font/google';
+import './globals.css';
+import { config } from '@fortawesome/fontawesome-svg-core';
+import '@fortawesome/fontawesome-svg-core/styles.css';
 
-const inter = Inter({ subsets: ["latin"] });
+config.autoAddCss = false;
+const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
   title: 'メール練習',
@@ -15,7 +18,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ja">
+    <html lang='ja'>
       <body className={inter.className}>{children}</body>
     </html>
   );
