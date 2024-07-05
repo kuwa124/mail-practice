@@ -1,4 +1,3 @@
 {
-  "javascript.preferences.importModuleSpecifier": "non-relative",
-  "cSpell.words": ["tailwindcss"]
+  "javascript.preferences.importModuleSpecifier": "non-relative"
 }
