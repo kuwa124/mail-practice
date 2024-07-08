@@ -8,6 +8,7 @@ const SIDEBAR_CLASS = 'w-48 bg-gray-200 p-4 space-y-2';
 // space-y-2: 子要素の間に0.5remの余白を設定
 
 const BUTTON_CLASS = 'sidebar-button';
+// カスタムクラスを使用
 // w-full: 幅を100%に設定
 // text-left: テキストを左揃えに設定
 // px-2: 左右のパディングを0.5remに設定
