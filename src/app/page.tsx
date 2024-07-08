@@ -1,5 +1,5 @@
-import Header from ' <prefix>/components/Header';
-import Sidebar from ' <prefix>/components/Sidebar';
+import Header from ' <prefix>/components/Header/Header';
+import Sidebar from ' <prefix>/components/Sidebar/Sidebar';
 import Image from 'next/image';
 
 export default function Home() {
