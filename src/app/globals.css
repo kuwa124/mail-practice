@@ -1,3 +1,17 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* w-full: 幅を100%に設定
+text-left: テキストを左揃えに設定
+px-2: 左右のパディングを0.5remに設定
+py-1: 上下のパディングを0.25remに設定
+rounded: 角を丸く設定
+transition-colors: 色の変化をアニメーション化
+duration-200: アニメーションの持続時間を200msに設定
+hover:bg-blue-500: ホバー時に背景色を青に設定
+hover:text-white: ホバー時にテキスト色を白に設定 */
+.sidebar-button {
+  @apply w-full text-left px-2 py-1 rounded transition-colors duration-200;
+  @apply hover:bg-blue-500 hover:text-white;
+}
