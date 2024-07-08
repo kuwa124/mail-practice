@@ -1,10 +1,10 @@
 // Font Awesome アイコンをインポート
 import {
   faInbox,
-  faPencilAlt,
   faPaperPlane,
   faExclamationTriangle,
   faTrash,
+  faFileAlt,
 } from '@fortawesome/free-solid-svg-icons';
 // Font Awesome アイコンの型定義をインポート
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
@@ -40,7 +40,7 @@ export const BUTTON_BASE_CLASS =
 // ボタンの設定
 export const BUTTONS: ButtonConfig[] = [
   { name: '受信箱', icon: faInbox },
-  { name: '下書き', icon: faPencilAlt },
+  { name: '下書き', icon: faFileAlt },
   { name: '送信済み', icon: faPaperPlane },
   { name: '迷惑メール', icon: faExclamationTriangle },
   { name: 'ごみ箱', icon: faTrash },
