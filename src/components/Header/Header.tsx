@@ -1,3 +1,4 @@
+// ユーザー操作に適応するための定型文
 'use client';
 
 // Reactをインポート
@@ -14,7 +15,6 @@ import {
   LOGO_ICON,
   APP_NAME,
 } from './constants';
-import { useHeader } from './useHeader';
 
 // ヘッダーコンポーネントの定義
 const Header: React.FC = () => {
