@@ -20,6 +20,8 @@ import {
 const Header: React.FC = () => {
   return (
     // ヘッダー全体のスタイリング
+    // 背景はグレー、文字は白。
+    // 子要素は中央揃えで左右に配置。
     <header className='bg-gray-800 text-white p-2 flex items-center justify-between'>
       {/* ロゴとアプリ名の部分 */}
       <div className='flex items-center'>
