@@ -1,7 +1,8 @@
-// Toolbar.tsx
+// ユーザー操作に適応するための定型文
 'use client';
 
-import React from 'react';
+// 必要なReactフックとFont Awesomeのコンポーネントをインポート
+import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faSearch,
@@ -9,81 +10,89 @@ import {
   faTimes,
 } from '@fortawesome/free-solid-svg-icons';
 
-import { useToolbar } from '@/components/Toolbar/useToolbar';
+// 定数をインポート
+import { TOOLBAR_BUTTONS, COMMON_STYLES, HOVER_BG } from './constants';
 
-interface ToolbarProps {
-  onNewMessage: () => void;
-}
-
-const Toolbar: React.FC<ToolbarProps> = ({ onNewMessage }) => {
-  const { hoveredButton, setHoveredButton, buttons } = useToolbar(onNewMessage);
+// Toolbarコンポーネントを定義
+const Toolbar: React.FC = () => {
+  // ホバー中のボタンのメッセージを管理するstate
+  const [hoveredButton, setHoveredButton] = useState<string | null>(null);
 
   return (
-    <div className='bg-gray-100 p-4 flex items-center'>
-      {buttons.map((button) => (
-        <div key={button.message} className='relative mr-4'>
+    // ツールバーのメインコンテナ
+    <div className={`bg-white shadow-md p-2 ${COMMON_STYLES.FLEX_CENTER}`}>
+      {/* ボタンをマップして表示 */}
+      {TOOLBAR_BUTTONS.map((button) => (
+        // 各ボタンのコンテナ
+        <div
+          key={button.message}
+          className={`relative mr-2 ${COMMON_STYLES.FLEX_CENTER}`}
+        >
+          {/* ボタン要素 */}
           <button
-            className='p-2 rounded transition-colors duration-200 focus:outline-none focus:ring-2'
+            className={`w-10 h-10 ${COMMON_STYLES.FLEX_CENTER} ${COMMON_STYLES.ROUNDED} ${COMMON_STYLES.TRANSITION} ${HOVER_BG}`}
+            // マウスが入ったときにホバーメッセージを設定
             onMouseEnter={() => setHoveredButton(button.message)}
+            // マウスが出たときにホバーメッセージをクリア
             onMouseLeave={() => setHoveredButton(null)}
-            onClick={button.onClick}
             aria-label={button.ariaLabel}
           >
+            {/* アイコンを表示し、ホバー時に色を変更 */}
             <FontAwesomeIcon
               icon={button.icon}
               className={`text-2xl ${
+                // ホバー時は青色、それ以外はグレー色を適用
                 hoveredButton === button.message
                   ? 'text-blue-500'
                   : 'text-gray-600'
               }`}
             />
           </button>
+          {/* ホバー時にメッセージを表示 */}
           {hoveredButton === button.message && (
             <div className='absolute z-10 bg-black text-white text-sm rounded py-2 px-3 left-full top-full ml-1 mt-1 whitespace-nowrap'>
+              {/* ホバーメッセージのテキストを表示 */}
               {button.message}
             </div>
           )}
         </div>
       ))}
-      <div className='ml-auto flex items-center'>
-        <div className='relative'>
-          <input
-            type='text'
-            placeholder='すべて'
-            className='border rounded-l px-3 py-2 text-lg'
-            aria-label='フィルター選択'
-          />
-          <button
-            className='absolute right-0 top-1/2 transform -translate-y-1/2 mr-3'
-            aria-label='フィルターオプションを開く'
-          >
-            <FontAwesomeIcon
-              icon={faChevronDown}
-              className='text-gray-400 text-xl'
-            />
-          </button>
+      {/* 検索バー部分 */}
+      <div className={`flex-grow ${COMMON_STYLES.FLEX_CENTER}`}>
+        {/* 'すべて'ドロップダウン */}
+        <div
+          className={`${COMMON_STYLES.FLEX_CENTER} ${COMMON_STYLES.ROUNDED} ${HOVER_BG} px-3 py-2 mr-2 cursor-pointer`}
+        >
+          {/* 'すべて'テキストを表示 */}
+          <span className='mr-2 text-gray-600'>すべて</span>
+          {/* ドロップダウンアイコンを表示 */}
+          <FontAwesomeIcon icon={faChevronDown} className='text-gray-600' />
         </div>
-        <div className='relative ml-2'>
-          <input
-            type='text'
-            placeholder='検索'
-            className='border-t border-b border-r rounded-r px-3 py-2 pl-10 text-lg'
-            aria-label='検索'
-          />
+        {/* 検索入力フィールド */}
+        <div
+          className={`flex-grow ${COMMON_STYLES.FLEX_CENTER} ${COMMON_STYLES.ROUNDED} border border-gray-300`}
+        >
+          {/* 検索アイコンを表示 */}
           <FontAwesomeIcon
             icon={faSearch}
-            className='absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 text-xl'
+            className='text-gray-400 ml-3 mr-2'
           />
-          <button
-            className='absolute right-3 top-1/2 transform -translate-y-1/2'
-            aria-label='検索をクリア'
-          >
-            <FontAwesomeIcon icon={faTimes} className='text-gray-400 text-xl' />
-          </button>
+          {/* 検索入力フィールドを表示 */}
+          <input
+            type='text'
+            placeholder='検索...'
+            className='flex-grow py-2 px-2 outline-none'
+          />
+          {/* クリアアイコンを表示 */}
+          <FontAwesomeIcon
+            icon={faTimes}
+            className='text-gray-400 mr-3 cursor-pointer'
+          />
         </div>
       </div>
     </div>
   );
 };
 
+// Toolbarコンポーネントをエクスポート
 export default Toolbar;
