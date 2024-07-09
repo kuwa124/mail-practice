@@ -20,7 +20,7 @@ const Toolbar: React.FC<ToolbarProps> = ({ onNewMessage }) => {
   return (
     <div className='bg-gray-100 p-4 flex items-center'>
       {buttons.map((button) => (
-        <div key={index} className='relative mr-4'>
+        <div key={button.message} className='relative mr-4'>
           <button
             className='p-2 rounded transition-colors duration-200 focus:outline-none focus:ring-2'
             onMouseEnter={() => setHoveredButton(button.message)}
