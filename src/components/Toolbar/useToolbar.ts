@@ -1,6 +1,6 @@
 // useToolbar.ts
+import { TOOLBAR_BUTTONS } from '@/components/Toolbar/constants';
 import { useState } from 'react';
-import { TOOLBAR_BUTTONS } from './constants';
 
 export const useToolbar = (onNewMessage: () => void) => {
   const [hoveredButton, setHoveredButton] = useState<string | null>(null);

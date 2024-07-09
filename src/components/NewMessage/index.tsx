@@ -1,8 +1,8 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPaperclip, faTimes } from '@fortawesome/free-solid-svg-icons';
-import { useNewMessage } from './useNewMessage';
 import { EDITOR_TYPES, MAX_ATTACHMENT_SIZE } from './constants';
+import { useNewMessage } from '@/components/NewMessage/useNewMessage';
 
 const NewMessage: React.FC<{ onClose: () => void }> = ({ onClose }) => {
   const {

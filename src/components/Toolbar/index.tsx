@@ -8,7 +8,8 @@ import {
   faChevronDown,
   faTimes,
 } from '@fortawesome/free-solid-svg-icons';
-import { useToolbar } from './useToolbar';
+
+import { useToolbar } from '@/components/Toolbar/useToolbar';
 
 interface ToolbarProps {
   onNewMessage: () => void;
