@@ -32,34 +32,31 @@ const Toolbar: React.FC = () => {
           // 相対配置、右マージン、Flexboxで中央揃え
           key={button.message}
           className={`relative mr-2 ${COMMON_STYLES.FLEX_CENTER}`}
-          href='#'
+          href={button.href}
         >
-          {/* Next.jsのLinkコンポーネントを使用してナビゲーションを実装 */}
-          <Link href={button.href} passHref>
-            {/* ボタン要素 */}
-            <div
-              // 幅・高さ10、Flexboxで中央揃え、角丸、トランジション効果、ホバー時に背景色変更
-              className={`w-10 h-10 ${COMMON_STYLES.FLEX_CENTER} ${COMMON_STYLES.ROUNDED} ${COMMON_STYLES.TRANSITION} ${HOVER_BG}`}
-              // マウスが入ったときにホバーメッセージを設定
-              onMouseEnter={() => setHoveredButton(button.message)}
-              // マウスが出たときにホバーメッセージをクリア
-              onMouseLeave={() => setHoveredButton(null)}
-              role='button'
-              aria-label={button.ariaLabel}
-            >
-              {/* アイコンを表示し、ホバー時に色を変更 */}
-              <FontAwesomeIcon
-                icon={button.icon}
-                // アイコンサイズ2xl、ホバー時に青色、それ以外はグレー色
-                className={`text-2xl ${
-                  // ホバー時は青色、それ以外はグレー色を適用
-                  hoveredButton === button.message
-                    ? 'text-blue-500'
-                    : 'text-gray-600'
-                }`}
-              />
-            </div>
-          </Link>
+          {/* ボタン要素 */}
+          <div
+            // 幅・高さ10、Flexboxで中央揃え、角丸、トランジション効果、ホバー時に背景色変更
+            className={`w-10 h-10 ${COMMON_STYLES.FLEX_CENTER} ${COMMON_STYLES.ROUNDED} ${COMMON_STYLES.TRANSITION} ${HOVER_BG}`}
+            // マウスが入ったときにホバーメッセージを設定
+            onMouseEnter={() => setHoveredButton(button.message)}
+            // マウスが出たときにホバーメッセージをクリア
+            onMouseLeave={() => setHoveredButton(null)}
+            role='button'
+            aria-label={button.ariaLabel}
+          >
+            {/* アイコンを表示し、ホバー時に色を変更 */}
+            <FontAwesomeIcon
+              icon={button.icon}
+              // アイコンサイズ2xl、ホバー時に青色、それ以外はグレー色
+              className={`text-2xl ${
+                // ホバー時は青色、それ以外はグレー色を適用
+                hoveredButton === button.message
+                  ? 'text-blue-500'
+                  : 'text-gray-600'
+              }`}
+            />
+          </div>
           {/* ホバー時にメッセージを表示 */}
           {hoveredButton === button.message && (
             // 絶対位置、最前面、背景黒、テキスト白、小サイズテキスト、角丸、パディング、左寄せ、上寄せ、余白

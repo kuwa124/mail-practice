@@ -7,7 +7,7 @@ import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 // 定数とカスタムフックをインポート
 import { SIDEBAR_CLASS, BUTTONS } from './constants';
-import { useSidebar } from '@/components/Sidebar/useSidebar';
+import { useSidebar } from '@/app/home/components/Sidebar/useSidebar';
 
 // Sidebarコンポーネントの定義
 const Sidebar: React.FC = () => {

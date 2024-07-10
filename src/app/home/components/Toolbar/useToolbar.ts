@@ -1,5 +1,5 @@
 // 必要なモジュールと定数をインポート
-import { TOOLBAR_BUTTONS } from '@/components/Toolbar/constants';
+import { TOOLBAR_BUTTONS } from '@/app/home/components/Toolbar/constants';
 import { useState } from 'react';
 
 // ツールバーの状態と動作を管理するカスタムフック
