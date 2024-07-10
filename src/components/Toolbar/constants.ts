@@ -12,8 +12,8 @@ import {
 export const TOOLBAR_BUTTONS = [
   {
     icon: faEnvelope,
-    message: '新しく届いたメッセージを確認',
-    ariaLabel: 'メッセージ確認',
+    message: '新しく届いたメッセージを確認', // アイコンの説明
+    ariaLabel: 'メッセージ確認', // アクセシビリティラベル
     href: '#',
   },
   {
@@ -36,8 +36,11 @@ export const TOOLBAR_BUTTONS = [
 
 // 頻繁に使用される共通のスタイルを定数として定義
 export const COMMON_STYLES = {
+  // Flexboxで中央に配置
   FLEX_CENTER: 'flex items-center justify-center',
+  // 角を丸くする
   ROUNDED: 'rounded',
+  // ホバー時の色変更にトランジションを適用
   TRANSITION: 'transition-colors duration-200',
 };
 
