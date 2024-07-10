@@ -1,8 +1,9 @@
 // ユーザー操作に適応するための定型文
 'use client';
 
-// 必要なReactフックとFont Awesomeのコンポーネントをインポート
+// 必要なReactフックとコンポーネントをインポート
 import React, { useState } from 'react';
+import Link from 'next/link'; // Next.jsのLinkコンポーネントをインポート
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faSearch,
@@ -28,26 +29,30 @@ const Toolbar: React.FC = () => {
           key={button.message}
           className={`relative mr-2 ${COMMON_STYLES.FLEX_CENTER}`}
         >
-          {/* ボタン要素 */}
-          <button
-            className={`w-10 h-10 ${COMMON_STYLES.FLEX_CENTER} ${COMMON_STYLES.ROUNDED} ${COMMON_STYLES.TRANSITION} ${HOVER_BG}`}
-            // マウスが入ったときにホバーメッセージを設定
-            onMouseEnter={() => setHoveredButton(button.message)}
-            // マウスが出たときにホバーメッセージをクリア
-            onMouseLeave={() => setHoveredButton(null)}
-            aria-label={button.ariaLabel}
-          >
-            {/* アイコンを表示し、ホバー時に色を変更 */}
-            <FontAwesomeIcon
-              icon={button.icon}
-              className={`text-2xl ${
-                // ホバー時は青色、それ以外はグレー色を適用
-                hoveredButton === button.message
-                  ? 'text-blue-500'
-                  : 'text-gray-600'
-              }`}
-            />
-          </button>
+          {/* Next.jsのLinkコンポーネントを使用してナビゲーションを実装 */}
+          <Link href={button.href} passHref>
+            {/* ボタン要素 */}
+            <div
+              className={`w-10 h-10 ${COMMON_STYLES.FLEX_CENTER} ${COMMON_STYLES.ROUNDED} ${COMMON_STYLES.TRANSITION} ${HOVER_BG}`}
+              // マウスが入ったときにホバーメッセージを設定
+              onMouseEnter={() => setHoveredButton(button.message)}
+              // マウスが出たときにホバーメッセージをクリア
+              onMouseLeave={() => setHoveredButton(null)}
+              role='button'
+              aria-label={button.ariaLabel}
+            >
+              {/* アイコンを表示し、ホバー時に色を変更 */}
+              <FontAwesomeIcon
+                icon={button.icon}
+                className={`text-2xl ${
+                  // ホバー時は青色、それ以外はグレー色を適用
+                  hoveredButton === button.message
+                    ? 'text-blue-500'
+                    : 'text-gray-600'
+                }`}
+              />
+            </div>
+          </Link>
           {/* ホバー時にメッセージを表示 */}
           {hoveredButton === button.message && (
             <div className='absolute z-10 bg-black text-white text-sm rounded py-2 px-3 left-full top-full ml-1 mt-1 whitespace-nowrap'>
