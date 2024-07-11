@@ -1,7 +1,9 @@
+import ActionButtons from '@/app/createEmail/components/ActionButtons';
 import AttachmentArea from '@/app/createEmail/components/AttachmentArea';
 import EmailComposer from '@/app/createEmail/components/EmailComposer';
 import Header from '@/components/Header';
 import React from 'react';
+import Contact from '@/app/createEmail/components/Contact';
 
 const createEmail = () => {
   return (
@@ -10,10 +12,12 @@ const createEmail = () => {
       className='flex flex-col h-screen bg-gray-100'
     >
       <Header />
+      <ActionButtons />
       <div
         // フレックスコンテナ、メインコンテンツの高さを埋める、オーバーフロー隠す
         className='flex flex-1 overflow-hidden'
       >
+        <Contact />
         <EmailComposer />
         <AttachmentArea />
       </div>
