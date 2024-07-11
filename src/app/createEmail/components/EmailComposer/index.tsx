@@ -5,12 +5,11 @@ import React, { useState, useEffect, useRef } from 'react';
 
 // 共通で使用するTailwindクラスを定数化
 const INPUT_BASE = 'w-full border border-gray-300 rounded-md p-2'; // 入力フィールドの基本スタイル：全幅、ボーダー、角丸、パディング
-const LABEL_BASE = 'block text-lg font-medium text-gray-700 mb-2'; // ラベルの基本スタイル：ブロック表示、大きめフォント、中太字、グレーテキスト、下マージン
-const SMALL_TEXT_BUTTON = 'text-lg text-gray-600'; // 小さいテキストボタンのスタイル：大きめフォント、グレーテキスト
+const LABEL_BASE = 'block text-lg font-medium text-gray-700 mr-5 p-2'; // ラベルの基本スタイル：ブロック表示、大きめフォント、中太字、グレーテキスト、下マージン
+const SMALL_TEXT_BUTTON = 'text-lg text-gray-50'; // 小さいテキストボタンのスタイル：大きめフォント、グレーテキスト
 
 // 署名テキスト（先頭に2行分の空行を追加）
 const SIGNATURE = `
-
 
 ーーーーーーーーーーーーーーーーーーーーーー
 株式会社〇〇
@@ -53,10 +52,10 @@ const EmailComposer: React.FC = () => {
       {/* メール本文エリア */}
       <div
         // 垂直方向のスペース
-        className='space-y-6'
+        className='space-y-6 '
       >
         {/* 宛先入力フィールド */}
-        <div>
+        <div className='flex '>
           {/* ラベル：宛先 */}
           <label htmlFor='to' className={LABEL_BASE}>
             宛先
@@ -68,17 +67,20 @@ const EmailComposer: React.FC = () => {
             className={`${INPUT_BASE} text-lg`}
             placeholder='宛先を入力'
           />
-        </div>
-
-        {/* CC/BCCボタン */}
-        <div
-          // 水平方向のスペース、右寄せ
-          className='flex justify-end space-x-4'
-        >
-          {/* CCボタン */}
-          <button className={SMALL_TEXT_BUTTON}>Cc</button>
-          {/* BCCボタン */}
-          <button className={SMALL_TEXT_BUTTON}>Bcc</button>
+          {/* CC/BCCボタン */}
+          <div
+            // 水平方向のスペース、右寄せ
+            className='justify-end space-x-4'
+          >
+            {/* CCボタン */}
+            <button
+              className={`${SMALL_TEXT_BUTTON} bg-blue-300 px-5 py-1 rounded-md`}
+            >
+              Cc
+            </button>
+            {/* BCCボタン */}
+            <button className={SMALL_TEXT_BUTTON}>Bcc</button>
+          </div>
         </div>
 
         {/* 件名入力フィールド */}
