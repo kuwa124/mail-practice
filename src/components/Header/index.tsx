@@ -8,32 +8,31 @@ import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 // 定数をインポート
-import {
-  BUTTON_CLASS,
-  ICON_CLASS,
-  NAV_BUTTONS,
-  LOGO_ICON,
-  APP_NAME,
-} from './constants';
+import { BUTTON_CLASS, ICON_CLASS, NAV_BUTTONS } from './constants';
 
 // Next.jsの画像最適化コンポーネントをインポート
 import Image from 'next/image';
+
+// 使用するメールアイコン（封筒の形）をインポート
+import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
 
 // ヘッダーコンポーネントの定義
 const Header: React.FC = () => {
   return (
     // ヘッダー全体のスタイリング
-    // 背景はグレー、文字は白。
-    // 子要素は中央揃えで左右に配置。
+    // 背景はグレー、文字は白、パディングを追加、Flexboxで子要素を配置
     <header className='bg-gray-800 text-white p-2 flex items-center justify-between'>
       {/* ロゴとアプリ名の部分 */}
+      {/* Flexboxで子要素を横並びに配置し、中央揃え */}
       <div className='flex items-center'>
         {/* ロゴ（メールアイコン） */}
-        <div className='bg-blue-500 p-1 rounded mr-2'>
-          <FontAwesomeIcon icon={LOGO_ICON} className='w-10 h-10' />
-        </div>{' '}
+        {/* 青い背景、角丸、右マージン、幅16、Flexboxで中央揃え */}
+        <div className='bg-blue-500 p-2 rounded mr-4 w-16 flex items-center justify-center'>
+          {/* FontAwesomeIconを使用してメールアイコンを表示 */}
+          <FontAwesomeIcon icon={faEnvelope} className='text-2xl' />
+        </div>
         {/* FSCロゴ画像 */}
-        {/* 画像の幅20、高さ10、優先度高で読み込み */}
+        {/* Next.jsのImageコンポーネントを使用して最適化された画像を表示 */}
         <Image
           src='/fscLogo.WebP'
           alt='FSCロゴ'
@@ -41,36 +40,27 @@ const Header: React.FC = () => {
           height={52}
           priority
         />
-        {/* アプリ名 */}
-        <span className='text-xl font-bold ml-2'>{APP_NAME}</span>
+        {/* アプリ名（'Mail'） */}
+        {/* 大きめのフォントサイズ、文字間を広げ、太字 */}
+        <span className='text-3xl tracking-wider font-bold'>Mail</span>
       </div>
       {/* ナビゲーションボタンの部分 */}
+      {/* Flexboxで子要素を横並びに配置し、間隔を追加 */}
       <div className='flex items-center space-x-4'>
-        {
-          /*
-            NAV_BUTTONS配列をマップして、各ボタンを生成する。
-            flex: このdivをフレックスボックスコンテナにする。
-            items-center: フレックスボックスの子要素（アイテム）を中央に揃える。
-            space-x-4: 子要素の間に標準の間隔を設定する（x軸方向にスペースを設定）。
-          */
-          NAV_BUTTONS.map((button) => (
-            // ボタンを生成し、ユニークなキーにはbuttonの名前を使用する。
-            <button key={button.name} className={BUTTON_CLASS}>
-              {/*
-                FontAwesomeIconコンポーネントを使用してアイコンを表示。
-                iconプロパティはbuttonオブジェクトのiconプロパティから取得。
-              */}
-              <FontAwesomeIcon icon={button.icon} className={ICON_CLASS} />
-              {/*
-                ボタンのラベルとしてbuttonオブジェクトのnameプロパティを表示。
-              */}
-              {button.name}
-            </button>
-          ))
-        }
-      </div>{' '}
+        {/* NAV_BUTTONS配列をマップして、各ボタンを生成 */}
+        {NAV_BUTTONS.map((button) => (
+          // ボタンを生成し、ユニークなキーにはbuttonの名前を使用
+          <button key={button.name} className={BUTTON_CLASS}>
+            {/* FontAwesomeIconコンポーネントを使用してアイコンを表示 */}
+            <FontAwesomeIcon icon={button.icon} className={ICON_CLASS} />
+            {/* ボタンのラベルとしてbuttonオブジェクトのnameプロパティを表示 */}
+            {button.name}
+          </button>
+        ))}
+      </div>
     </header>
   );
 };
 
+// Headerコンポーネントをエクスポート
 export default Header;

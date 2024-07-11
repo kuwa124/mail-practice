@@ -1,6 +1,5 @@
-    // 使用するアイコンをインポート
+// 使用するアイコンをインポート
 import {
-  faEnvelope, // メールアイコン（封筒の形）
   faInbox, // 受信トレイアイコン（箱の形）
   faAddressBook, // アドレス帳アイコン（開いた本の形）
   faGear, // 設定アイコン（歯車の形）
@@ -29,9 +28,3 @@ export const NAV_BUTTONS = [
   { name: '設定', icon: faGear },
   { name: 'ログアウト', icon: faRightFromBracket },
 ];
-
-// ロゴのアイコン
-export const LOGO_ICON = faEnvelope;
-
-// アプリ名
-export const APP_NAME = 'Mail';
