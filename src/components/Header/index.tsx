@@ -7,7 +7,7 @@ import React from 'react';
 // Font Awesome のコンポーネントをインポート
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-// 定数とカスタムフックをインポート
+// 定数をインポート
 import {
   BUTTON_CLASS,
   ICON_CLASS,
@@ -15,6 +15,9 @@ import {
   LOGO_ICON,
   APP_NAME,
 } from './constants';
+
+// Next.jsの画像最適化コンポーネントをインポート
+import Image from 'next/image';
 
 // ヘッダーコンポーネントの定義
 const Header: React.FC = () => {
@@ -27,8 +30,17 @@ const Header: React.FC = () => {
       <div className='flex items-center'>
         {/* ロゴ（メールアイコン） */}
         <div className='bg-blue-500 p-1 rounded mr-2'>
-          <FontAwesomeIcon icon={LOGO_ICON} className='w-6 h-6' />
-        </div>
+          <FontAwesomeIcon icon={LOGO_ICON} className='w-10 h-10' />
+        </div>{' '}
+        {/* FSCロゴ画像 */}
+        {/* 画像の幅20、高さ10、優先度高で読み込み */}
+        <Image
+          src='/fscLogo.WebP'
+          alt='FSCロゴ'
+          width={78}
+          height={52}
+          priority
+        />
         {/* アプリ名 */}
         <span className='text-xl font-bold ml-2'>{APP_NAME}</span>
       </div>
