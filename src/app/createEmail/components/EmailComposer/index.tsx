@@ -1,111 +1,73 @@
+// ユーザー操作に適応するための定型文
 'use client';
 
-// 必要なReactフックとFont Awesomeコンポーネントをインポート
+// 必要なコンポーネントと定数をインポート
+import {
+  INPUT_BASE,
+  LABEL_BASE,
+  SMALL_TEXT_BUTTON,
+} from '@/app/createEmail/components/EmailComposer/constants';
+// カスタムフックをインポート
+import useEmailComposer from '@/app/createEmail/components/EmailComposer/useEmailComposer';
+// 必要なReactフックをインポート
 import React, { useState, useEffect, useRef } from 'react';
-
-// 共通で使用するTailwindクラスを定数化
-const INPUT_BASE = 'w-full border border-gray-300 rounded-md p-2'; // 入力フィールドの基本スタイル：全幅、ボーダー、角丸、パディング
-const LABEL_BASE = 'block text-lg font-medium text-gray-700 mr-5 p-2'; // ラベルの基本スタイル：ブロック表示、大きめフォント、中太字、グレーテキスト、下マージン
-const SMALL_TEXT_BUTTON = 'text-lg text-gray-50'; // 小さいテキストボタンのスタイル：大きめフォント、グレーテキスト
-
-// 署名テキスト（先頭に2行分の空行を追加）
-const SIGNATURE = `
-
-ーーーーーーーーーーーーーーーーーーーーーー
-株式会社〇〇
-〇〇部 〇〇 〇〇
-〒xxx-xxxx 〇〇県〇〇市〇〇町x-x-x
-Tel : xxx-xx-xxxx Fax : xxx-xx-xxxx
-Email : xx@xx.co.jp
-`;
 
 // EmailComposerコンポーネントの定義
 const EmailComposer: React.FC = () => {
-  // メール本文の状態を管理するstate
-  const [body, setBody] = useState(SIGNATURE);
-  // テキストエリアへの参照を作成
-  const textareaRef = useRef<HTMLTextAreaElement>(null);
-
-  // テキストエリアの内容が変更されたときのハンドラ
-  const handleBodyChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setBody(e.target.value);
-  };
-
-  // 署名が削除された場合に再追加する
-  useEffect(() => {
-    if (!body.endsWith(SIGNATURE)) {
-      const cursorPosition = textareaRef.current?.selectionStart || 0;
-      setBody((prevBody) => prevBody + SIGNATURE);
-      // カーソル位置を維持
-      setTimeout(() => {
-        textareaRef.current?.setSelectionRange(cursorPosition, cursorPosition);
-      }, 0);
-    }
-  }, [body]);
+  // カスタムフックを使用してメール本文の状態と関連機能を取得
+  const { body, textareaRef, handleBodyChange } = useEmailComposer();
 
   return (
     // メールコンポーザー全体のコンテナ
-    <div
-      // 背景色白、パディング、シャドウ、角丸、フレックスアイテム
-      className='bg-white p-6 shadow-md rounded-lg flex-1'
-    >
+    // 全体を白背景、マージン、パディング、影、角丸、縦並び、最大高さと幅に設定
+    <div className='bg-white m-2 p-6 shadow-md rounded-lg flex flex-col h-full w-full'>
       {/* メール本文エリア */}
-      <div
-        // 垂直方向のスペース
-        className='space-y-6 '
-      >
+      {/* 要素間の垂直方向の間隔を確保し、縦並びで最大高さに設定 */}
+      <div className='space-y-6 flex flex-col h-full'>
         {/* 宛先入力フィールド */}
-        <div className='flex '>
+        {/* 宛先フィールドをグリッドレイアウトで配置し、要素を中央揃えに設定 */}
+        <div className='grid grid-cols-[60px_1fr_auto_auto] gap-1 items-center'>
           {/* ラベル：宛先 */}
           <label htmlFor='to' className={LABEL_BASE}>
             宛先
           </label>
           {/* 宛先入力用のテキストフィールド */}
           <input
-            type='text'
-            id='to'
-            className={`${INPUT_BASE} text-lg`}
-            placeholder='宛先を入力'
+            type='text' // テキスト入力フィールドを指定
+            id='to' // 要素のID（ラベルとの紐付けに使用）
+            className={INPUT_BASE} // 入力フィールドの基本スタイルを適用
+            placeholder='宛先を入力' // プレースホルダーテキストを設定
           />
-          {/* CC/BCCボタン */}
-          <div
-            // 水平方向のスペース、右寄せ
-            className='justify-end space-x-4'
-          >
-            {/* CCボタン */}
-            <button
-              className={`${SMALL_TEXT_BUTTON} bg-blue-300 px-5 py-1 rounded-md`}
-            >
-              Cc
-            </button>
-            {/* BCCボタン */}
-            <button className={SMALL_TEXT_BUTTON}>Bcc</button>
-          </div>
+          {/* CCボタン：小さいテキストボタン、左右マージン */}
+          <button className={`${SMALL_TEXT_BUTTON} mx-2`}>Cc</button>
+          {/* BCCボタン：小さいテキストボタン */}
+          <button className={SMALL_TEXT_BUTTON}>Bcc</button>
         </div>
 
         {/* 件名入力フィールド */}
-        <div>
+        {/* 件名フィールドをグリッドレイアウトで配置し、要素を中央揃えに設定 */}
+        <div className='grid grid-cols-[60px_1fr] gap-1 items-center'>
           {/* ラベル：件名 */}
           <label htmlFor='subject' className={LABEL_BASE}>
             件名
           </label>
           {/* 件名入力用のテキストフィールド */}
           <input
-            type='text'
-            id='subject'
-            className={`${INPUT_BASE} text-lg`}
-            placeholder='件名を入力'
+            type='text' // テキスト入力フィールドを指定
+            id='subject' // 要素のID（ラベルとの紐付けに使用）
+            className={INPUT_BASE} // 入力フィールドの基本スタイルを適用
+            placeholder='件名を入力' // プレースホルダーテキストを設定
           />
         </div>
 
         {/* メール本文テキストエリア（署名を含む） */}
+        {/* 入力フィールドの基本スタイル、フレックスグロー1で残りのスペースを埋める */}
         <textarea
-          ref={textareaRef}
-          // 入力フィールドの基本スタイル: 全幅、ボーダー、角丸、パディング、高さ画面いっぱい、大きめフォント
-          className={`${INPUT_BASE} h-screen text-lg`}
-          placeholder='メール本文を入力'
-          value={body}
-          onChange={handleBodyChange}
+          ref={textareaRef} // テキストエリアへの参照を設定
+          className={`${INPUT_BASE} flex-grow`} // 基本スタイルと拡張可能なスタイルを適用
+          placeholder='メール本文を入力' // プレースホルダーテキストを設定
+          value={body} // テキストエリアの値を設定
+          onChange={handleBodyChange} // 値が変更されたときのハンドラを設定
         />
       </div>
     </div>
