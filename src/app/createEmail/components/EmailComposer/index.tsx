@@ -7,10 +7,9 @@ import {
   LABEL_BASE,
   SMALL_TEXT_BUTTON,
 } from '@/app/createEmail/components/EmailComposer/constants';
+
 // カスタムフックをインポート
 import useEmailComposer from '@/app/createEmail/components/EmailComposer/useEmailComposer';
-// 必要なReactフックをインポート
-import React, { useState, useEffect, useRef } from 'react';
 
 // EmailComposerコンポーネントの定義
 const EmailComposer: React.FC = () => {
