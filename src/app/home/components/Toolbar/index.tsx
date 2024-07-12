@@ -2,133 +2,107 @@
 'use client';
 
 // 必要なReactフックとコンポーネントをインポート
-import React, { useState } from 'react';
-import Link from 'next/link'; // Next.jsのLinkコンポーネントをインポート
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import React from 'react'; // Reactをインポート
+import Link from 'next/link'; // Next.jsのページ間リンクのためのLinkコンポーネントをインポート
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'; // FontAwesomeのアイコンを使用するためのコンポーネントをインポート
 import {
-  faSearch,
-  faChevronDown,
-  faTimes,
-} from '@fortawesome/free-solid-svg-icons';
+  faSearch, // 検索アイコン
+  faChevronDown, // 下向き矢印アイコン
+  faTimes, // バツ印アイコン
+} from '@fortawesome/free-solid-svg-icons'; // 使用する具体的なアイコンをインポート
 
-// 定数をインポート
+// 定数をインポート（ボタン設定、共通スタイル、ホバー背景色）
 import { TOOLBAR_BUTTONS, COMMON_STYLES, HOVER_BG } from './constants';
 
 // Toolbarコンポーネントを定義
 const Toolbar: React.FC = () => {
-  // ホバー中のボタンのメッセージを管理するstate
-  const [hoveredButton, setHoveredButton] = useState<string | null>(null);
-
+  // コンポーネントのJSXを返す
   return (
     // ツールバーのメインコンテナ
-    <div
-      // 背景白、影、パディング、Flexboxで中央揃え
-      className={`bg-white shadow-md p-2 ${COMMON_STYLES.FLEX_CENTER}`}
-    >
+    // 背景白、影付き、パディング、中央揃えのフレックスボックス
+    <div className={`bg-white shadow-md p-2 ${COMMON_STYLES.FLEX_CENTER}`}>
       {/* ボタンをマップして表示 */}
       {TOOLBAR_BUTTONS.map((button) => (
         // 各ボタンのコンテナ
+        // 相対配置、右マージン、中央揃えのフレックスボックス
         <Link
-          // 相対配置、右マージン、Flexboxで中央揃え
-          key={button.message}
-          className={`relative mr-2 ${COMMON_STYLES.FLEX_CENTER}`}
-          href={button.href}
+          key={button.message} // Reactのリストレンダリング用のユニークキー
+          className={`relative mr-2 ${COMMON_STYLES.FLEX_CENTER}`} // リンクのスタイル
+          href={button.href} // リンクの遷移先
+          title={button.message} // ツールチップとして表示されるテキスト
         >
           {/* ボタン要素 */}
+          {/* 幅・高さ10、中央揃えのフレックスボックス、角丸、トランジション効果、ホバー時背景色変更 */}
           <div
-            // 幅・高さ10、Flexboxで中央揃え、角丸、トランジション効果、ホバー時に背景色変更
             className={`w-10 h-10 ${COMMON_STYLES.FLEX_CENTER} ${COMMON_STYLES.ROUNDED} ${COMMON_STYLES.TRANSITION} ${HOVER_BG}`}
-            // マウスが入ったときにホバーメッセージを設定
-            onMouseEnter={() => setHoveredButton(button.message)}
-            // マウスが出たときにホバーメッセージをクリア
-            onMouseLeave={() => setHoveredButton(null)}
-            role='button'
-            aria-label={button.ariaLabel}
+            role='button' // アクセシビリティのための役割指定
+            aria-label={button.ariaLabel} // スクリーンリーダー用のラベル
           >
             {/* アイコンを表示し、ホバー時に色を変更 */}
+            {/* アイコンサイズ2xl、通常時グレー色、ホバー時青色 */}
             <FontAwesomeIcon
-              icon={button.icon}
-              // アイコンサイズ2xl、ホバー時に青色、それ以外はグレー色
-              className={`text-2xl ${
-                // ホバー時は青色、それ以外はグレー色を適用
-                hoveredButton === button.message
-                  ? 'text-blue-500'
-                  : 'text-gray-600'
-              }`}
+              icon={button.icon} // 表示するアイコン
+              className='text-2xl text-gray-600 hover:text-blue-500' // アイコンのスタイル
             />
           </div>
-          {/* ホバー時にメッセージを表示 */}
-          {hoveredButton === button.message && (
-            // 絶対位置、最前面、背景黒、テキスト白、小サイズテキスト、角丸、パディング、左寄せ、上寄せ、余白
-            <div className='absolute z-10 bg-black text-white text-sm rounded py-2 px-3 left-full top-full ml-1 mt-1 whitespace-nowrap'>
-              {/* ホバーメッセージのテキストを表示 */}
-              {button.message}
-            </div>
-          )}
         </Link>
       ))}
       {/* 検索バー部分 */}
-      <div
-        // 左マージン自動、Flexboxで中央揃え
-        className='ml-auto flex items-center'
-      >
+      {/* 左マージン自動、中央揃えのフレックスボックス */}
+      <div className='ml-auto flex items-center'>
         {/* 'すべて'ドロップダウン */}
-        <div
-          // フィルター入力のコンテナスタイル
-          className='relative'
-        >
+        {/* フィルター入力のコンテナスタイル */}
+        <div className='relative'>
           {/* フィルター選択入力フィールド */}
+          {/* 境界線、左角丸、パディング、大きめのテキスト */}
           <input
-            type='text'
-            placeholder='すべて'
-            // 境界線、左角丸、パディング、大きめのテキスト
-            className='border rounded-l px-3 py-2 text-lg'
-            aria-label='フィルター選択'
+            type='text' // テキスト入力フィールド
+            placeholder='すべて' // プレースホルダーテキスト
+            className='border rounded-l px-3 py-2 text-lg' // 入力フィールドのスタイル
+            aria-label='フィルター選択' // スクリーンリーダー用のラベル
           />
           {/* ドロップダウンボタン */}
+          {/* 絶対位置、右寄せ、上下中央揃え、右マージン */}
           <button
-            // 絶対位置、右寄せ、上下中央揃え、右マージン
-            className='absolute right-0 top-1/2 transform -translate-y-1/2 mr-3'
-            aria-label='フィルターオプションを開く'
+            className='absolute right-0 top-1/2 transform -translate-y-1/2 mr-3' // ボタンの位置とスタイル
+            aria-label='フィルターオプションを開く' // スクリーンリーダー用のラベル
           >
             {/* ドロップダウンアイコン */}
+            {/* グレーの色、大きめのサイズ */}
             <FontAwesomeIcon
-              // グレーの色、大きめのサイズ
-              icon={faChevronDown}
-              className='text-gray-400 text-xl'
+              icon={faChevronDown} // 下向き矢印アイコン
+              className='text-gray-400 text-xl' // アイコンのスタイル
             />
           </button>
         </div>
         {/* 検索入力フィールド */}
-        <div
-          // 相対位置、左マージン
-          className='relative ml-2'
-        >
+        {/* 相対位置、左マージン */}
+        <div className='relative ml-2'>
           {/* 検索入力フィールド */}
+          {/* 境界線（上下右）、右角丸、パディング、左側に大きめの余白、大きめのテキスト */}
           <input
-            type='text'
-            placeholder='検索'
-            // 境界線（上下右）、右角丸、パディング、左側に大きめの余白、大きめのテキスト
-            className='border-t border-b border-r rounded-r px-3 py-2 pl-10 text-lg'
-            aria-label='検索'
+            type='text' // テキスト入力フィールド
+            placeholder='検索' // プレースホルダーテキスト
+            className='border-t border-b border-r rounded-r px-3 py-2 pl-10 text-lg' // 入力フィールドのスタイル
+            aria-label='検索' // スクリーンリーダー用のラベル
           />
           {/* 検索アイコン */}
+          {/* 絶対位置、左寄せ、上下中央揃え、グレーの色、大きめのサイズ */}
           <FontAwesomeIcon
-            // 絶対位置、左寄せ、上下中央揃え、グレーの色、大きめのサイズ
-            icon={faSearch}
-            className='absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 text-xl'
+            icon={faSearch} // 検索アイコン
+            className='absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 text-xl' // アイコンの位置とスタイル
           />
           {/* 検索クリアボタン */}
+          {/* 絶対位置、右寄せ、上下中央揃え */}
           <button
-            // 絶対位置、右寄せ、上下中央揃え
-            className='absolute right-3 top-1/2 transform -translate-y-1/2'
-            aria-label='検索をクリア'
+            className='absolute right-3 top-1/2 transform -translate-y-1/2' // ボタンの位置
+            aria-label='検索をクリア' // スクリーンリーダー用のラベル
           >
             {/* クリアアイコン */}
+            {/* グレーの色、大きめのサイズ */}
             <FontAwesomeIcon
-              // グレーの色、大きめのサイズ
-              icon={faTimes}
-              className='text-gray-400 text-xl'
+              icon={faTimes} // バツ印アイコン
+              className='text-gray-400 text-xl' // アイコンのスタイル
             />
           </button>
         </div>
