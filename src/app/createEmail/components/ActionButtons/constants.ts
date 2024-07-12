@@ -15,10 +15,6 @@ export const ACTION_ICONS: ActionIcon[] = [
   { icon: faPaperclip, tooltip: '添付ファイル' }, // 添付ファイルアイコンとツールチップ
 ];
 
-// アラートメッセージを定数として追加
-export const ALERT_MESSAGE =
-  'まだメッセージを送信していなくて、保存していない変更もあります。変更した内容を破棄しますか?';
-
 // 共通のスタイルを定数化
 // ボタンの基本スタイル：パディング、角丸、フォーカス時のリング
 export const BUTTON_BASE_STYLE =

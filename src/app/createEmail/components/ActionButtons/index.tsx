@@ -1,69 +1,81 @@
 // ユーザー操作に適応するための定型文
 'use client';
 
-import React from 'react'; // Reactをインポート
+// Reactコンポーネントを作成するために必要なモジュールをインポート
+import React from 'react';
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'; // Font Awesome コンポーネントをインポート
+// Font Awesomeアイコンを使用するためのコンポーネントをインポート
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
+// アクションボタン関連の定数をインポート
 import {
-  ACTION_BUTTON_STYLE, // アクションボタンのスタイル定数をインポート
-  ACTION_ICONS, // アクションアイコンの設定をインポート
-  SEND_BUTTON_STYLE, // 送信ボタンのスタイル定数をインポート
+  ACTION_BUTTON_STYLE, // アクションボタンのスタイル定数
+  ACTION_ICONS, // アクションアイコンの設定
+  SEND_BUTTON_STYLE, // 送信ボタンのスタイル定数
 } from '@/app/createEmail/components/ActionButtons/constants';
 
-import { faPaperPlane, faTimes } from '@fortawesome/free-solid-svg-icons'; // 紙飛行機アイコンとバツ印アイコンをインポート
+// 紙飛行機アイコンと閉じるアイコンをインポート
+import { faPaperPlane, faTimes } from '@fortawesome/free-solid-svg-icons';
 
+// カスタムフックをインポート（アクションボタンの機能を提供）
+import { useActionButtons } from '@/app/createEmail/components/ActionButtons/useActionButtons';
 
-import { useActionButtons } from '@/app/createEmail/components/ActionButtons/useActionButtons'; // カスタムフックをインポート
+// モーダルコンポーネントをインポート
+import Modal from '@/app/createEmail/components/ActionButtons/Modal';
 
-import Modal from '@/app/createEmail/components/ActionButtons/Modal/Send'; // 送信モーダルコンポーネントをインポート
-
-// ActionButtonsコンポーネント：React関数コンポーネントとして定義
+// ActionButtonsコンポーネント：メール作成画面のアクションボタンを表示
 const ActionButtons: React.FC = () => {
   // カスタムフックからモーダル関連の状態と関数を取得
-  const { isModalOpen, handleSubmit, closeModal } = useActionButtons();
+  const {
+    modalType,
+    handleSendClick,
+    handleDiscardClick,
+    closeModal,
+    handleConfirm,
+  } = useActionButtons();
 
   return (
-    // 外側のコンテナ：パディングを追加
+    // 外側のコンテナ：パディングを追加してボタンを囲む
     <div className='p-2'>
-      {/* ヘッダー部分：送信ボタンと各種アクションアイコン */}
-      {/* フレックスコンテナ、アイテムを左揃え、アイテム間のスペース */}
+      {/* ヘッダー部分：送信ボタンと各種アクションアイコンを横並びに配置 */}
       <div className='flex items-center space-x-4'>
-        {/* 送信ボタン */}
-        {/* 青色の送信ボタン、大きめフォント、太字 */}
+        {/* 送信ボタン：青色の大きめボタンで目立つデザイン */}
         <button
-          className={`${SEND_BUTTON_STYLE} text-lg font-semibold`} // スタイルを適用
-          onClick={handleSubmit} // クリック時のハンドラを設定
+          // 青色の背景、白色のテキスト、角丸、パディング、ホバー効果を適用
+          className={`${SEND_BUTTON_STYLE} text-lg font-semibold`}
+          onClick={handleSendClick} // クリック時に送信モーダルを表示
         >
-          {/* 紙飛行機アイコンと「送信」テキスト */}
-          <FontAwesomeIcon icon={faPaperPlane} className='mr-2' />{' '}
-          {/* アイコンの右側にマージンを追加 */}
+          {/* 紙飛行機アイコンと「送信」テキストを表示 */}
+          <FontAwesomeIcon icon={faPaperPlane} className='mr-2' />
           送信
         </button>
-        {/* Font Awesomeを使用したアクションアイコン */}
+        {/* アクションアイコン：各種操作用のアイコンボタンを表示 */}
         {ACTION_ICONS.map((actionIcon) => (
-          // アクションボタン：グレーのホバー効果、大きめアイコン
           <button
-            key={actionIcon.tooltip} // Reactのリストレンダリング用のkey
-            className={`${ACTION_BUTTON_STYLE} text-xl`} // スタイルを適用
-            title={actionIcon.tooltip} // ツールチップを設定
+            key={actionIcon.tooltip}
+            // グレーの背景、角丸、パディング、ホバー効果を適用
+            className={`${ACTION_BUTTON_STYLE} text-xl`}
+            title={actionIcon.tooltip} // マウスオーバー時にツールチップを表示
           >
-            {/* アクションアイコン */}
             <FontAwesomeIcon icon={actionIcon.icon} />
           </button>
         ))}
+        {/* 破棄ボタン */}
         <button
-          className={`${ACTION_BUTTON_STYLE} text-xl`} // スタイルを適用
-          title='閉じる' // ツールチップを設定
+          // グレーの背景、角丸、パディング、ホバー効果を適用
+          className={`${ACTION_BUTTON_STYLE} text-xl`}
+          title='破棄' // マウスオーバー時にツールチップを表示
+          onClick={handleDiscardClick} // クリック時に破棄モーダルを表示
         >
-          {/* アクションアイコン */}
           <FontAwesomeIcon icon={faTimes} />
         </button>
       </div>
-      {/* モーダルコンポーネント */}
+      {/* モーダルコンポーネント：確認ダイアログを表示 */}
       <Modal
-        isOpen={isModalOpen} // モーダルの表示状態
-        onClose={closeModal} // モーダルを閉じる関数
+        isOpen={modalType !== null} // モーダルの表示状態を制御
+        onClose={closeModal} // モーダルを閉じる関数を指定
+        onConfirm={handleConfirm} // 確認ボタンクリック時の処理を指定
+        modalType={modalType} // モーダルの種類を指定
       />
     </div>
   );
