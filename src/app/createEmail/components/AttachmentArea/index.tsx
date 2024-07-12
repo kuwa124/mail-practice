@@ -9,7 +9,7 @@ const AttachmentArea: React.FC = () => {
     // 添付ファイルエリア全体のコンテナ
     <div
       // 幅48、グレーの背景、要素間の垂直方向のスペース、マージン、パディング、角丸
-      className='w-48 bg-gray-300 space-y-2 m-2 p-2 rounded'
+      className='w-60 bg-gray-300 space-y-2 m-2 p-2 rounded'
     >
       {/* 添付ファイル欄 */}
       <div
