@@ -1,22 +1,18 @@
 import {
   faFileAlt, // ファイルアイコンをインポート
   faPaperclip, // クリップアイコンをインポート
-  faTimes, // バツ印アイコンをインポート
 } from '@fortawesome/free-solid-svg-icons'; // Font Awesome の無料の実線アイコンをインポート
 
 // アクションアイコンの型定義
 export interface ActionIcon {
   icon: typeof faFileAlt; // アイコンの型（Font Awesome アイコン）
   tooltip: string; // ツールチップのテキスト
-  href: string; // ボタンのリンク先
-  needConfirm?: boolean; // 確認が必要かどうかのフラグを追加
 }
 
 // アクションアイコンの設定を定数化
 export const ACTION_ICONS: ActionIcon[] = [
-  { icon: faFileAlt, tooltip: '下書きとして保存', href: '#' }, // 下書き保存アイコンとツールチップ
-  { icon: faPaperclip, tooltip: '添付ファイル', href: '#' }, // 添付ファイルアイコンとツールチップ
-  { icon: faTimes, tooltip: '破棄', href: '/', needConfirm: true }, // 破棄アイコンとツールチップ
+  { icon: faFileAlt, tooltip: '下書きとして保存' }, // 下書き保存アイコンとツールチップ
+  { icon: faPaperclip, tooltip: '添付ファイル' }, // 添付ファイルアイコンとツールチップ
 ];
 
 // アラートメッセージを定数として追加
