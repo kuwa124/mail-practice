@@ -39,6 +39,12 @@ const AttachmentArea: React.FC = () => {
         >
           添付可能なファイルは最大で20 MBです。
         </p>
+        <p
+          // 最小のテキストサイズ、グレーの文字色、太字
+          className='text-xs text-gray-600  font-bold'
+        >
+          ※練習用の為、添付機能はございません。
+        </p>
       </div>
     </div>
   );
