@@ -1,13 +1,12 @@
 // Reactコンポーネントを作成するために必要なモジュールをインポート
 import React from 'react';
 
-// モーダルコンポーネントのプロップスの型定義
-interface ModalProps {
-  isOpen: boolean; // モーダルの表示状態を制御するブール値
-  onClose: () => void; // モーダルを閉じる関数
-  onConfirm: () => void; // 確認ボタンクリック時の処理を行う関数
-  modalType: 'send' | 'discard' | null; // モーダルの種類を指定する文字列
-}
+// 共通の型定義をインポート：ModalTypeを使用するために必要
+import {
+  modalContents,
+  ModalProps,
+  ModalType,
+} from '@/app/createEmail/components/ActionButtons/constants';
 
 // モーダルコンポーネント：確認ダイアログを表示するポップアップ
 const Modal: React.FC<ModalProps> = ({
@@ -19,19 +18,8 @@ const Modal: React.FC<ModalProps> = ({
   // モーダルが開いていない場合は何も表示しない
   if (!isOpen) return null;
 
-  // モーダルの内容を決定：モーダルの種類に応じて表示内容を変更
-  const modalContent = {
-    send: {
-      title: 'メール送信の確認',
-      message: 'メールを送信しますか？\n※実際には送信されません。',
-      confirmButton: '送信',
-    },
-    discard: {
-      title: 'メール破棄の確認',
-      message: '変更した内容を破棄しますか?',
-      confirmButton: 'OK',
-    },
-  }[modalType!];
+  // modalTypeに基づいて適切なモーダル内容を取得
+  const modalContent = modalContents[modalType as Exclude<ModalType, null>];
 
   return (
     // モーダルの背景：画面全体を覆う半透明のオーバーレイ
@@ -78,35 +66,39 @@ const Modal: React.FC<ModalProps> = ({
           */}
 
           {/* 確認ボタン：青色背景で目立つデザイン */}
-          <button
-            className='px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600'
-            onClick={onConfirm} // クリック時に確認処理を実行
-          >
-            {/* 
-              px-4: 左右のパディング
-              py-2: 上下のパディング
-              bg-blue-500: 青色の背景
-              text-white: 白色のテキスト
-              rounded-md: 中程度の角丸
-              hover:bg-blue-600: ホバー時に濃い青に変更
-            */}
-            {modalContent.confirmButton}
-          </button>
+          {modalContent.confirmButton && (
+            <button
+              className='px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 w-28'
+              onClick={onConfirm} // クリック時に確認処理を実行
+            >
+              {/* 
+                px-4: 左右のパディング
+                py-2: 上下のパディング
+                bg-blue-500: 青色の背景
+                text-white: 白色のテキスト
+                rounded-md: 中程度の角丸
+                hover:bg-blue-600: ホバー時に濃い青に変更
+              */}
+              {modalContent.confirmButton}
+            </button>
+          )}
 
           {/* キャンセルボタン：グレー背景でホバー効果あり */}
-          <button
-            className='px-4 py-2 bg-gray-300 rounded-md hover:bg-gray-400'
-            onClick={onClose} // クリック時にモーダルを閉じる
-          >
-            {/* 
+          {modalContent.showCancelButton && (
+            <button
+              className='px-4 py-2 bg-gray-300 rounded-md hover:bg-gray-400 w-28'
+              onClick={onClose} // クリック時にモーダルを閉じる
+            >
+              {/* 
               px-4: 左右のパディング
               py-2: 上下のパディング
               bg-gray-300: 薄いグレーの背景色
               rounded-md: 中程度の角丸
               hover:bg-gray-400: ホバー時に濃いグレーに変更
             */}
-            キャンセル
-          </button>
+              キャンセル
+            </button>
+          )}
         </div>
       </div>
     </div>
