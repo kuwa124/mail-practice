@@ -47,13 +47,16 @@ const EmailComposer: React.FC = () => {
           />
           {/* CCボタン：小さいテキストボタン、左右マージン */}
           <button
-            className={`${SMALL_TEXT_BUTTON} mx-2`}
-            onClick={toggleCcVisible}
+            className={`${SMALL_TEXT_BUTTON} mx-2`} // 小さいテキストボタンスタイルと左右マージンを適用
+            onClick={toggleCcVisible} // クリック時にCC欄の表示/非表示を切り替え
           >
             Cc
           </button>
           {/* BCCボタン：小さいテキストボタン */}
-          <button className={SMALL_TEXT_BUTTON} onClick={toggleBccVisible}>
+          <button
+            className={SMALL_TEXT_BUTTON} // 小さいテキストボタンスタイルを適用
+            onClick={toggleBccVisible} // クリック時にBCC欄の表示/非表示を切り替え
+          >
             Bcc
           </button>
         </div>
@@ -65,10 +68,10 @@ const EmailComposer: React.FC = () => {
               Cc
             </label>
             <input
-              type='text'
-              id='cc'
-              className={INPUT_BASE}
-              placeholder='Ccを入力'
+              type='text' // テキスト入力フィールドを指定
+              id='cc' // 要素のID（ラベルとの紐付けに使用）
+              className={INPUT_BASE} // 入力フィールドの基本スタイルを適用
+              placeholder='Ccを入力' // プレースホルダーテキストを設定
             />
           </div>
         )}
@@ -80,10 +83,10 @@ const EmailComposer: React.FC = () => {
               Bcc
             </label>
             <input
-              type='text'
-              id='bcc'
-              className={INPUT_BASE}
-              placeholder='Bccを入力'
+              type='text' // テキスト入力フィールドを指定
+              id='bcc' // 要素のID（ラベルとの紐付けに使用）
+              className={INPUT_BASE} // 入力フィールドの基本スタイルを適用
+              placeholder='Bccを入力' // プレースホルダーテキストを設定
             />
           </div>
         )}
