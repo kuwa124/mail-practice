@@ -7,6 +7,13 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'; // FontAwesome
 import { faSave, faArrowLeft } from '@fortawesome/free-solid-svg-icons'; // 使用する具体的なアイコンをインポート
 import Link from 'next/link'; // Next.jsのページ間リンクのためのLinkコンポーネントをインポート
 import { SIGNATURE } from '@/app/createEmail/components/EmailComposer/constants'; //署名をインポート
+import { useSignature } from '@/app/contexts/SignatureContext';
+
+// モーダルコンポーネントをインポート
+import Modal from '@/app/Modal';
+
+// カスタムフックをインポート（アクションボタンの機能を提供）
+import { useModal } from '@/app/Modal/useModal';
 
 // 設定コンポーネントを定義
 const Settings: React.FC = () => {
@@ -14,19 +21,10 @@ const Settings: React.FC = () => {
   const [theme, setTheme] = useState('light');
   const [language, setLanguage] = useState('日本語');
   const [notifications, setNotifications] = useState(true);
-  const [signature, setSignature] = useState('');
+  const { signature, setSignature } = useSignature();
 
-  // 設定を保存する関数
-  const handleSave = () => {
-    // ここに設定を保存するロジックを実装
-    console.log('設定が保存されました', {
-      theme,
-      language,
-      notifications,
-      signature,
-    });
-    // 実際のアプリケーションでは、ここでAPIリクエストを送信するなどの処理を行います
-  };
+  // カスタムフックからモーダル関連の状態と関数を取得
+  const { modalType, closeModal, handleSave } = useModal();
 
   return (
     // 設定画面のメインコンテナ
@@ -126,6 +124,13 @@ const Settings: React.FC = () => {
         <FontAwesomeIcon icon={faSave} className='mr-2' />
         保存
       </button>
+      {/* モーダルコンポーネント：確認ダイアログを表示 */}
+      <Modal
+        isOpen={modalType !== null} // モーダルの表示状態を制御
+        onClose={closeModal} // モーダルを閉じる関数を指定
+        onConfirm={closeModal} // 保存ボタンクリック時の処理を指定
+        modalType={modalType} // モーダルの種類を指定
+      />
     </div>
   );
 };

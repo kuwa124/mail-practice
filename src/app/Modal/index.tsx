@@ -6,7 +6,7 @@ import {
   modalContents,
   ModalProps,
   ModalType,
-} from '@/app/createEmail/components/ActionButtons/constants';
+} from '@/app/Modal/constants';
 
 // モーダルコンポーネント：確認ダイアログを表示するポップアップ
 const Modal: React.FC<ModalProps> = ({

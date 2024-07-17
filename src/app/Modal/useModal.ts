@@ -5,16 +5,22 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 
 // 共通の型定義をインポート：ModalTypeを使用するために必要
-import { ModalType } from '@/app/createEmail/components/ActionButtons/constants';
+import { ModalType } from '@/app/Modal/constants';
 
 // アクションボタンの機能を提供するカスタムフック
-export const useActionButtons = () => {
+export const useModal = () => {
   // モーダルの種類を管理するstate
   // useState<ModalType>で初期値をnullに設定
   const [modalType, setModalType] = useState<ModalType>(null);
 
   // Next.jsのルーターを初期化：ページ遷移に使用
   const router = useRouter();
+
+  // モーダルを閉じる処理
+  // モーダルの種類をnullに設定してモーダルを非表示にする
+  const closeModal = (): void => {
+    setModalType(null);
+  };
 
   // 送信ボタンクリック時の処理
   // モーダルの種類を'send'に設定
@@ -26,12 +32,6 @@ export const useActionButtons = () => {
   // モーダルの種類を'discard'に設定
   const handleDiscardClick = (): void => {
     setModalType('discard');
-  };
-
-  // モーダルを閉じる処理
-  // モーダルの種類をnullに設定してモーダルを非表示にする
-  const closeModal = (): void => {
-    setModalType(null);
   };
 
   // 送信確認時の処理
@@ -50,6 +50,11 @@ export const useActionButtons = () => {
     setModalType('discardComplete');
   };
 
+  // 設定を保存する関数
+  const handleSave = (): void => {
+    setModalType('settings');
+  };
+
   // 確認ボタンがクリックされたときの処理
   // モーダルタイプに応じた処理を実行する関数
   const handleConfirm = (): void => {
@@ -63,6 +68,7 @@ export const useActionButtons = () => {
       discard: confirmDiscard, // 破棄確認用の関数
       sendComplete: confirmComplete, // 完了確認用の関数
       discardComplete: confirmComplete, // 完了確認用の関数
+      settings: closeModal, // 設定を保存する関数(モーダルを閉じる)
     };
 
     // モーダルタイプに対応する関数を実行
@@ -76,5 +82,6 @@ export const useActionButtons = () => {
     handleDiscardClick,
     closeModal,
     handleConfirm,
+    handleSave,
   };
 };

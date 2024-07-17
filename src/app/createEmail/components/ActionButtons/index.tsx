@@ -17,11 +17,11 @@ import {
 // 紙飛行機アイコンと閉じるアイコンをインポート
 import { faPaperPlane, faTimes } from '@fortawesome/free-solid-svg-icons';
 
-// カスタムフックをインポート（アクションボタンの機能を提供）
-import { useActionButtons } from '@/app/createEmail/components/ActionButtons/useActionButtons';
-
 // モーダルコンポーネントをインポート
-import Modal from '@/app/createEmail/components/ActionButtons/Modal';
+import Modal from '@/app/Modal';
+
+// カスタムフックをインポート（アクションボタンの機能を提供）
+import { useModal } from '@/app/Modal/useModal';
 
 // ActionButtonsコンポーネント：メール作成画面のアクションボタンを表示
 const ActionButtons: React.FC = () => {
@@ -32,7 +32,7 @@ const ActionButtons: React.FC = () => {
     handleDiscardClick,
     closeModal,
     handleConfirm,
-  } = useActionButtons();
+  } = useModal();
 
   return (
     // 外側のコンテナ：パディングを追加してボタンを囲む

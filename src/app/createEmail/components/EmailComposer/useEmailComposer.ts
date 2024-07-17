@@ -1,11 +1,13 @@
 // React のフックと定数をインポート
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { SIGNATURE } from './constants';
+import { useSignature } from '@/app/contexts/SignatureContext';
 
 // EmailComposerのロジックを管理するカスタムフック
 const useEmailComposer = () => {
+  const { signature } = useSignature();
   // メール本文の状態を管理するstate
-  const [body, setBody] = useState(SIGNATURE);
+  const [body, setBody] = useState('');
   const [ccVisible, setCcVisible] = useState(false);
   const [bccVisible, setBccVisible] = useState(false);
 
@@ -13,6 +15,11 @@ const useEmailComposer = () => {
   // この場合、テキストエリアのDOM要素への参照を保持する
   // useRef<HTMLTextAreaElement>(null) は、HTMLTextAreaElement型の参照を初期値nullで作成
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+
+  // コンポーネントマウント時に署名を設定
+  useEffect(() => {
+    setBody(signature);
+  }, [signature]);
 
   // テキストエリアの内容が変更されたときのハンドラ
   // React.ChangeEvent<HTMLTextAreaElement>は、テキストエリアの変更イベントの型
@@ -43,3 +50,4 @@ const useEmailComposer = () => {
 };
 // カスタムフックをエクスポート
 export default useEmailComposer;
+  
