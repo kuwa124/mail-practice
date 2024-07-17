@@ -1,30 +1,67 @@
-// 使用するアイコンをインポート
+// Header/constants.ts
+
+// Font Awesomeのアイコンをインポート
 import {
-  faInbox, // 受信トレイアイコン（箱の形）
-  faAddressBook, // アドレス帳アイコン（開いた本の形）
-  faGear, // 設定アイコン（歯車の形）
-  faRightFromBracket, // ログアウトアイコン（ドアから出る矢印の形）
+  faInbox, // 受信トレイアイコン
+  faAddressBook, // アドレス帳アイコン
+  faGear, // 設定アイコン
+  faRightFromBracket, // ログアウトアイコン
+  IconDefinition, // アイコン定義の型をインポート
 } from '@fortawesome/free-solid-svg-icons';
 
-// ボタンの共通クラス
-// bg-gray-700: 背景色をダークグレーに設定
-// px-2: 左右の内側余白を設定（x軸）
-// py-1: 上下の内側余白を設定（y軸）
-// rounded: 角を丸くする
-// flex: フレックスボックスコンテナにする
-// items-center: フレックスボックスの子要素（アイテム）を中央に揃える
-export const BUTTON_CLASS = 'bg-gray-700 px-2 py-1 rounded flex items-center';
-
-// アイコンの共通クラス
-// w-4: 幅をサイズ4に設定
-// h-4: 高さをサイズ4に設定
-// mr-2: 右側に余白を設定
-export const ICON_CLASS = 'w-4 h-4 mr-2';
+// ナビゲーションボタンの型定義
+interface NavButton {
+  name: string; // ボタンの名前
+  icon: IconDefinition; // Font Awesomeアイコンの型
+  href: string; // ボタンのリンク先
+  ariaLabel: string; // アクセシビリティ用のラベル
+}
 
 // ナビゲーションボタンの設定
-export const NAV_BUTTONS = [
-  { name: '受信トレイ', icon: faInbox },
-  { name: '連絡先', icon: faAddressBook },
-  { name: '設定', icon: faGear },
-  { name: 'ログアウト', icon: faRightFromBracket },
+export const NAV_BUTTONS: NavButton[] = [
+  {
+    name: '受信トレイ',
+    icon: faInbox,
+    href: '/inbox',
+    ariaLabel: '受信トレイを開く',
+  },
+  {
+    name: '連絡先',
+    icon: faAddressBook,
+    href: '/contacts',
+    ariaLabel: '連絡先を開く',
+  },
+  {
+    name: '設定',
+    icon: faGear,
+    href: '/set',
+    ariaLabel: '設定を開く',
+  },
+  {
+    name: 'ログアウト',
+    icon: faRightFromBracket,
+    href: '/logout',
+    ariaLabel: 'ログアウトする',
+  },
 ];
+
+// スタイル定義の型
+interface CommonStyles {
+  FLEX_CENTER: string; // Flexboxで中央に配置するためのスタイル
+  BUTTON: string; // ボタンの基本スタイル
+  ICON: string; // アイコンの基本スタイル
+}
+
+// 頻繁に使用される共通のスタイルを定数として定義
+export const COMMON_STYLES: CommonStyles = {
+  FLEX_CENTER: 'flex items-center justify-center', // Flexboxで中央に配置
+  // ボタンの基本スタイル
+  // 背景色をダークグレーに設定、パディングを追加、角を丸くする、Flexboxで配置
+  BUTTON: 'bg-gray-700 px-2 py-1 rounded flex items-center',
+  // アイコンの基本スタイル
+  // 幅と高さを設定、右マージンを追加
+  ICON: 'w-4 h-4 mr-2',
+};
+
+// ボタンのホバー時の背景色を定数として定義
+export const HOVER_BG: string = 'hover:bg-gray-600'; // ホバー時に背景色を薄いグレーに変更
