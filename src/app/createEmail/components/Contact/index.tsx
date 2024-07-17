@@ -2,8 +2,12 @@
 'use client';
 
 // Reactと必要なコンポーネントをインポート
-import React from 'react';
+import React, { useState } from 'react';
+
+// React: Reactライブラリをインポート
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
+// FontAwesomeIcon: FontAwesomeアイコンコンポーネントをインポート
 import {
   faSearch,
   faXmarkCircle,
@@ -25,15 +29,42 @@ const contacts: Contact[] = [
 
 // Contactsコンポーネントの定義
 const Contacts: React.FC = () => {
+  const [searchTerm, setSearchTerm] = useState('');
+
+  // 検索バーの入力ハンドラー
+  // 入力値を検索用の状態にセット
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(event.target.value);
+  };
+
+  // クリアボタンのクリックイベントハンドラー
+  // 入力フィールドの内容を削除する
+  const handleClear = () => {
+    setSearchTerm('');
+  };
+
+  // エンターキー押下時のイベントハンドラー
+  // デフォルトのフォーム送信動作を防止
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === 'Enter') {
+      event.preventDefault();
+    }
+  };
+
+  // 検索キーワードに基づいて連絡先リストをフィルタリング
+  const filteredContacts = contacts.filter((contact) =>
+    contact.name.includes(searchTerm)
+  );
+
   return (
     // 連絡先リストのコンテナ
-    // w-48: 幅を12rem（192px）に設定
+    // w-60: 幅を15rem（240px）に設定
     // bg-gray-300: 背景色を薄いグレー（#d1d5db）に設定
     // space-y-2: 子要素間の上下の間隔を0.5rem（8px）に設定
     // m-2: 外側の余白を全方向に0.5rem（8px）設定
     // p-2: 内側の余白を全方向に0.5rem（8px）設定
     // rounded: 角を少し丸くする
-    <div className='w-48 bg-gray-300 space-y-2 m-2 p-2 rounded'>
+    <div className='w-60 bg-gray-300 space-y-2 m-2 p-2 rounded'>
       {/* タイトル */}
       {/* font-bold: 文字を太字にする */}
       {/* text-sm: 文字サイズを小さめに設定 */}
@@ -62,6 +93,9 @@ const Contacts: React.FC = () => {
           className='flex-grow p-2 pr-8 bg-transparent outline-none'
           type='text'
           placeholder='検索'
+          value={searchTerm}
+          onChange={handleInputChange}
+          onKeyDown={handleKeyDown}
         />
         {/* クリアアイコン（円形） */}
         {/* absolute: 絶対位置指定 */}
@@ -69,14 +103,17 @@ const Contacts: React.FC = () => {
         {/* top-1/2: 上端から50%の位置に配置 */}
         {/* -translate-y-1/2: Y軸方向に自身の高さの半分だけ上に移動（垂直中央揃え） */}
         {/* p-2: 内側の余白を全方向に0.5rem（8px）設定 */}
-        <button className='absolute right-0 top-1/2 -translate-y-1/2 p-2'>
+        <button
+          className='absolute right-0 top-1/2 -translate-y-1/2 p-2'
+          onClick={handleClear}
+        >
           <FontAwesomeIcon icon={faXmarkCircle} className='text-gray-400' />
         </button>
       </div>
 
       {/* 連絡先リスト */}
       <ul>
-        {contacts.map((contact, index) => (
+        {filteredContacts.map((contact, index) => (
           // 各連絡先項目
           // flex: 子要素を横並びに配置
           // items-center: 子要素を垂直方向に中央揃え

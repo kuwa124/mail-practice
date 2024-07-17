@@ -14,7 +14,15 @@ import useEmailComposer from '@/app/createEmail/components/EmailComposer/useEmai
 // EmailComposerコンポーネントの定義
 const EmailComposer: React.FC = () => {
   // カスタムフックを使用してメール本文の状態と関連機能を取得
-  const { body, textareaRef, handleBodyChange } = useEmailComposer();
+  const {
+    body,
+    textareaRef,
+    handleBodyChange,
+    ccVisible,
+    bccVisible,
+    toggleCcVisible,
+    toggleBccVisible,
+  } = useEmailComposer();
 
   return (
     // メールコンポーザー全体のコンテナ
@@ -38,10 +46,47 @@ const EmailComposer: React.FC = () => {
             placeholder='宛先を入力' // プレースホルダーテキストを設定
           />
           {/* CCボタン：小さいテキストボタン、左右マージン */}
-          <button className={`${SMALL_TEXT_BUTTON} mx-2`}>Cc</button>
+          <button
+            className={`${SMALL_TEXT_BUTTON} mx-2`}
+            onClick={toggleCcVisible}
+          >
+            Cc
+          </button>
           {/* BCCボタン：小さいテキストボタン */}
-          <button className={SMALL_TEXT_BUTTON}>Bcc</button>
+          <button className={SMALL_TEXT_BUTTON} onClick={toggleBccVisible}>
+            Bcc
+          </button>
         </div>
+
+        {/* CC入力フィールド（表示/非表示） */}
+        {ccVisible && (
+          <div className='relative grid grid-cols-[60px_1fr] gap-1 items-center'>
+            <label htmlFor='cc' className={LABEL_BASE}>
+              Cc
+            </label>
+            <input
+              type='text'
+              id='cc'
+              className={INPUT_BASE}
+              placeholder='Ccを入力'
+            />
+          </div>
+        )}
+
+        {/* BCC入力フィールド（表示/非表示） */}
+        {bccVisible && (
+          <div className='relative grid grid-cols-[60px_1fr] gap-1 items-center'>
+            <label htmlFor='bcc' className={LABEL_BASE}>
+              Bcc
+            </label>
+            <input
+              type='text'
+              id='bcc'
+              className={INPUT_BASE}
+              placeholder='Bccを入力'
+            />
+          </div>
+        )}
 
         {/* 件名入力フィールド */}
         {/* 件名フィールドをグリッドレイアウトで配置し、要素を中央揃えに設定 */}

@@ -6,6 +6,8 @@ import { SIGNATURE } from './constants';
 const useEmailComposer = () => {
   // メール本文の状態を管理するstate
   const [body, setBody] = useState(SIGNATURE);
+  const [ccVisible, setCcVisible] = useState(false);
+  const [bccVisible, setBccVisible] = useState(false);
 
   // useRef: コンポーネントのライフサイクル全体で保持される可変な参照を作成
   // この場合、テキストエリアのDOM要素への参照を保持する
@@ -18,9 +20,26 @@ const useEmailComposer = () => {
     setBody(e.target.value);
   };
 
-  // フックの戻り値としてステートと関数を返す
-  return { body, textareaRef, handleBodyChange };
-};
+  // CC欄をトグルする関数
+  const toggleCcVisible = () => {
+    setCcVisible((prev) => !prev);
+  };
 
+  // BCC欄をトグルする関数
+  const toggleBccVisible = () => {
+    setBccVisible((prev) => !prev);
+  };
+
+  // フックの戻り値としてステートと関数を返す
+  return {
+    body,
+    textareaRef,
+    handleBodyChange,
+    ccVisible,
+    bccVisible,
+    toggleCcVisible,
+    toggleBccVisible,
+  };
+};
 // カスタムフックをエクスポート
 export default useEmailComposer;
