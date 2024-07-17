@@ -1,6 +1,5 @@
 // React のフックと定数をインポート
 import { useState, useRef, useEffect } from 'react';
-import { SIGNATURE } from './constants';
 import { useSignature } from '@/app/contexts/SignatureContext';
 
 // EmailComposerのロジックを管理するカスタムフック
@@ -50,4 +49,3 @@ const useEmailComposer = () => {
 };
 // カスタムフックをエクスポート
 export default useEmailComposer;
-  
