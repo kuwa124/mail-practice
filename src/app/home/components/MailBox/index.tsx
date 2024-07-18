@@ -25,7 +25,7 @@ export function MailBox() {
       {/* メールリストのコンテナ */}
       {/* col-span-1: グリッドの1列分を占める */}
       {/* overflow-auto: コンテンツがはみ出した場合にスクロール可能にする */}
-      <div className='col-span-1 container space-y-2 m-2 p-2 rounded bg-gray-300 overflow-auto'>
+      <div className='col-span-1 container space-y-2 my-2 p-2 rounded bg-gray-300 overflow-auto'>
         {/* メールボックスのタイトル */}
         <h1 className='text-2xl font-bold mb-6 text-gray-800'>受信トレイ</h1>
         {/* メールリスト */}
