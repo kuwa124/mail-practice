@@ -25,8 +25,12 @@ export default function Home() {
         {/* サイドバーコンポーネント */}
         <Sidebar />
         {/* メールボックスコンポーネント */}
-        {/* handleMailClickを渡して、メール選択時の挙動を制御 */}
-        <MailBox />
+        {/* flex-1: 残りの横幅全てを占める */}
+        {/* h-full: 親要素の高さいっぱいに広げる */}
+        {/* overflow-hidden: はみ出た部分を隠す（MailBox内でスクロールを制御する） */}
+        <div className='flex-1 h-full overflow-hidden mx-2'>
+          <MailBox />
+        </div>
       </div>
     </div>
   );

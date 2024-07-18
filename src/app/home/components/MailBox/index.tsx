@@ -17,50 +17,42 @@ export function MailBox() {
   // JSXを返す（コンポーネントの見た目を定義）
   return (
     // メールボックス全体のコンテナ
-    // container: レスポンシブなコンテナ, w-96: 幅を24rem（384px）に設定
-    // space-y-2: 子要素間の縦方向の間隔を0.5rem（8px）に設定
-    // m-2: 外側のマージンを0.5rem（8px）に設定, p-2: 内側のパディングを0.5rem（8px）に設定
-    // rounded: 角を丸くする, bg-gray-300: 背景色を薄いグレーに設定
-    <div className='container w-96 space-y-2 m-2 p-2 rounded bg-gray-300'>
-      {/* メールボックスのタイトル */}
-      {/* text-2xl: フォントサイズを大きく, font-bold: フォントを太く */}
-      {/* mb-6: 下側のマージンを1.5rem（24px）に設定 */}
-      {/* text-gray-800: テキストの色を濃いグレーに設定 */}
-      <h1 className='text-2xl font-bold mb-6 text-gray-800'>受信トレイ</h1>
-      {/* メールリスト */}
-      <ul>
-        {/* dummyMailsの各要素に対してマッピング処理を行う */}
-        {dummyMails.map((mail) => (
-          // メールリストの各アイテム
-          // key属性: Reactのリストレンダリング最適化のため、一意の値を設定
-          // onClick: クリック時にメールを選択する
-          // mb-4: 下側のマージンを1rem（16px）に設定
-          // p-4: 内側のパディングを1rem（16px）に設定
-          // border border-gray-200: グレーの境界線を追加
-          // rounded-lg: 角をやや丸くする
-          // hover:bg-gray-50: マウスホバー時に背景色を少し明るくする
-          // transition-colors duration-200: 色の変化を0.2秒かけてなめらかに行う
-          // cursor-pointer: カーソルをポインターに変更
-          // 選択されたメールの場合、背景色を水色に変更
-          <li
-            key={mail.id}
-            onClick={() => handleMailClick(mail)}
-            className={`mb-4 p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors duration-200 cursor-pointer
+    // grid: グリッドレイアウトを適用
+    // grid-cols-4: 4列のグリッドを作成
+    // gap-4: グリッドアイテム間の隙間を1rem（16px）に設定
+    // h-full: 親要素の高さいっぱいに広げる
+    <div className='grid grid-cols-4 gap-4 h-full '>
+      {/* メールリストのコンテナ */}
+      {/* col-span-1: グリッドの1列分を占める */}
+      {/* overflow-auto: コンテンツがはみ出した場合にスクロール可能にする */}
+      <div className='col-span-1 container space-y-2 m-2 p-2 rounded bg-gray-300 overflow-auto'>
+        {/* メールボックスのタイトル */}
+        <h1 className='text-2xl font-bold mb-6 text-gray-800'>受信トレイ</h1>
+        {/* メールリスト */}
+        <ul>
+          {/* dummyMailsの各要素に対してマッピング処理を行う */}
+          {dummyMails.map((mail) => (
+            <li
+              key={mail.id}
+              onClick={() => handleMailClick(mail)}
+              className={`mb-4 p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors duration-200 cursor-pointer
               ${selectedMail?.id === mail.id ? 'bg-blue-100' : ''}`}
-          >
-            {/* メール送信者の名前 */}
-            {/* text-lg: フォントサイズを大きく */}
-            {/* font-semibold: フォントをやや太く */}
-            <p className='text-lg font-semibold'>{mail.name}</p>
+            >
+              {/* メール送信者の名前 */}
+              <p className='text-lg font-semibold'>{mail.name}</p>
 
-            {/* メールの件名 */}
-            {/* mt-2: 上側のマージンを0.5rem（8px）に設定 */}
-            <p className='mt-2'>{mail.subject}</p>
-          </li>
-        ))}
-      </ul>
+              {/* メールの件名 */}
+              <p className='mt-2'>{mail.subject}</p>
+            </li>
+          ))}
+        </ul>
+      </div>
       {/* 選択されたメールを表示 */}
-      <MailView mail={selectedMail} />
+      {/* col-span-3: グリッドの3列分を占める（横幅いっぱいに広がる） */}
+      {/* h-full: 親要素の高さいっぱいに広げる */}
+      <div className='col-span-3 h-full overflow-hidden'>
+        <MailView mail={selectedMail} />
+      </div>
     </div>
   );
 }
