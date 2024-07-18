@@ -14,18 +14,8 @@ import {
   faUser,
 } from '@fortawesome/free-solid-svg-icons';
 
-// 連絡先の情報を定義する型
-// name: 連絡先の名前（文字列）
-type Contact = {
-  name: string;
-};
-
-// 連絡先リストのデータ
-const contacts: Contact[] = [
-  { name: '山田 太郎' },
-  { name: '飯塚 花子' },
-  { name: '福岡 一郎' },
-];
+// 共有の定数と型をインポート
+import { Mail, dummyMails } from '@/app/shared/constants';
 
 // Contactsコンポーネントの定義
 const Contacts: React.FC = () => {
@@ -52,8 +42,8 @@ const Contacts: React.FC = () => {
   };
 
   // 検索キーワードに基づいて連絡先リストをフィルタリング
-  const filteredContacts = contacts.filter((contact) =>
-    contact.name.includes(searchTerm)
+  const filteredContacts = dummyMails.filter((mail) =>
+    mail.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   return (
@@ -113,19 +103,19 @@ const Contacts: React.FC = () => {
 
       {/* 連絡先リスト */}
       <ul>
-        {filteredContacts.map((contact, index) => (
+        {filteredContacts.map((mail) => (
           // 各連絡先項目
           // flex: 子要素を横並びに配置
           // items-center: 子要素を垂直方向に中央揃え
           // space-x-2: 子要素間の左右の間隔を0.5rem（8px）に設定
           // py-2: 上下のパディングを0.5rem（8px）に設定
-          <li key={index} className='flex items-center space-x-2 py-2'>
+          <li key={mail.id} className='flex items-center space-x-2 py-2'>
             {/* ユーザーアイコン */}
             {/* text-gray-600: アイコンの色を灰色に設定 */}
             {/* text-lg: アイコンのサイズを少し大きめに設定 */}
             <FontAwesomeIcon icon={faUser} className='text-gray-600 text-lg' />
             {/* 連絡先名 */}
-            <span>{contact.name}</span>
+            <span>{mail.name}</span>
           </li>
         ))}
       </ul>
