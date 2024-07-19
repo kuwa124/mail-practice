@@ -3,7 +3,7 @@ import AttachmentArea from '@/app/createEmail/components/AttachmentArea';
 import EmailComposer from '@/app/createEmail/components/EmailComposer';
 import Header from '@/components/Header';
 import React from 'react';
-import Contact from '@/app/createEmail/components/Contact';
+import Contact from '@/components/Contact';
 
 const createEmail = () => {
   return (
