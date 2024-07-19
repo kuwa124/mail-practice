@@ -2,18 +2,25 @@
 'use client';
 
 // 必要なコンポーネントと定数をインポート
+import React from 'react';
+// React: Reactライブラリをインポート
+
+// 共通のスタイル定数をインポート
 import {
   INPUT_BASE,
   LABEL_BASE,
   SMALL_TEXT_BUTTON,
 } from '@/app/createEmail/components/EmailComposer/constants';
+// INPUT_BASE: 入力フィールドの基本スタイル
+// LABEL_BASE: ラベルの基本スタイル
+// SMALL_TEXT_BUTTON: 小さいテキストボタンのスタイル
 
-// カスタムフックをインポート
+// EmailComposer用のカスタムフックをインポート
 import useEmailComposer from '@/app/createEmail/components/EmailComposer/useEmailComposer';
 
 // EmailComposerコンポーネントの定義
 const EmailComposer: React.FC = () => {
-  // カスタムフックを使用してメール本文の状態と関連機能を取得
+  // カスタムフックを使用してメール関連の状態と機能を取得
   const {
     body,
     textareaRef,
@@ -22,6 +29,11 @@ const EmailComposer: React.FC = () => {
     bccVisible,
     toggleCcVisible,
     toggleBccVisible,
+    focusedInput,
+    setFocusedInput,
+    toRef,
+    ccRef,
+    bccRef,
   } = useEmailComposer();
 
   return (
@@ -40,10 +52,12 @@ const EmailComposer: React.FC = () => {
           </label>
           {/* 宛先入力用のテキストフィールド */}
           <input
+            ref={toRef} // 入力フィールドへの参照を設定
             type='text' // テキスト入力フィールドを指定
             id='to' // 要素のID（ラベルとの紐付けに使用）
             className={INPUT_BASE} // 入力フィールドの基本スタイルを適用
             placeholder='宛先を入力' // プレースホルダーテキストを設定
+            onFocus={() => setFocusedInput('to')} // フォーカス時に現在の入力フィールドを設定
           />
           {/* CCボタン：小さいテキストボタン、左右マージン */}
           <button
@@ -68,10 +82,12 @@ const EmailComposer: React.FC = () => {
               Cc
             </label>
             <input
+              ref={ccRef} // 入力フィールドへの参照を設定
               type='text' // テキスト入力フィールドを指定
               id='cc' // 要素のID（ラベルとの紐付けに使用）
               className={INPUT_BASE} // 入力フィールドの基本スタイルを適用
               placeholder='Ccを入力' // プレースホルダーテキストを設定
+              onFocus={() => setFocusedInput('cc')} // フォーカス時に現在の入力フィールドを設定
             />
           </div>
         )}
@@ -83,10 +99,12 @@ const EmailComposer: React.FC = () => {
               Bcc
             </label>
             <input
+              ref={bccRef} // 入力フィールドへの参照を設定
               type='text' // テキスト入力フィールドを指定
               id='bcc' // 要素のID（ラベルとの紐付けに使用）
               className={INPUT_BASE} // 入力フィールドの基本スタイルを適用
               placeholder='Bccを入力' // プレースホルダーテキストを設定
+              onFocus={() => setFocusedInput('bcc')} // フォーカス時に現在の入力フィールドを設定
             />
           </div>
         )}
@@ -114,7 +132,7 @@ const EmailComposer: React.FC = () => {
           className={`${INPUT_BASE} flex-grow`} // 基本スタイルと拡張可能なスタイルを適用
           placeholder='メール本文を入力' // プレースホルダーテキストを設定
           value={body} // テキストエリアの値を設定
-          onChange={handleBodyChange} // 値が変更されたときのハンドラを設定
+          onChange={handleBodyChange} // 値が変更されたときのハンドラーを設定
         />
       </div>
     </div>

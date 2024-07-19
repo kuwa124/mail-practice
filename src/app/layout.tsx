@@ -10,12 +10,15 @@ import './globals.css';
 // SignatureProviderコンポーネントをインポート
 import { SignatureProvider } from '@/app/contexts/SignatureContext';
 
+// EmailProviderコンポーネントをインポート
+import { EmailProvider } from '@/app/contexts/EmailContext';
+
 // Interフォントを設定（ラテン文字サブセットのみ使用）
 const inter = Inter({ subsets: ['latin'] });
 
 // アプリケーションのメタデータを設定
 export const metadata: Metadata = {
-  title: 'メール練習練習サイト', // ページのタイトルを設定
+  title: 'メール練習サイト', // ページのタイトルを設定
   description: 'メールの使い方を練習できるサイトです。', // ページの説明を設定
 };
 
@@ -31,8 +34,11 @@ export default function RootLayout({
     <html lang='ja'>
       {/* ボディ要素にInterフォントのクラスを適用 */}
       <body className={inter.className}>
-        {/* SignatureProviderで子コンポーネントをラップし、署名コンテキストを提供 */}
-        <SignatureProvider>{children}</SignatureProvider>
+        {/* EmailProviderで全体をラップし、メール関連の状態を提供 */}
+        <EmailProvider>
+          {/* SignatureProviderで子コンポーネントをラップし、署名コンテキストを提供 */}
+          <SignatureProvider>{children}</SignatureProvider>
+        </EmailProvider>
       </body>
     </html>
   );
