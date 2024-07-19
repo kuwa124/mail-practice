@@ -1,7 +1,7 @@
 import Header from '@/components/Header';
 import Settings from '@/app/set/components/Settings';
 
-export default function Home() {
+export default function Set() {
   return (
     <div
       // フレックスコンテナ、縦方向に配置、画面全体の高さ、背景色
