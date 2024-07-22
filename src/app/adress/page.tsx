@@ -5,7 +5,7 @@ import Header from '@/components/Header';
 import Contact from '@/components/Contact';
 
 // メールエディターコンポーネントをインポート（現在はコメントアウト）
-// import EditContact from '@/app/adress/EmailEditor';
+import { EditContact } from '@/app/adress/EditContact';
 
 // 編集用コンポーネントをインポート
 import EditComponent from '@/app/adress/EditComponent';
@@ -42,8 +42,10 @@ const Adress: React.FC<AdressProps> = () => {
           {/* 編集用コンポーネントを配置 */}
           <EditComponent />
         </div>
-        {/* メールエディターコンポーネントはコメントアウト状態 */}
-        {/* <EditContact  /> */}
+        <div className='flex-1'>
+          {/* メールエディターコンポーネントはコメントアウト状態 */}
+          <EditContact />
+        </div>
       </div>
     </div>
   );
