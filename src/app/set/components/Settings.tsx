@@ -47,7 +47,9 @@ const Settings: React.FC = () => {
         {/* ホームページへのリンク、テキストカラーを青に、ホバー時にテキストカラーを濃い青に変更 */}
         <Link
           href='/' // リンク先のURLを指定
-          className='text-blue-500 hover:text-blue-700' // スタイルを指定
+          //  青色のテキスト、グレーの背景色、テキストサイズ大きめ、フォントを太字に、ホバー時に濃い青色に
+          // 薄いグレーの背景色に変更、上下左右に余白を設け、角を丸くする、色の変更にアニメーションを適用
+          className='text-blue-500 bg-gray-300 text-lg font-bold  hover:text-blue-700 hover:bg-gray-200 px-4 py-2 rounded-lg transition-colors duration-200'
           aria-label='Homeのページに戻る' // アクセシビリティのためのラベルを指定
         >
           {/* アイコンの右側にマージンを 2 単位設定 */}
@@ -142,7 +144,7 @@ const Settings: React.FC = () => {
       {/* 上側のマージンを 6 単位、背景色を青、テキストカラーを白に、パディングを 2 単位、角丸を設定、ホバー時の背景色を濃い青に変更 */}
       <button
         onClick={handleSave} // 保存ボタンクリック時の処理
-        className='mt-6 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600'
+        className='mt-6 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition-colors duration-200'
         aria-label='設定を保存' // アクセシビリティのためのラベルを指定
       >
         {/* アイコンの右側にマージンを 2 単位設定 */}
