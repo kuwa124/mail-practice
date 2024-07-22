@@ -1,40 +1,38 @@
 // ユーザー操作に対応するための定型文
 'use client';
 
-// Reactをインポート
+// Reactライブラリをインポート
 import React from 'react';
-// React: Reactライブラリをインポート
 
+// FontAwesomeアイコンコンポーネントをインポート
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-// FontAwesomeIcon: FontAwesomeアイコンコンポーネントをインポート
+
+// 検索アイコン、バツ印の円形アイコン、ユーザーアイコンをインポート
 import {
   faSearch,
   faXmarkCircle,
   faUser,
 } from '@fortawesome/free-solid-svg-icons';
-// faSearch: 検索アイコン
-// faXmarkCircle: バツ印の円形アイコン
-// faUser: ユーザーアイコン
 
-// カスタムフックをインポート
+// 連絡先の状態管理とロジックを提供するカスタムフックをインポート
 import useContacts from './useContacts';
 
 // Contactsコンポーネントの定義
 const Contacts: React.FC = () => {
-  // カスタムフックを使用してロジックと状態を取得
+  // カスタムフックからロジックと状態を取得
   const {
-    searchTerm,
-    setSelectedEmail,
-    handleInputChange,
-    handleClear,
-    handleKeyDown,
-    filteredContacts,
+    searchTerm, //検索ワードの状態
+    setSelectedEmail, //選択されたメールの状態を更新する関数
+    handleInputChange, //検索ワード入力時の処理
+    handleClear, //検索ワードをクリアする処理
+    handleKeyDown, //キー押下時の処理
+    filteredContacts, //検索ワードに基づいてフィルタリングされた連絡先リスト
   } = useContacts();
 
   return (
     // 連絡先リストのコンテナ
-    // 幅を設定し、背景色を薄いグレーに、余白と角丸を適用
-    <div className='w-60 bg-gray-300 space-y-2 m-2 p-2 rounded'>
+    // 幅を60単位に設定し、背景色を薄いグレーに、要素間の上下マージンを2単位、パディングを2単位、角丸を適用
+    <div className='w-60 bg-gray-300 space-y-2 m-2 p-2 rounded h-full'>
       {/* タイトル */}
       {/* 文字を太字に、サイズを小さめに設定 */}
       <h2 className='font-bold text-sm'>連絡先</h2>
@@ -62,6 +60,7 @@ const Contacts: React.FC = () => {
           className='absolute right-0 top-1/2 -translate-y-1/2 p-2'
           onClick={handleClear} // クリックでクリア処理を実行
         >
+          {/* アイコンの色をグレーに設定 */}
           <FontAwesomeIcon icon={faXmarkCircle} className='text-gray-400' />
         </button>
       </div>
@@ -69,7 +68,7 @@ const Contacts: React.FC = () => {
       <ul>
         {filteredContacts.map((mail) => (
           // 各連絡先項目
-          // 横並びに配置し、要素間隔と上下パディングを設定
+          // 横並びに配置し、要素間隔を2単位、上下パディングを2単位、カーソルをポインターに、ホバー時に背景色を薄いグレーに設定
           <li
             key={mail.id}
             className='flex items-center space-x-2 py-2 cursor-pointer hover:bg-gray-200'
