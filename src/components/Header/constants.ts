@@ -22,13 +22,13 @@ export const NAV_BUTTONS: NavButton[] = [
   {
     name: '受信トレイ',
     icon: faInbox,
-    href: '/inbox',
+    href: '/',
     ariaLabel: '受信トレイを開く',
   },
   {
     name: '連絡先',
     icon: faAddressBook,
-    href: '/contacts',
+    href: '/adress',
     ariaLabel: '連絡先を開く',
   },
   {
@@ -40,7 +40,7 @@ export const NAV_BUTTONS: NavButton[] = [
   {
     name: 'ログアウト',
     icon: faRightFromBracket,
-    href: '/logout',
+    href: 'https://www.google.com/',
     ariaLabel: 'ログアウトする',
   },
 ];
