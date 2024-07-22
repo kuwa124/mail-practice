@@ -11,7 +11,7 @@ export type Mail = {
 export const dummyMails: Mail[] = [
   {
     id: 1,
-    name: '山田太郎',
+    name: '山田 太郎',
     email: 'taro.yamada@example.com',
     subject: '会議の件について',
     body: `FSC会社
@@ -29,7 +29,7 @@ export const dummyMails: Mail[] = [
   },
   {
     id: 2,
-    name: '飯塚花子',
+    name: '飯塚 花子',
     email: 'hanako.iizuka@example.com',
     subject: 'プロジェクト進捗報告',
     body: `FSC会社
@@ -49,7 +49,7 @@ export const dummyMails: Mail[] = [
   },
   {
     id: 3,
-    name: '福岡一郎',
+    name: '福岡 一郎',
     email: 'ichiro.fukuoka@example.com',
     subject: '新製品ローンチについて',
     body: `チームの皆様
