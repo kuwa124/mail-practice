@@ -1,3 +1,5 @@
+import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
+import { faUser } from '@fortawesome/free-solid-svg-icons';
 // メールデータの型定義
 export type Mail = {
   id: number; // メールを一意に識別するID
@@ -7,6 +9,7 @@ export type Mail = {
   body: string; // メールの本文
   phone?: string; // 電話番号フィールド
   other?: string; // その他の情報フィールド
+  icon: IconDefinition; // メールに表示するアイコン
 };
 
 // ダミーのメールデータを定義（表示テスト用）
@@ -28,6 +31,7 @@ export const dummyMails: Mail[] = [
 
   お忙しいところ恐縮ですが、どうぞよろしくお願いいたします。
   `,
+    icon: faUser, //ユーザーアイコン
   },
   {
     id: 2,
@@ -48,6 +52,7 @@ export const dummyMails: Mail[] = [
   ご質問やご不明な点がございましたら、どうぞお気軽にご連絡ください。迅速に対応させていただきます。
 
   今後ともよろしくお願い申し上げます。`,
+    icon: faUser, //ユーザーアイコン
   },
   {
     id: 3,
@@ -70,5 +75,6 @@ export const dummyMails: Mail[] = [
 
   福岡一郎
   マーケティング部長`,
+    icon: faUser, //ユーザーアイコン
   },
 ];

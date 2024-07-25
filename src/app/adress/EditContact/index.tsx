@@ -5,7 +5,6 @@ import React, { useState, useEffect } from 'react'; // Reactと状態管理の�
 import useContacts from '@/components/Contact/useContacts'; // カスタム連絡先フックをインポート
 // 必要なアイコンをインポート
 import {
-  faUser, // ユーザーアイコン
   faEnvelope, // メールアイコン
   faPhone, // 電話アイコン
   faEllipsisH, // 水平省略アイコン
@@ -68,7 +67,7 @@ export function EditContact(): JSX.Element {
         <div className='flex items-center mb-10'>
           {/* ユーザーアイコン：サイズと色を設定し、右側に余白を追加 */}
           <FontAwesomeIcon
-            icon={faUser}
+            icon={selectedContact.icon}
             className='text-7xl text-gray-600 mr-4'
           />
           {/* 名前のセクション */}
