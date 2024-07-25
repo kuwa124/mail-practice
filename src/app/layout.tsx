@@ -1,43 +1,41 @@
-// Next.jsのメタデータ型をインポート
+// Next.jsのMetadataタイプをインポート
 import type { Metadata } from 'next';
-
 // Googleフォント（Inter）をインポート
 import { Inter } from 'next/font/google';
-
 // グローバルCSSをインポート
 import './globals.css';
-
-// SignatureProviderコンポーネントをインポート
+// 各コンテキストプロバイダーをインポート
 import { SignatureProvider } from '@/app/contexts/SignatureContext';
-
-// EmailProviderコンポーネントをインポート
 import { EmailProvider } from '@/app/contexts/EmailContext';
+import { AddressProvider } from '@/app/contexts/AddressContext';
 
-// Interフォントを設定（ラテン文字サブセットのみ使用）
+// Interフォントを設定（latinサブセットを使用）
 const inter = Inter({ subsets: ['latin'] });
 
-// アプリケーションのメタデータを設定
+// ページのメタデータを設定
 export const metadata: Metadata = {
-  title: 'メール練習サイト', // ページのタイトルを設定
-  description: 'メールの使い方を練習できるサイトです。', // ページの説明を設定
+  title: 'メール練習サイト', // ページのタイトル
+  description: 'メールの使い方を練習できるサイトです。', // ページの説明
 };
 
 // ルートレイアウトコンポーネントを定義
 export default function RootLayout({
-  children,
+  children, // 子コンポーネントを受け取るプロパティ
 }: {
-  children: React.ReactNode; // 子コンポーネントの型を定義
+  children: React.ReactNode; // 子コンポーネントの型を指定
 }) {
-  // HTML構造を返す
   return (
-    // 言語を日本語に設定
+    // html要素の言語属性を日本語に設定
     <html lang='ja'>
-      {/* ボディ要素にInterフォントのクラスを適用 */}
+      {/* bodyにInterフォントのクラスを適用 */}
       <body className={inter.className}>
-        {/* EmailProviderで全体をラップし、メール関連の状態を提供 */}
+        {/* 各コンテキストプロバイダーで子コンポーネントをラップ */}
         <EmailProvider>
-          {/* SignatureProviderで子コンポーネントをラップし、署名コンテキストを提供 */}
-          <SignatureProvider>{children}</SignatureProvider>
+          <SignatureProvider>
+            <AddressProvider>
+              {children} {/* 子コンポーネントをレンダリング */}
+            </AddressProvider>
+          </SignatureProvider>
         </EmailProvider>
       </body>
     </html>

@@ -12,6 +12,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'; // FontAwesomeアイコンコンポーネントをインポート
 import { useEmailContext } from '@/app/contexts/EmailContext'; // EmailContextのカスタムフックをインポート
+import { useAddress } from '@/app/contexts/AddressContext'; // AddressContextのカスタムフックをインポート
 import { Mail } from '@/app/shared/constants'; // Mail型をインポート
 import { AdressEditor } from '@/app/adress/EditContact/AdressEditor'; // 住所編集コンポーネントをインポート
 
@@ -19,6 +20,9 @@ import { AdressEditor } from '@/app/adress/EditContact/AdressEditor'; // 住所�
 export function EditContact(): JSX.Element {
   // EmailContextから選択されたメールアドレスを取得
   const { selectedEmail } = useEmailContext();
+
+  // AddressContextからアドレス情報を取得
+  const { addressInfo } = useAddress();
 
   // カスタムフックから連絡先一覧を取得
   const { filteredContacts } = useContacts();
@@ -75,7 +79,9 @@ export function EditContact(): JSX.Element {
             {/* "名前"ラベル：文字サイズと色を設定 */}
             <div className='text-sm text-gray-500'>名前</div>
             {/* 名前を表示：文字サイズと太さを設定 */}
-            <h2 className='text-3xl font-bold'>{selectedContact.name}</h2>
+            <h2 className='text-3xl font-bold'>
+              {addressInfo.name || selectedContact.name}
+            </h2>
           </div>
         </div>
 
@@ -95,7 +101,9 @@ export function EditContact(): JSX.Element {
               {/* "電子メール"ラベル：文字サイズと色を設定 */}
               <div className='text-sm text-gray-500'>電子メール</div>
               {/* メールアドレスを表示：文字サイズを設定 */}
-              <div className='text-lg'>{selectedContact.email}</div>
+              <div className='text-lg'>
+                {addressInfo.email || selectedContact.email}
+              </div>
             </div>
           </div>
 
