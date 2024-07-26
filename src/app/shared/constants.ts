@@ -1,5 +1,8 @@
+// FontAwesomeのアイコン型定義をインポート
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
+// デフォルトのユーザーアイコンをインポート
 import { faUser } from '@fortawesome/free-solid-svg-icons';
+
 // メールデータの型定義
 export type Mail = {
   id: number; // メールを一意に識別するID
