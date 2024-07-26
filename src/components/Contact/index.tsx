@@ -1,33 +1,36 @@
 // ユーザー操作に対応するための定型文
 'use client';
 
-// Reactライブラリをインポート
+// 必要なモジュールとコンポーネントのインポート
 import React from 'react';
-
-// FontAwesomeアイコンコンポーネントをインポート
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-
-// 検索アイコン、バツ印の円形アイコン、ユーザーアイコンをインポート
 import {
   faSearch,
   faXmarkCircle,
   faUser,
 } from '@fortawesome/free-solid-svg-icons';
-
-// 連絡先の状態管理とロジックを提供するカスタムフックをインポート
+import { useRecoilValue } from 'recoil'; // Recoilの状態読み取りフックをインポート
+import { addressState } from '@/app/recoil/adressState'; // アドレス状態を管理するatomをインポート
 import useContacts from './useContacts';
 
 // Contactsコンポーネントの定義
 const Contacts: React.FC = () => {
+  // Recoilからアドレス情報を取得
+  const addresses = useRecoilValue(addressState);
+
   // カスタムフックからロジックと状態を取得
   const {
-    searchTerm, //検索ワードの状態
-    setSelectedEmail, //選択されたメールの状態を更新する関数
-    handleInputChange, //検索ワード入力時の処理
-    handleClear, //検索ワードをクリアする処理
-    handleKeyDown, //キー押下時の処理
-    filteredContacts, //検索ワードに基づいてフィルタリングされた連絡先リスト
+    searchTerm, // 検索ワードの状態
+    setSelectedEmail, // 選択されたメールの状態を更新する関数
+    handleInputChange, // 検索ワード入力時の処理
+    handleClear, // 検索ワードをクリアする処理
+    handleKeyDown, // キー押下時の処理
   } = useContacts();
+
+  // 検索ワードに基づいて連絡先をフィルタリング
+  const filteredContacts = addresses.filter((contact) =>
+    contact.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   return (
     // 連絡先リストのコンテナ
@@ -66,19 +69,19 @@ const Contacts: React.FC = () => {
       </div>
       {/* 連絡先リスト */}
       <ul>
-        {filteredContacts.map((mail) => (
+        {filteredContacts.map((contact) => (
           // 各連絡先項目
           // 横並びに配置し、要素間隔を2単位、上下パディングを2単位、カーソルをポインターに、ホバー時に背景色を薄いグレーに設定
           <li
-            key={mail.id}
+            key={contact.id}
             className='flex items-center space-x-2 py-2 cursor-pointer hover:bg-gray-200'
-            onClick={() => setSelectedEmail(mail.email)} // クリックで連絡先を選択
+            onClick={() => setSelectedEmail(contact.email)} // クリックで連絡先を選択
           >
             {/* ユーザーアイコン */}
             {/* アイコンの色とサイズを設定 */}
             <FontAwesomeIcon icon={faUser} className='text-gray-600 text-lg' />
             {/* 連絡先名 */}
-            <span>{mail.name}</span>
+            <span>{contact.name}</span>
           </li>
         ))}
       </ul>

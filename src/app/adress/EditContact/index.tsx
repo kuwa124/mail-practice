@@ -2,7 +2,11 @@
 
 // 必要なモジュールとコンポーネントのインポート
 import React, { useState, useEffect } from 'react'; // Reactと状態管理のためのフックをインポート
-import useContacts from '@/components/Contact/useContacts'; // カスタム連絡先フックをインポート
+
+import { useRecoilValue } from 'recoil'; // Recoilの状態読み取りフックをインポート
+
+import { addressState } from '@/app/recoil/adressState';// アドレス状態を管理するatomをインポート
+
 // 必要なアイコンをインポート
 import {
   faEnvelope, // メールアイコン
@@ -10,10 +14,13 @@ import {
   faEllipsisH, // 水平省略アイコン
   faPencilAlt, // 編集アイコン
 } from '@fortawesome/free-solid-svg-icons';
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'; // FontAwesomeアイコンコンポーネントをインポート
+
 import { useEmailContext } from '@/app/contexts/EmailContext'; // EmailContextのカスタムフックをインポート
-import { useAddress } from '@/app/contexts/AddressContext'; // AddressContextのカスタムフックをインポート
+
 import { Mail } from '@/app/shared/constants'; // Mail型をインポート
+
 import { AdressEditor } from '@/app/adress/EditContact/AdressEditor'; // 住所編集コンポーネントをインポート
 
 // EditContactコンポーネントの定義
@@ -21,11 +28,8 @@ export function EditContact(): JSX.Element {
   // EmailContextから選択されたメールアドレスを取得
   const { selectedEmail } = useEmailContext();
 
-  // AddressContextからアドレス情報を取得
-  const { addressInfo } = useAddress();
-
-  // カスタムフックから連絡先一覧を取得
-  const { filteredContacts } = useContacts();
+  // Recoilからアドレス情報を取得
+  const addresses = useRecoilValue(addressState);
 
   // 編集対象の連絡先を状態として管理（初期値はnull）
   const [selectedContact, setSelectedContact] = useState<Mail | null>(null);
@@ -35,14 +39,12 @@ export function EditContact(): JSX.Element {
 
   // 選択されたメールアドレスが変更されたときに連絡先を更新するeffect
   useEffect(() => {
-    // filteredContactsから選択された連絡先を探す
-    const contact = filteredContacts.find(
-      (c: Mail) => c.email === selectedEmail
-    );
+    // addressesから選択された連絡先を探す
+    const contact = addresses.find((c: Mail) => c.email === selectedEmail);
 
     // 選択された連絡先を状態にセット
     setSelectedContact(contact || null);
-  }, [selectedEmail, filteredContacts]);
+  }, [selectedEmail, addresses]);
 
   // 編集ボタンがクリックされたときの処理
   const handleEditClick = () => {
@@ -54,6 +56,7 @@ export function EditContact(): JSX.Element {
     return (
       // 全高さと幅を設定し、中央揃えでメッセージを表示
       <div className='h-full w-full flex items-center justify-center text-gray-500'>
+        {/* 連絡先が選択されていない場合のメッセージ */}
         連絡先を選択するとここに表示されます。
       </div>
     );
@@ -79,9 +82,7 @@ export function EditContact(): JSX.Element {
             {/* "名前"ラベル：文字サイズと色を設定 */}
             <div className='text-sm text-gray-500'>名前</div>
             {/* 名前を表示：文字サイズと太さを設定 */}
-            <h2 className='text-3xl font-bold'>
-              {addressInfo.name || selectedContact.name}
-            </h2>
+            <h2 className='text-3xl font-bold'>{selectedContact.name}</h2>
           </div>
         </div>
 
@@ -101,9 +102,7 @@ export function EditContact(): JSX.Element {
               {/* "電子メール"ラベル：文字サイズと色を設定 */}
               <div className='text-sm text-gray-500'>電子メール</div>
               {/* メールアドレスを表示：文字サイズを設定 */}
-              <div className='text-lg'>
-                {addressInfo.email || selectedContact.email}
-              </div>
+              <div className='text-lg'>{selectedContact.email}</div>
             </div>
           </div>
 

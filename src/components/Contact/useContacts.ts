@@ -1,11 +1,5 @@
 // Reactと必要な関数をインポート
 import { useState } from 'react';
-// useState: 状態管理のためのReactフックをインポート
-
-// 共有の定数と型をインポート
-import { Mail, dummyMails } from '@/app/shared/constants';
-// Mail: メールデータの型定義
-// dummyMails: ダミーのメールデータ配列
 
 // EmailContextをインポート
 import { useEmailContext } from '@/app/contexts/EmailContext';
@@ -44,20 +38,12 @@ const useContacts = () => {
     }
   };
 
-  // 検索キーワードに基づいて連絡先リストをフィルタリング
-  const filteredContacts = dummyMails.filter((mail: Mail) =>
-    // mail.name.toLowerCase()で連絡先の名前を小文字に変換し、
-    // includes(searchTerm.toLowerCase())で検索キーワードが小文字の名前に含まれているかチェック
-    mail.name.toLowerCase().includes(searchTerm.toLowerCase())
-  );
-
   return {
-    searchTerm,
-    setSelectedEmail,
-    handleInputChange,
-    handleClear,
-    handleKeyDown,
-    filteredContacts,
+    searchTerm, // 検索ワードの状態
+    setSelectedEmail, // 選択されたメールの状態を更新する関数
+    handleInputChange, // 検索ワード入力時の処理
+    handleClear, // 検索ワードをクリアする処理
+    handleKeyDown, // キー押下時の処理
   };
 };
 

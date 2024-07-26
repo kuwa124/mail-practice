@@ -2,7 +2,8 @@
 
 // 必要なモジュールとコンポーネントのインポート
 import React, { useState } from 'react'; // Reactと状態管理のためのフックをインポート
-
+import { useRecoilState } from 'recoil'; // Recoilの状態管理フックをインポート
+import { addressState } from '@/app/recoil/adressState';// アドレス状態を管理するatomをインポート
 import { Mail } from '@/app/shared/constants'; // Mail型をインポート
 
 // AdressEditorコンポーネントのプロパティの型定義
@@ -16,6 +17,9 @@ export function AdressEditor({
   contact,
   onClose,
 }: AdressEditorProps): JSX.Element {
+  // アドレス状態を取得し、更新関数を取得
+  const [addresses, setAddresses] = useRecoilState(addressState);
+
   // 編集用の状態を管理（初期値は渡されたcontact）
   const [editedContact, setEditedContact] = useState<Mail>(contact);
 
@@ -29,8 +33,12 @@ export function AdressEditor({
   // フォーム送信時の処理
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault(); // デフォルトのフォーム送信を防止
-    // ここで編集した連絡先を保存する処理を実装
-    console.log('Saving edited contact:', editedContact);
+    // 編集した連絡先を保存する処理
+    setAddresses((prevAddresses) =>
+      prevAddresses.map((addr) =>
+        addr.id === editedContact.id ? editedContact : addr
+      )
+    );
     onClose(); // 編集モードを閉じる
   };
 

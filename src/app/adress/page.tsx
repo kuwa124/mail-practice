@@ -1,3 +1,6 @@
+// ユーザー操作に適応するための定型文
+'use client';
+
 // Next.jsのページコンポーネントで使用するヘッダーコンポーネントをインポート
 import Header from '@/components/Header';
 
@@ -10,6 +13,9 @@ import { EditContact } from '@/app/adress/EditContact';
 // 連絡先編集用コンポーネントをインポート
 import EditComponent from '@/app/adress/EditComponent';
 
+// RecoilのRecoilRootをインポート
+import { RecoilRoot } from 'recoil';
+
 // Adressページコンポーネントのプロパティの型定義
 type AdressProps = {
   // 現時点では特にプロパティは必要ないが、将来的な拡張性を考慮して空オブジェクトを定義
@@ -18,39 +24,42 @@ type AdressProps = {
 // アドレス帳ページのメインコンポーネント
 const Adress: React.FC<AdressProps> = () => {
   return (
-    <div
-      // 画面全体を縦方向に分割し、高さを画面いっぱいに設定、背景色を薄いグレーに
-      className='flex flex-col h-screen bg-gray-100'
-    >
-      {/* ページ上部にヘッダーコンポーネントを配置 */}
-      <Header />
+    // RecoilRootでアプリ全体をラップして状態管理を提供
+    <RecoilRoot>
       <div
-        // メインコンテンツエリアを横並びに配置し、はみ出た部分を隠す
-        className='flex flex-1 overflow-hidden'
+        // 画面全体を縦方向に分割し、高さを画面いっぱいに設定、背景色を薄いグレーに
+        className='flex flex-col h-screen bg-gray-100'
       >
+        {/* ページ上部にヘッダーコンポーネントを配置 */}
+        <Header />
         <div
-          // 左側のカラム：連絡先リストと編集コンポーネントを縦に配置
-          className='flex flex-col h-full'
+          // メインコンテンツエリアを横並びに配置し、はみ出た部分を隠す
+          className='flex flex-1 overflow-hidden'
         >
           <div
-            // 連絡先リストを表示するエリアを設定し、残りのスペースを最大限使用
-            className='flex-grow'
+            // 左側のカラム：連絡先リストと編集コンポーネントを縦に配置
+            className='flex flex-col h-full'
           >
-            {/* 連絡先一覧を表示するコンポーネントを配置 */}
-            <Contact />
+            <div
+              // 連絡先リストを表示するエリアを設定し、残りのスペースを最大限使用
+              className='flex-grow'
+            >
+              {/* 連絡先一覧を表示するコンポーネントを配置 */}
+              <Contact />
+            </div>
+            {/* 連絡先編集用のコンポーネントを配置 */}
+            <EditComponent />
           </div>
-          {/* 連絡先編集用のコンポーネントを配置 */}
-          <EditComponent />
-        </div>
-        <div
-          // 右側のカラム：残りのスペースを最大限使用
-          className='flex-1'
-        >
-          {/* 連絡先詳細編集コンポーネントを配置（現在は使用されていない） */}
-          <EditContact />
+          <div
+            // 右側のカラム：残りのスペースを最大限使用
+            className='flex-1'
+          >
+            {/* 連絡先詳細編集コンポーネントを配置（現在は使用されていない） */}
+            <EditContact />
+          </div>
         </div>
       </div>
-    </div>
+    </RecoilRoot>
   );
 };
 
