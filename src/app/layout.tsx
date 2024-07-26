@@ -7,7 +7,6 @@ import './globals.css';
 // 各コンテキストプロバイダーをインポート
 import { SignatureProvider } from '@/app/contexts/SignatureContext';
 import { EmailProvider } from '@/app/contexts/EmailContext';
-import { AddressProvider } from '@/app/contexts/AddressContext';
 
 // Interフォントを設定（latinサブセットを使用）
 const inter = Inter({ subsets: ['latin'] });
@@ -32,9 +31,7 @@ export default function RootLayout({
         {/* 各コンテキストプロバイダーで子コンポーネントをラップ */}
         <EmailProvider>
           <SignatureProvider>
-            <AddressProvider>
-              {children} {/* 子コンポーネントをレンダリング */}
-            </AddressProvider>
+            {children} {/* 子コンポーネントをレンダリング */}
           </SignatureProvider>
         </EmailProvider>
       </body>
