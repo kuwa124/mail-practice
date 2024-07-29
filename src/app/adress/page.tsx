@@ -54,7 +54,7 @@ const Adress: React.FC<AdressProps> = () => {
             // 右側のカラム：残りのスペースを最大限使用
             className='flex-1'
           >
-            {/* 連絡先詳細編集コンポーネントを配置（現在は使用されていない） */}
+            {/* 連絡先詳細編集コンポーネントを配置 */}
             <EditContact />
           </div>
         </div>
