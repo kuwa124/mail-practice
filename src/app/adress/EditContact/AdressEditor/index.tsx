@@ -3,24 +3,56 @@
 import { useAddress } from '@/app/contexts/AddressContext';
 // 必要なモジュールとコンポーネントのインポート
 import { Mail } from '@/app/shared/constants'; // Mail型をインポート
-import React, { useState } from 'react'; // Reactと状態管理のためのフックをインポート
+import React, { useEffect, useState } from 'react'; // React、状態管理、副作用のためのフックをインポート
+
+// デフォルトのユーザーアイコンをインポート
+import { faUser } from '@fortawesome/free-solid-svg-icons';
 
 // AdressEditorコンポーネントのプロパティの型定義
 type AdressEditorProps = {
-  contact: Mail; // 編集対象の連絡先
+  contact: Mail | null; // 編集対象の連絡先（新規作成時はnull）
   onClose: () => void; // 編集を閉じる関数
+  isNewContact: boolean; // 新規連絡先作成モードかどうかを示すフラグ
 };
 
 // AdressEditorコンポーネントの定義
 export function AdressEditor({
   contact,
   onClose,
+  isNewContact,
 }: AdressEditorProps): JSX.Element {
   // アドレス状態を取得し、更新関数を取得
   const { addresses, setAddresses } = useAddress();
 
-  // 編集用の状態を管理（初期値は渡されたcontact）
-  const [editedContact, setEditedContact] = useState<Mail>(contact);
+  // 編集用の状態を管理（初期値は渡されたcontactまたは空のオブジェクト）
+  const [editedContact, setEditedContact] = useState<Mail>(
+    contact || {
+      id: 0, // 初期値として数値のIDを設定
+      name: '',
+      email: '',
+      phone: '',
+      other: '',
+      icon: faUser, // 初期値としてアイコンを設定
+    }
+  );
+
+  // 新規作成モードまたは編集対象の連絡先が変更された場合の処理
+  useEffect(() => {
+    if (isNewContact) {
+      // 新規作成モードの場合、空の連絡先データを初期化
+      setEditedContact({
+        id: Date.now(), // 数値の一時的なIDを生成
+        name: '',
+        email: '',
+        phone: '',
+        other: '',
+        icon: faUser, // アイコンを設定
+      });
+    } else if (contact) {
+      // 既存の連絡先を編集する場合、その連絡先データをセット
+      setEditedContact(contact);
+    }
+  }, [isNewContact, contact]);
 
   // 入力フィールドの変更を処理する関数
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -33,12 +65,17 @@ export function AdressEditor({
   // フォーム送信時の処理
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault(); // デフォルトのフォーム送信を防止
-    // 編集した連絡先を保存する処理
-    setAddresses((prevAddresses) =>
-      prevAddresses.map((addr) =>
-        addr.id === editedContact.id ? editedContact : addr
-      )
-    );
+    if (isNewContact) {
+      // 新規作成モードの場合、新しい連絡先を追加
+      setAddresses((prevAddresses) => [...prevAddresses, editedContact]);
+    } else {
+      // 編集モードの場合、既存の連絡先を更新
+      setAddresses((prevAddresses) =>
+        prevAddresses.map((addr) =>
+          addr.id === editedContact.id ? editedContact : addr
+        )
+      );
+    }
     onClose(); // 編集モードを閉じる
   };
 
@@ -47,7 +84,10 @@ export function AdressEditor({
     <div className='fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center'>
       {/* モーダルのコンテンツ：背景色を白に、角丸と影を適用 */}
       <div className='bg-white rounded-lg shadow-xl p-6 w-full max-w-md'>
-        <h2 className='text-2xl font-bold mb-4'>連絡先の編集</h2>
+        {/* タイトル：新規作成か編集かで表示を切り替え */}
+        <h2 className='text-2xl font-bold mb-4'>
+          {isNewContact ? '新規連絡先の作成' : '連絡先の編集'}
+        </h2>
         {/* フォーム：送信時の処理を設定 */}
         <form onSubmit={handleSubmit}>
           {/* 名前入力フィールド：ラベルとテキスト入力を設定 */}
@@ -130,12 +170,13 @@ export function AdressEditor({
             >
               キャンセル
             </button>
-            {/* 保存ボタン：背景色と文字色を設定 */}
+            {/* 保存/作成ボタン：背景色と文字色を設定 */}
             <button
               type='submit' // 送信ボタンタイプを指定
               className='px-4 py-2 bg-blue-500 text-white rounded-md'
             >
-              保存
+              {/* 新規作成モードか編集モードかでボタンのテキストを切り替え */}
+              {isNewContact ? '作成' : '保存'}
             </button>
           </div>
         </form>

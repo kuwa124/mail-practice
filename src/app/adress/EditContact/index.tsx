@@ -161,6 +161,7 @@ export function EditContact(): JSX.Element {
           <AdressEditor
             contact={selectedContact} // 編集対象の連絡先
             onClose={() => setIsEditing(false)} // 編集モードを終了する関数
+            isNewContact={false} // 既存の連絡先の編集モードであることを示す
           />
         )}
       </div>

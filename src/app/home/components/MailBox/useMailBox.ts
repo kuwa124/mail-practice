@@ -1,7 +1,6 @@
 // Reactの必要なフックをインポート
+import { Mail } from '@/app/shared/constants'; // Mail型をインポート
 import { useState } from 'react';
-// 型定義をインポート
-import { Mail } from '@/app/home/components/MailBox/constants';
 
 // メールボックスの状態を管理するカスタムフック
 export function useMailBox() {

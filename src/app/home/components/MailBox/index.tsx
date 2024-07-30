@@ -2,10 +2,10 @@
 'use client'; // クライアントサイドでの実行を明示
 
 // 必要なモジュールとフックをインポート
-import React, { useState } from 'react';
-import { Mail } from '@/app/shared/constants'; // Mail型をインポート
-import { MailView } from './MailView'; // MailViewコンポーネントをインポート
 import { useAddress } from '@/app/contexts/AddressContext';
+import { Mail } from '@/app/shared/constants'; // Mail型をインポート
+import { useState } from 'react';
+import { MailView } from './MailView'; // MailViewコンポーネントをインポート
 
 // メールボックスコンポーネント
 export function MailBox() {
@@ -19,6 +19,11 @@ export function MailBox() {
   const handleMailSelect = (mail: Mail) => {
     setSelectedMail(mail); // クリックされたメールを選択状態にする
   };
+
+  // bodyが空でないメールのみをフィルタリング
+  const validMails = addresses.filter(
+    (mail) => mail.body && mail.body.trim() !== ''
+  );
 
   // JSXを返す（コンポーネントの見た目を定義）
   return (
@@ -35,8 +40,8 @@ export function MailBox() {
 
         {/* メールリスト */}
         <ul>
-          {/* addressesの各要素に対してマッピング処理を行う */}
-          {addresses.map((mail: Mail) => (
+          {/* フィルタリングされたメールの各要素に対してマッピング処理を行う */}
+          {validMails.map((mail: Mail) => (
             <li
               key={mail.id} // リストの各項目を一意に識別するためのキー
               onClick={() => handleMailSelect(mail)} // クリック時のイベントハンドラ
@@ -47,8 +52,8 @@ export function MailBox() {
               {/* メール送信者の名前 */}
               <p className='text-lg font-semibold'>{mail.name}</p>
 
-              {/* メールの件名 */}
-              <p className='mt-2'>{mail.subject}</p>
+              {/* メールの件名（subjectが存在する場合のみ表示） */}
+              {mail.subject && <p className='mt-2'>{mail.subject}</p>}
             </li>
           ))}
         </ul>

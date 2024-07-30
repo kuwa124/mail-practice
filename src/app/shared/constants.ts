@@ -8,8 +8,8 @@ export type Mail = {
   id: number; // メールを一意に識別するID
   name: string; // 送信者の名前
   email: string; // 送信者のメールアドレス
-  subject: string; // メールの件名
-  body: string; // メールの本文
+  subject?: string; // メールの件名
+  body?: string; // メールの本文
   phone?: string; // 電話番号フィールド
   other?: string; // その他の情報フィールド
   icon: IconDefinition; // メールに表示するアイコン
