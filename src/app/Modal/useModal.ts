@@ -55,6 +55,13 @@ export const useModal = () => {
     setModalType('settings');
   };
 
+  // 連絡先削除確認時の処理
+  const confirmDelete = (): void => {
+    closeModal(); // モーダルを閉じる
+    // ここに実際の削除処理を追加
+    console.log('連絡先を削除しました');
+  };
+
   // 確認ボタンがクリックされたときの処理
   // モーダルタイプに応じた処理を実行する関数
   const handleConfirm = (): void => {
@@ -69,6 +76,8 @@ export const useModal = () => {
       sendComplete: confirmComplete, // 完了確認用の関数
       discardComplete: confirmComplete, // 完了確認用の関数
       settings: closeModal, // 設定を保存する関数(モーダルを閉じる)
+      confirmDelete: confirmDelete, // 連絡先削除確認用の関数
+      selectContact: closeModal, // 連絡先選択用の関数（ここでは単にモーダルを閉じる）
     };
 
     // モーダルタイプに対応する関数を実行
@@ -78,6 +87,7 @@ export const useModal = () => {
   // フックから必要な状態と関数を返す
   return {
     modalType,
+    setModalType,
     handleSendClick,
     handleDiscardClick,
     closeModal,

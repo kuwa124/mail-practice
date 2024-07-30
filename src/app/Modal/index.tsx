@@ -2,11 +2,7 @@
 import React from 'react';
 
 // 共通の型定義をインポート：ModalTypeを使用するために必要
-import {
-  modalContents,
-  ModalProps,
-  ModalType,
-} from '@/app/Modal/constants';
+import { modalContents, ModalProps, ModalType } from '@/app/Modal/constants';
 
 // モーダルコンポーネント：確認ダイアログを表示するポップアップ
 const Modal: React.FC<ModalProps> = ({
