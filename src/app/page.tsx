@@ -1,9 +1,8 @@
 // 必要なコンポーネントとフックをインポート
-import React from 'react';
-import Header from '@/components/Header';
-import Toolbar from '@/app/home/components/Toolbar';
-import Sidebar from '@/app/home/components/Sidebar';
 import { MailBox } from '@/app/home/components/MailBox';
+import Sidebar from '@/app/home/components/Sidebar';
+import Toolbar from '@/app/home/components/Toolbar';
+import Header from '@/components/Header';
 
 // ホームページコンポーネントを定義
 export default function Home() {

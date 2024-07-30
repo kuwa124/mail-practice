@@ -5,8 +5,9 @@ import { Inter } from 'next/font/google';
 // グローバルCSSをインポート
 import './globals.css';
 // 各コンテキストプロバイダーをインポート
-import { SignatureProvider } from '@/app/contexts/SignatureContext';
+import { AddressProvider } from '@/app/contexts/AddressContext';
 import { EmailProvider } from '@/app/contexts/EmailContext';
+import { SignatureProvider } from '@/app/contexts/SignatureContext';
 
 // Interフォントを設定（latinサブセットを使用）
 const inter = Inter({ subsets: ['latin'] });
@@ -29,11 +30,14 @@ export default function RootLayout({
       {/* bodyにInterフォントのクラスを適用 */}
       <body className={inter.className}>
         {/* 各コンテキストプロバイダーで子コンポーネントをラップ */}
-        <EmailProvider>
-          <SignatureProvider>
-            {children} {/* 子コンポーネントをレンダリング */}
-          </SignatureProvider>
-        </EmailProvider>
+        <AddressProvider>
+          <EmailProvider>
+            <SignatureProvider>
+              {children} {/* 子コンポーネントをレンダリング */}
+            </SignatureProvider>
+          </EmailProvider>
+        </AddressProvider>
+        \{' '}
       </body>
     </html>
   );

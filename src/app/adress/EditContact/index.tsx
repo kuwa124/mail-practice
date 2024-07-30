@@ -1,23 +1,21 @@
 'use client'; // クライアントサイドでの実行を明示
 
 // 必要なモジュールとコンポーネントのインポート
-import React, { useState, useEffect } from 'react'; // Reactと状態管理のためのフックをインポート
-
-import { useRecoilValue } from 'recoil'; // Recoilの状態読み取りフックをインポート
-
-import { addressState } from '@/app/recoil/adressState';// アドレス状態を管理するatomをインポート
+import { useEffect, useState } from 'react'; // Reactと状態管理のためのフックをインポート
 
 // 必要なアイコンをインポート
 import {
-  faEnvelope, // メールアイコン
+  faEllipsisH,
+  faEnvelope, // 水平省略アイコン
+  faPencilAlt, // メールアイコン
   faPhone, // 電話アイコン
-  faEllipsisH, // 水平省略アイコン
-  faPencilAlt, // 編集アイコン
 } from '@fortawesome/free-solid-svg-icons';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'; // FontAwesomeアイコンコンポーネントをインポート
 
 import { useEmailContext } from '@/app/contexts/EmailContext'; // EmailContextのカスタムフックをインポート
+
+import { useAddress } from '@/app/contexts/AddressContext'; // AddressContextのカスタムフックをインポート
 
 import { Mail } from '@/app/shared/constants'; // Mail型をインポート
 
@@ -28,8 +26,8 @@ export function EditContact(): JSX.Element {
   // EmailContextから選択されたメールアドレスを取得
   const { selectedEmail } = useEmailContext();
 
-  // Recoilからアドレス情報を取得
-  const addresses = useRecoilValue(addressState);
+  // AddressContextから住所情報を取得
+  const { addresses } = useAddress();
 
   // 編集対象の連絡先を状態として管理（初期値はnull）
   const [selectedContact, setSelectedContact] = useState<Mail | null>(null);

@@ -9,15 +9,12 @@ import {
   faXmarkCircle,
   faUser,
 } from '@fortawesome/free-solid-svg-icons';
-import { useRecoilState } from 'recoil'; // Recoilの状態読み取りフックをインポート
-import { addressState } from '@/app/recoil/adressState'; // アドレス状態を管理するatomをインポート
 import useContacts from './useContacts';
+import { useAddress } from '@/app/contexts/AddressContext';
 
 // Contactsコンポーネントの定義
 const Contacts: React.FC = () => {
-  // Recoilからアドレス情報を取得
-  const [addresses, setAddresses] = useRecoilState(addressState);
-  // カスタムフックからロジックと状態を取得
+  const { addresses } = useAddress();  // カスタムフックからロジックと状態を取得
   const {
     searchTerm, // 検索ワードの状態
     setSelectedEmail, // 選択されたメールの状態を更新する関数

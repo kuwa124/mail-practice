@@ -1,10 +1,9 @@
 'use client'; // クライアントサイドでの実行を明示
 
+import { useAddress } from '@/app/contexts/AddressContext';
 // 必要なモジュールとコンポーネントのインポート
-import React, { useState } from 'react'; // Reactと状態管理のためのフックをインポート
-import { useRecoilState } from 'recoil'; // Recoilの状態管理フックをインポート
-import { addressState } from '@/app/recoil/adressState';// アドレス状態を管理するatomをインポート
 import { Mail } from '@/app/shared/constants'; // Mail型をインポート
+import React, { useState } from 'react'; // Reactと状態管理のためのフックをインポート
 
 // AdressEditorコンポーネントのプロパティの型定義
 type AdressEditorProps = {
@@ -18,13 +17,14 @@ export function AdressEditor({
   onClose,
 }: AdressEditorProps): JSX.Element {
   // アドレス状態を取得し、更新関数を取得
-  const [addresses, setAddresses] = useRecoilState(addressState);
+  const { addresses, setAddresses } = useAddress();
 
   // 編集用の状態を管理（初期値は渡されたcontact）
   const [editedContact, setEditedContact] = useState<Mail>(contact);
 
   // 入力フィールドの変更を処理する関数
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    // イベントオブジェクトからname（フィールド名）とvalue（入力値）を取得
     const { name, value } = e.target;
     // 変更されたフィールドの値を更新
     setEditedContact((prev) => ({ ...prev, [name]: value }));
@@ -53,7 +53,7 @@ export function AdressEditor({
           {/* 名前入力フィールド：ラベルとテキスト入力を設定 */}
           <div className='mb-4'>
             <label
-              htmlFor='name'
+              htmlFor='name' // 関連する入力フィールドとラベルを紐付け
               className='block text-sm font-medium text-gray-700'
             >
               名前
@@ -71,7 +71,7 @@ export function AdressEditor({
           {/* メールアドレス入力フィールド：ラベルとメール入力を設定 */}
           <div className='mb-4'>
             <label
-              htmlFor='email'
+              htmlFor='email' // 関連する入力フィールドとラベルを紐付け
               className='block text-sm font-medium text-gray-700'
             >
               メールアドレス
@@ -89,7 +89,7 @@ export function AdressEditor({
           {/* 電話番号入力フィールド：ラベルとテキスト入力を設定 */}
           <div className='mb-4'>
             <label
-              htmlFor='phone'
+              htmlFor='phone' // 関連する入力フィールドとラベルを紐付け
               className='block text-sm font-medium text-gray-700'
             >
               電話番号
@@ -106,7 +106,7 @@ export function AdressEditor({
           {/* その他の情報入力フィールド：ラベルとテキスト入力を設定 */}
           <div className='mb-4'>
             <label
-              htmlFor='other'
+              htmlFor='other' // 関連する入力フィールドとラベルを紐付け
               className='block text-sm font-medium text-gray-700'
             >
               その他
