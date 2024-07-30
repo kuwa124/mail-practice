@@ -10,6 +10,13 @@ import React, { useState } from 'react';
 // AdressEditorコンポーネントをインポート
 import { AdressEditor } from '@/app/adress/EditContact/AdressEditor';
 
+// モーダル関連のインポート
+import Modal from '@/app/Modal';
+import { useModal } from '@/app/Modal/useModal';
+
+// コンテキストをインポート
+import { useContact } from '@/app/contexts/ContactContext';
+
 // EditComponentの型定義
 type EditComponentProps = {
   // 将来的に props が必要になった場合のために空のオブジェクトを定義
@@ -20,9 +27,32 @@ const EditComponent: React.FC<EditComponentProps> = () => {
   // 新規連絡先作成モードの状態を管理
   const [isCreating, setIsCreating] = useState(false);
 
+  // コンテキストから選択された連絡先の状態を取得
+  const { selectedContact, setSelectedContact } = useContact();
+
+  // モーダル関連の状態と関数を取得
+  const { modalType, setModalType, closeModal, handleConfirm } = useModal();
+
   // プラスアイコンクリック時のハンドラ
   const handlePlusClick = () => {
     setIsCreating(true);
+  };
+
+  // ゴミ箱アイコンクリック時のハンドラ
+  const handleTrashClick = () => {
+    if (selectedContact) {
+      setModalType('confirmDelete');
+    } else {
+      setModalType('selectContact');
+    }
+  };
+
+  // 削除確認時の処理
+  const confirmDelete = () => {
+    // ここに実際の削除処理を実装
+    console.log('連絡先を削除しました');
+    setSelectedContact(null);
+    closeModal();
   };
 
   return (
@@ -48,6 +78,7 @@ const EditComponent: React.FC<EditComponentProps> = () => {
       <div
         // ホバー時に背景色が変わる角丸の四角形を作成
         className='transition-colors duration-200 rounded p-2 hover:bg-gray-200 cursor-pointer'
+        onClick={handleTrashClick} // クリック時に削除モーダルを表示
       >
         {/* FontAwesomeIconコンポーネントでゴミ箱アイコンを表示 */}
         <FontAwesomeIcon
@@ -64,6 +95,16 @@ const EditComponent: React.FC<EditComponentProps> = () => {
           isNewContact={true} // 新規連絡先作成モードであることを示す
         />
       )}
+
+      {/* モーダル */}
+      <Modal
+        isOpen={modalType !== null}
+        onClose={closeModal}
+        onConfirm={
+          modalType === 'confirmDelete' ? confirmDelete : handleConfirm
+        }
+        modalType={modalType}
+      />
     </div>
   );
 };

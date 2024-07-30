@@ -1,7 +1,7 @@
 'use client'; // クライアントサイドでの実行を明示
 
 // 必要なモジュールとコンポーネントのインポート
-import { useEffect, useState } from 'react'; // Reactと状態管理のためのフックをインポート
+import { useEffect, useState } from 'react'; // Reactのeffectフックと状態フックをインポート
 
 // 必要なアイコンをインポート
 import {
@@ -21,6 +21,8 @@ import { Mail } from '@/app/shared/constants'; // Mail型をインポート
 
 import { AdressEditor } from '@/app/adress/EditContact/AdressEditor'; // 住所編集コンポーネントをインポート
 
+import { useContact } from '@/app/contexts/ContactContext'; // ContactContextのカスタムフックをインポート
+
 // EditContactコンポーネントの定義
 export function EditContact(): JSX.Element {
   // EmailContextから選択されたメールアドレスを取得
@@ -29,10 +31,10 @@ export function EditContact(): JSX.Element {
   // AddressContextから住所情報を取得
   const { addresses } = useAddress();
 
-  // 編集対象の連絡先を状態として管理（初期値はnull）
-  const [selectedContact, setSelectedContact] = useState<Mail | null>(null);
+  // ContactContextから選択された連絡先を取得
+  const { selectedContact, setSelectedContact } = useContact();
 
-  // 編集モードの状態を管理
+  // 編集モードの状態をローカルで管理
   const [isEditing, setIsEditing] = useState<boolean>(false);
 
   // 選択されたメールアドレスが変更されたときに連絡先を更新するeffect
@@ -42,7 +44,7 @@ export function EditContact(): JSX.Element {
 
     // 選択された連絡先を状態にセット
     setSelectedContact(contact || null);
-  }, [selectedEmail, addresses]);
+  }, [selectedEmail, addresses, setSelectedContact]);
 
   // 編集ボタンがクリックされたときの処理
   const handleEditClick = () => {
