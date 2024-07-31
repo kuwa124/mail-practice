@@ -1,7 +1,5 @@
-// Reactをインポート
-import React from 'react';
 // Mail型をインポート
-import { Mail } from '@/app/home/components/MailBox/constants';
+import { Mail } from '@/app/shared/constants';
 
 // MailViewコンポーネントのプロップスの型を定義
 interface MailViewProps {
