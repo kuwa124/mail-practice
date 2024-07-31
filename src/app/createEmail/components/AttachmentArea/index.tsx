@@ -30,7 +30,7 @@ const AttachmentArea: React.FC<AttachmentAreaProps> = () => {
         {/* 添付ファイル選択ボタン */}
         <button
           // パディング、角丸、白文字、フォーカス時のアウトライン無し、グレーの背景色とホバー時の色変化を設定
-          className='py-2 px-4 rounded text-white focus:outline-none bg-gray-500 hover:bg-gray-600'
+          className='py-2 px-5 mx-auto block rounded text-white focus:outline-none bg-gray-500 hover:bg-gray-600'
         >
           添付ファイル
         </button>
