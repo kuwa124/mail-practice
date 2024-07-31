@@ -2,19 +2,19 @@
 'use client';
 
 // 必要なモジュールとコンポーネントのインポート
-import React from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useAddress } from '@/app/contexts/AddressContext';
 import {
   faSearch,
-  faXmarkCircle,
   faUser,
+  faXmarkCircle,
 } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import React from 'react';
 import useContacts from './useContacts';
-import { useAddress } from '@/app/contexts/AddressContext';
 
 // Contactsコンポーネントの定義
 const Contacts: React.FC = () => {
-  const { addresses } = useAddress();  // カスタムフックからロジックと状態を取得
+  const { addresses } = useAddress(); // カスタムフックからロジックと状態を取得
   const {
     searchTerm, // 検索ワードの状態
     setSelectedEmail, // 選択されたメールの状態を更新する関数
@@ -70,7 +70,7 @@ const Contacts: React.FC = () => {
           // 横並びに配置し、要素間隔を2単位、上下パディングを2単位、カーソルをポインターに、ホバー時に背景色を薄いグレーに設定
           <li
             key={contact.id}
-            className='flex items-center space-x-2 py-2 cursor-pointer hover:bg-gray-200'
+            className='flex items-center space-x-2 py-2  pl-2 cursor-pointer hover:bg-gray-200'
             onClick={() => setSelectedEmail(contact.email)} // クリックで連絡先を選択
           >
             {/* ユーザーアイコン */}
