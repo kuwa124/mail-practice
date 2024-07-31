@@ -1,22 +1,29 @@
 // Font Awesomeのアイコンをインポート
 import {
+  faEllipsisH, // その他（省略記号）アイコン
   faEnvelope, // メールアイコン
+  faFlag, // フラッグアイコン
   faPen, // ペンアイコン
   faReply, // 返信アイコン
-  faFlag, // フラッグアイコン
   faTrash, // ゴミ箱アイコン
-  faEllipsisH, // その他（省略記号）アイコン
   IconDefinition, // アイコン定義の型をインポート
 } from '@fortawesome/free-solid-svg-icons';
 
 // ツールバーボタンの型定義
-interface ToolbarButton {
+export type ToolbarButton = {
   icon: IconDefinition; // Font Awesomeアイコンの型
   message: string; // アイコンの説明文
   ariaLabel: string; // アクセシビリティ用のラベル
-  href: string; // ボタンのリンク先
+  href?: string; // ボタンのリンク先（オプション）
   action?: string; // オプションのアクション（一部のボタンにのみ存在）
-}
+  onClick?: () => void; // クリック時に実行する関数
+};
+
+// ボタンのクリック時に実行される関数を定義
+const handleReply = () => console.log('返信します');
+const handleFlag = () => console.log('マークをつけました');
+const handleTrash = () => console.log('ゴミ箱に移動しました');
+const handleOtherActions = () => console.log('その他の操作を実行します');
 
 // ツールバーのボタン情報を定義
 export const TOOLBAR_BUTTONS: ToolbarButton[] = [
@@ -24,7 +31,7 @@ export const TOOLBAR_BUTTONS: ToolbarButton[] = [
     icon: faEnvelope, // メールアイコンを使用
     message: '新しく届いたメッセージを確認', // アイコンの説明
     ariaLabel: 'メッセージ確認', // アクセシビリティラベル
-    href: '#', // リンク先（ここではダミー）
+    action: 'checkNewMessage', // メッセージ確認アクション
   },
   {
     icon: faPen, // ペンアイコンを使用
@@ -37,41 +44,24 @@ export const TOOLBAR_BUTTONS: ToolbarButton[] = [
     icon: faReply, // 返信アイコンを使用
     message: '返信', // アイコンの説明
     ariaLabel: '返信', // アクセシビリティラベル
-    href: '#', // リンク先（ここではダミー）
+    onClick: handleReply, // クリック時の処理
   },
   {
     icon: faFlag, // フラッグアイコンを使用
     message: 'マークをつける', // アイコンの説明
     ariaLabel: 'マーク', // アクセシビリティラベル
-    href: '#', // リンク先（ここではダミー）
+    onClick: handleFlag, // クリック時の処理
   },
   {
     icon: faTrash, // ゴミ箱アイコンを使用
     message: 'ゴミ箱に移動', // アイコンの説明
     ariaLabel: 'ゴミ箱', // アクセシビリティラベル
-    href: '#', // リンク先（ここではダミー）
+    onClick: handleTrash, // クリック時の処理
   },
   {
     icon: faEllipsisH, // その他（省略記号）アイコンを使用
     message: 'その他の操作', // アイコンの説明
     ariaLabel: 'その他', // アクセシビリティラベル
-    href: '#', // リンク先（ここではダミー）
+    onClick: handleOtherActions, // クリック時の処理
   },
 ];
-
-// スタイル定義の型
-interface CommonStyles {
-  FLEX_CENTER: string; // Flexboxで中央に配置するためのスタイル
-  ROUNDED: string; // 角を丸くするためのスタイル
-  TRANSITION: string; // トランジション効果を適用するためのスタイル
-}
-
-// 頻繁に使用される共通のスタイルを定数として定義
-export const COMMON_STYLES: CommonStyles = {
-  FLEX_CENTER: 'flex items-center justify-center', // Flexboxで中央に配置
-  ROUNDED: 'rounded', // 角を丸くする
-  TRANSITION: 'transition-colors duration-200', // ホバー時の色変更にトランジションを適用
-};
-
-// ボタンのホバー時の背景色を定数として定義
-export const HOVER_BG: string = 'hover:bg-gray-200'; // ホバー時に背景色をグレーに変更

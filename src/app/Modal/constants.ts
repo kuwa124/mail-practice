@@ -1,4 +1,4 @@
-// モーダルの種類を定義：送信、破棄、送信完了、破棄完了、設定、連絡先削除確認、連絡先選択、またはnull（モーダルを表示しない）
+// モーダルの種類を定義：送信、破棄、送信完了、破棄完了、設定、連絡先削除確認、連絡先選択、新着メッセージ確認、またはnull（モーダルを表示しない）
 export type ModalType =
   | 'send'
   | 'discard'
@@ -7,6 +7,7 @@ export type ModalType =
   | 'settings'
   | 'confirmDelete'
   | 'selectContact'
+  | 'checkNewMessage'
   | null;
 
 // モーダルコンポーネントのプロップスの型定義
@@ -67,6 +68,13 @@ export const modalContents: Record<Exclude<ModalType, null>, ModalContent> = {
   selectContact: {
     title: '連絡先の選択',
     message: '削除する連絡先を選択してください',
+    confirmButton: 'OK',
+    showCancelButton: false,
+  },
+  // 新着メッセージ確認用のモーダル内容を追加
+  checkNewMessage: {
+    title: '新着メッセージ確認',
+    message: '新しいメッセージはありません。',
     confirmButton: 'OK',
     showCancelButton: false,
   },
