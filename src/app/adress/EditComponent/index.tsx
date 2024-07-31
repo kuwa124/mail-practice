@@ -15,6 +15,7 @@ import Modal from '@/app/Modal';
 import { useModal } from '@/app/Modal/useModal';
 
 // コンテキストをインポート
+import { useAddress } from '@/app/contexts/AddressContext'; // AddressContextをインポート
 import { useContact } from '@/app/contexts/ContactContext';
 
 // EditComponentの型定義
@@ -29,6 +30,9 @@ const EditComponent: React.FC<EditComponentProps> = () => {
 
   // コンテキストから選択された連絡先の状態を取得
   const { selectedContact, setSelectedContact } = useContact();
+
+  // AddressContextから住所データと更新関数を取得
+  const { addresses, setAddresses } = useAddress();
 
   // モーダル関連の状態と関数を取得
   const { modalType, setModalType, closeModal, handleConfirm } = useModal();
@@ -49,10 +53,21 @@ const EditComponent: React.FC<EditComponentProps> = () => {
 
   // 削除確認時の処理
   const confirmDelete = () => {
-    // ここに実際の削除処理を実装
-    console.log('連絡先を削除しました');
-    setSelectedContact(null);
-    closeModal();
+    if (selectedContact) {
+      // 選択された連絡先をaddresses配列から削除
+      const updatedAddresses = addresses.filter(
+        (address) => address.id !== selectedContact.id
+      );
+
+      // 更新された住所リストを設定
+      setAddresses(updatedAddresses);
+
+      // 選択された連絡先をリセット
+      setSelectedContact(null);
+
+      // モーダルを閉じる
+      closeModal();
+    }
   };
 
   return (
