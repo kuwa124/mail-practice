@@ -1,10 +1,9 @@
-// src/app/home/components/MailBox/index.tsx
 'use client'; // クライアントサイドでの実行を明示
 
 // 必要なモジュールとフックをインポート
-import { useAddress } from '@/app/contexts/AddressContext';
+import { useAddress } from '@/app/contexts/AddressContext'; // アドレスコンテキストを使用
+import { useMail } from '@/app/contexts/MailContext'; // 新しく作成したメールコンテキストを使用
 import { Mail } from '@/app/shared/constants'; // Mail型をインポート
-import { useState } from 'react';
 import { MailView } from './MailView'; // MailViewコンポーネントをインポート
 
 // メールボックスコンポーネント
@@ -12,8 +11,8 @@ export function MailBox() {
   // useAddressフックを使用してアドレス状態を取得
   const { addresses } = useAddress();
 
-  // 選択されたメールの状態を管理
-  const [selectedMail, setSelectedMail] = useState<Mail | null>(null);
+  // useMailフックを使用して選択されたメールの状態を取得
+  const { selectedMail, setSelectedMail } = useMail();
 
   // メールをクリックした時の処理
   const handleMailSelect = (mail: Mail) => {
