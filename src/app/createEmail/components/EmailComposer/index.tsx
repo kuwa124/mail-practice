@@ -2,8 +2,9 @@
 'use client';
 
 // 必要なコンポーネントと定数をインポート
-import React from 'react';
+import React, { useEffect } from 'react';
 // React: Reactライブラリをインポート
+// useEffect: 副作用を扱うためのReactフックをインポート
 
 // 共通のスタイル定数をインポート
 import {
@@ -18,11 +19,15 @@ import {
 // EmailComposer用のカスタムフックをインポート
 import useEmailComposer from '@/app/createEmail/components/EmailComposer/useEmailComposer';
 
-// EmailComposerコンポーネントの定義
+// コンテキストをインポート
+import { useEmailComposer as useEmailComposerContext } from '@/app/contexts/EmailComposerContext';
+import { useSignature } from '@/app/contexts/SignatureContext';
+
 const EmailComposer: React.FC = () => {
   // カスタムフックを使用してメール関連の状態と機能を取得
   const {
     body,
+    setBody,
     textareaRef,
     handleBodyChange,
     ccVisible,
@@ -34,11 +39,38 @@ const EmailComposer: React.FC = () => {
     toRef,
     ccRef,
     bccRef,
+    addEmail,
+    to,
+    setTo,
+    subject,
+    setSubject,
   } = useEmailComposer();
 
+  // 署名とメール返信情報を取得
+  const { signature } = useSignature();
+  const { replyInfo } = useEmailComposerContext();
+
+  // 初期化時に署名を本文に追加
+  useEffect(() => {
+    if (textareaRef.current) {
+      textareaRef.current.value = signature;
+    }
+  }, [signature, textareaRef]);
+
+  const line: string = 'ーーーーーーーーーーーーーーーーーーーーーー';
+
+  // replyInfoが更新されたら、フィールドに値を設定
+  useEffect(() => {
+    if (replyInfo) {
+      setTo(replyInfo.to);
+      setSubject(replyInfo.subject);
+      setBody(`${signature}${line}${replyInfo.body}`);
+    }
+  }, [replyInfo, setTo, setSubject, setBody, signature]);
+
   return (
-    // メールコンポーザー全体のコンテナ
-    // 全体を白背景、マージン、パディング、影、角丸、縦並び、最大高さと幅に設定
+    //  メールコンポーザー全体のコンテナ 
+    //  全体を白背景、マージン、パディング、影、角丸、縦並び、最大高さと幅に設定 
     <div className='bg-white m-2 p-6 shadow-md rounded-lg flex flex-col h-full w-full'>
       {/* メール本文エリア */}
       {/* 要素間の垂直方向の間隔を確保し、縦並びで最大高さに設定 */}
@@ -57,6 +89,8 @@ const EmailComposer: React.FC = () => {
             id='to' // 要素のID（ラベルとの紐付けに使用）
             className={INPUT_BASE} // 入力フィールドの基本スタイルを適用
             placeholder='宛先を入力' // プレースホルダーテキストを設定
+            value={to} // 入力フィールドの値を設定
+            onChange={(e) => setTo(e.target.value)} // 値が変更されたときのハンドラーを設定
             onFocus={() => setFocusedInput('to')} // フォーカス時に現在の入力フィールドを設定
           />
           {/* CCボタン：小さいテキストボタン、左右マージン */}
@@ -122,6 +156,8 @@ const EmailComposer: React.FC = () => {
             id='subject' // 要素のID（ラベルとの紐付けに使用）
             className={INPUT_BASE} // 入力フィールドの基本スタイルを適用
             placeholder='件名を入力' // プレースホルダーテキストを設定
+            value={subject} // 入力フィールドの値を設定
+            onChange={(e) => setSubject(e.target.value)} // 値が変更されたときのハンドラーを設定
           />
         </div>
 

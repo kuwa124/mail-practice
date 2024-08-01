@@ -1,6 +1,7 @@
 // 共通で使用するTailwindクラスを定数化
 // 入力フィールドの基本スタイル：全幅、ボーダー、角丸、パディング、大きめフォント
-export const INPUT_BASE = 'w-full border border-gray-300 rounded-md p-2 text-lg';
+export const INPUT_BASE =
+  'w-full border border-gray-300 rounded-md p-2 text-lg';
 
 // ラベルの基本スタイル：大きめフォント、中太字、グレーテキスト、右マージン、パディング
 export const LABEL_BASE = 'text-lg font-medium text-gray-700 mr-2 p-2';

@@ -6,6 +6,7 @@ import { Inter } from 'next/font/google';
 import './globals.css';
 // 各コンテキストプロバイダーをインポート
 import { AddressProvider } from '@/app/contexts/AddressContext';
+import { EmailComposerProvider } from '@/app/contexts/EmailComposerContext';
 import { EmailProvider } from '@/app/contexts/EmailContext';
 import { MailProvider } from '@/app/contexts/MailContext';
 import { SignatureProvider } from '@/app/contexts/SignatureContext';
@@ -31,15 +32,17 @@ export default function RootLayout({
       {/* bodyにInterフォントのクラスを適用 */}
       <body className={inter.className}>
         {/* 各コンテキストプロバイダーで子コンポーネントをラップ */}
-        <MailProvider>
-          <AddressProvider>
-            <EmailProvider>
-              <SignatureProvider>
-                {children} {/* 子コンポーネントをレンダリング */}
-              </SignatureProvider>
-            </EmailProvider>
-          </AddressProvider>
-        </MailProvider>
+        <EmailComposerProvider>
+          <MailProvider>
+            <AddressProvider>
+              <EmailProvider>
+                <SignatureProvider>
+                  {children} {/* 子コンポーネントをレンダリング */}
+                </SignatureProvider>
+              </EmailProvider>
+            </AddressProvider>
+          </MailProvider>
+        </EmailComposerProvider>
         \{' '}
       </body>
     </html>

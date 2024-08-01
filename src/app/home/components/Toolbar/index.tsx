@@ -12,6 +12,8 @@ import { useRouter } from 'next/navigation'; // Next.jsのルーティング機�
 import React, { useCallback, useState } from 'react'; // React本体とuseState, useCallbackフックをインポート
 
 // ツールバーボタンの型定義とボタン情報をインポート
+import { useEmailComposer } from '@/app/contexts/EmailComposerContext'; // EmailComposerコンテキストをインポート
+import { useMail } from '@/app/contexts/MailContext'; // メールコンテキストをインポート
 import Modal from '@/app/Modal'; // モーダルコンポーネントをインポート
 import { useModal } from '@/app/Modal/useModal'; // モーダル制御用のカスタムフックをインポート
 import { TOOLBAR_BUTTONS, ToolbarButton } from './constants'; // ツールバーボタンの定数と型をインポート
@@ -31,29 +33,47 @@ const Toolbar: React.FC = () => {
   const { modalType, handleMessageCheck, closeModal, handleConfirm } =
     useModal();
 
-  // ボタンアクションのハンドラー型定義
-  type ButtonActionHandler = (button: ToolbarButton) => void;
+  // useMailフックを使用して選択されたメールの状態を取得
+  const { selectedMail } = useMail();
 
-  // ボタンアクションのマップオブジェクト定義
-  const buttonActionMap: Record<string, ButtonActionHandler> = {
-    onClick: (button) => button.onClick?.(), // onClickが存在する場合に実行
-    href: (button) => router.push(button.href!), // hrefが存在する場合にページ遷移
-    checkNewMessage: () => handleMessageCheck(), // メッセージチェックアクションの実行
-    // 他のアクションをここに追加できます
-  };
+  // useEmailComposerフックを使用してEmailComposerの状態を更新する関数を取得
+  const { setReplyInfo } = useEmailComposer();
+
+  // 返信処理を行う関数
+  const handleReply = useCallback(() => {
+    if (selectedMail) {
+      // EmailComposerの状態を更新
+      setReplyInfo({
+        to: selectedMail.name,
+        subject: `Re: ${selectedMail.subject || ''}`,
+        body: `\n\n${selectedMail.body || ''}`,
+      });
+
+      // 新しいメール作成ページに遷移
+      router.push('/createEmail');
+    }
+  }, [selectedMail, setReplyInfo, router]);
 
   // ボタンクリック時の共通処理を行う関数
   const handleButtonClick = useCallback(
     (button: ToolbarButton): void => {
-      const actionKey = Object.keys(buttonActionMap).find(
-        (
-          key // アクションキーを検索
-        ) => key in button || key === button.action
-      ) as keyof typeof buttonActionMap; // 型アサーションでキーの型を保証
-
-      buttonActionMap[actionKey]?.(button); // 対応するアクションハンドラーを実行
+      // ボタンのアクションに応じて処理を分岐
+      if (button.onClick) {
+        // onClickプロパティが存在する場合、それを実行
+        button.onClick();
+      } else if (button.href) {
+        // hrefプロパティが存在する場合、そのページに遷移
+        router.push(button.href);
+      } else if (button.action === 'checkNewMessage') {
+        // メッセージチェックアクションの実行
+        handleMessageCheck();
+      } else if (button.action === 'reply') {
+        // 返信処理の実行
+        handleReply();
+      }
+      // 他のアクションがある場合、ここに追加できます
     },
-    [router, handleMessageCheck]
+    [router, handleMessageCheck, handleReply] // この関数が依存する外部の値
   );
 
   // 検索入力の変更を処理する関数

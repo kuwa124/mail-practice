@@ -20,7 +20,6 @@ export type ToolbarButton = {
 };
 
 // ボタンのクリック時に実行される関数を定義
-const handleReply = () => console.log('返信します');
 const handleFlag = () => console.log('マークをつけました');
 const handleTrash = () => console.log('ゴミ箱に移動しました');
 const handleOtherActions = () => console.log('その他の操作を実行します');
@@ -44,7 +43,7 @@ export const TOOLBAR_BUTTONS: ToolbarButton[] = [
     icon: faReply, // 返信アイコンを使用
     message: '返信', // アイコンの説明
     ariaLabel: '返信', // アクセシビリティラベル
-    onClick: handleReply, // クリック時の処理
+    action: 'reply', //返信アクション
   },
   {
     icon: faFlag, // フラッグアイコンを使用

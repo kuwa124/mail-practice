@@ -1,5 +1,5 @@
 // React のフックと定数をインポート
-import { useState, useRef, useEffect } from 'react';
+import { useEffect, useRef, useState } from 'react';
 // useState: 状態管理のためのReactフック
 // useRef: DOM要素への参照を作成するためのReactフック
 // useEffect: 副作用を扱うためのReactフック
@@ -23,18 +23,22 @@ const useEmailComposer = () => {
   const [ccVisible, setCcVisible] = useState(false); // CC欄の表示状態を管理
   const [bccVisible, setBccVisible] = useState(false); // BCC欄の表示状態を管理
 
+  // 宛先と件名の状態を管理するstate
+  const [to, setTo] = useState(''); // 宛先を保持
+  const [subject, setSubject] = useState(''); // 件名を保持
+
   // 現在フォーカスされている入力フィールドの状態を管理
   const [focusedInput, setFocusedInput] = useState<'to' | 'cc' | 'bcc' | null>(
     null
   );
 
   // テキストエリアのDOM要素への参照を作成
-  const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const textareaRef = useRef<HTMLTextAreaElement | null>(null);
 
   // 入力フィールドの参照を作成
-  const toRef = useRef<HTMLInputElement>(null);
-  const ccRef = useRef<HTMLInputElement>(null);
-  const bccRef = useRef<HTMLInputElement>(null);
+  const toRef = useRef<HTMLInputElement | null>(null);
+  const ccRef = useRef<HTMLInputElement | null>(null);
+  const bccRef = useRef<HTMLInputElement | null>(null);
 
   // 入力フィールドの参照を一つのオブジェクトにまとめる
   const refs = { to: toRef, cc: ccRef, bcc: bccRef };
@@ -83,6 +87,10 @@ const useEmailComposer = () => {
         const newValue = currentValue ? `${currentValue}, ${email}` : email;
         // 入力フィールドの値を更新
         input.value = newValue;
+        // 宛先の場合、状態も更新
+        if (focusedInput === 'to') {
+          setTo(newValue);
+        }
       }
     }
   };
@@ -90,6 +98,7 @@ const useEmailComposer = () => {
   // フックの戻り値としてステートと関数を返す
   return {
     body, // メール本文の内容
+    setBody, // メール本文を設定する関数
     textareaRef, // テキストエリアへの参照
     handleBodyChange, // メール本文変更ハンドラ
     ccVisible, // CC欄の表示状態
@@ -102,6 +111,10 @@ const useEmailComposer = () => {
     ccRef, // CC入力フィールドへの参照
     bccRef, // BCC入力フィールドへの参照
     addEmail, // メールアドレスを追加する関数
+    to, // 宛先の状態
+    setTo, // 宛先を設定する関数
+    subject, // 件名の状態
+    setSubject, // 件名を設定する関数
   };
 };
 
