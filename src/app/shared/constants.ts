@@ -44,6 +44,11 @@ const generateRandomDate = (): string => {
   return formattedDate;
 };
 
+// 固定の日付データを生成
+const fixedDates: string[] = Array.from({ length: 5 }, () =>
+  generateRandomDate()
+);
+
 // ダミーのメールデータを定義（表示テスト用）
 export const dummyMails: Mail[] = [
   {
@@ -64,7 +69,7 @@ export const dummyMails: Mail[] = [
   お忙しいところ恐縮ですが、どうぞよろしくお願いいたします。
   `,
     icon: faUser, // ユーザーアイコン
-    date: generateRandomDate(), // ランダムな日付を生成
+    date: fixedDates[0], // 固定の日付データを使用
   },
   {
     id: 2,
@@ -86,7 +91,7 @@ export const dummyMails: Mail[] = [
 
   今後ともよろしくお願い申し上げます。`,
     icon: faUser, // ユーザーアイコン
-    date: generateRandomDate(), // ランダムな日付を生成
+    date: fixedDates[1], // 固定の日付データを使用
   },
   {
     id: 3,
@@ -126,7 +131,7 @@ TEL:XXX-XX-XXXX　FAX:XXX-XX-XXXX
 Email:sairo.fukuoka@example.come
 `,
     icon: faUser, // ユーザーアイコン
-    date: generateRandomDate(), // ランダムな日付を生成
+    date: fixedDates[2], // 固定の日付データを使用
   },
   {
     id: 4,
@@ -150,7 +155,7 @@ Email:sairo.fukuoka@example.come
   福岡一郎
   マーケティング部長`,
     icon: faUser, // ユーザーアイコン
-    date: generateRandomDate(), // ランダムな日付を生成
+    date: fixedDates[3], // 固定の日付データを使用
   },
   {
     id: 5,
@@ -178,6 +183,6 @@ TEL:XXX-XX-XXXX　FAX:XXX-XX-XXXX
 Email : mi-yamamoto@fsc.school.jp
 `,
     icon: faUser, // ユーザーアイコン
-    date: generateRandomDate(), // ランダムな日付を生成
+    date: fixedDates[4], // 固定の日付データを使用
   },
 ];
