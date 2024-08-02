@@ -39,6 +39,8 @@ const Toolbar: React.FC = () => {
   // useEmailComposerフックを使用してEmailComposerの状態を更新する関数を取得
   const { setReplyInfo } = useEmailComposer();
 
+  const line: string = 'ーーーーーーーーーーーーーーーーーーーーーー';
+
   // 返信処理を行う関数
   const handleReply = useCallback(() => {
     if (selectedMail) {
@@ -46,7 +48,7 @@ const Toolbar: React.FC = () => {
       setReplyInfo({
         to: selectedMail.name,
         subject: `Re: ${selectedMail.subject || ''}`,
-        body: `\n\n${selectedMail.body || ''}`,
+        body: `${line}\n\n${selectedMail.body || ''}`,
       });
 
       // 新しいメール作成ページに遷移

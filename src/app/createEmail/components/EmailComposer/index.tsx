@@ -57,20 +57,18 @@ const EmailComposer: React.FC = () => {
     }
   }, [signature, textareaRef]);
 
-  const line: string = 'ーーーーーーーーーーーーーーーーーーーーーー';
-
   // replyInfoが更新されたら、フィールドに値を設定
   useEffect(() => {
     if (replyInfo) {
       setTo(replyInfo.to);
       setSubject(replyInfo.subject);
-      setBody(`${signature}${line}${replyInfo.body}`);
+      setBody(`${signature}${replyInfo.body}`);
     }
   }, [replyInfo, setTo, setSubject, setBody, signature]);
 
   return (
-    //  メールコンポーザー全体のコンテナ 
-    //  全体を白背景、マージン、パディング、影、角丸、縦並び、最大高さと幅に設定 
+    //  メールコンポーザー全体のコンテナ
+    //  全体を白背景、マージン、パディング、影、角丸、縦並び、最大高さと幅に設定
     <div className='bg-white m-2 p-6 shadow-md rounded-lg flex flex-col h-full w-full'>
       {/* メール本文エリア */}
       {/* 要素間の垂直方向の間隔を確保し、縦並びで最大高さに設定 */}
