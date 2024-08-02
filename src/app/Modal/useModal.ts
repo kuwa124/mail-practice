@@ -7,6 +7,9 @@ import { useRouter } from 'next/navigation';
 // 共通の型定義をインポート：ModalTypeを使用するために必要
 import { ModalType } from '@/app/Modal/constants';
 
+// コンテキストをインポート
+import { useEmailComposer } from '@/app/contexts/EmailComposerContext';
+
 // アクションボタンの機能を提供するカスタムフック
 export const useModal = () => {
   // モーダルの種類を管理するstate
@@ -15,6 +18,9 @@ export const useModal = () => {
 
   // Next.jsのルーターを初期化：ページ遷移に使用
   const router = useRouter();
+
+  // EmailComposerContextからsetReplyInfoを取得
+  const { setReplyInfo } = useEmailComposer();
 
   // モーダルを閉じる処理
   // モーダルの種類をnullに設定してモーダルを非表示にする
@@ -47,7 +53,14 @@ export const useModal = () => {
     setModalType('sendComplete');
   }, [closeModal]);
 
+  // 送信時、破棄時の処理
   const confirmComplete = useCallback((): void => {
+    // ReplyInfoをすべて空白にセット
+    setReplyInfo({
+      to: '',
+      subject: '',
+      body: '',
+    });
     router.push('/'); // ルートページに遷移
   }, [router]);
 
