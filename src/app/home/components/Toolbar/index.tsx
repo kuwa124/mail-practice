@@ -59,26 +59,42 @@ const Toolbar: React.FC = () => {
     }
   }, [selectedMail, setReplyInfo, router]);
 
+  // アクションに応じた処理を行う関数
+  const handleAction = useCallback(
+    (action: string): void => {
+      switch (action) {
+        case 'checkNewMessage':
+          handleMessageCheck();
+          break;
+        case 'newMessage':
+          router.push('/createEmail');
+          break;
+        case 'reply':
+          handleReply();
+          break;
+        case 'flag':
+          console.log('マークをつけました');
+          break;
+        case 'trash':
+          console.log('ゴミ箱に移動しました');
+          break;
+        case 'otherActions':
+          console.log('その他の操作を実行します');
+          break;
+        default:
+          console.log('未知のアクションです');
+      }
+    },
+    [router, handleMessageCheck, handleReply]
+  );
+
   // ボタンクリック時の共通処理を行う関数
   const handleButtonClick = useCallback(
     (button: ToolbarButton): void => {
-      // ボタンのアクションに応じて処理を分岐
-      if (button.onClick) {
-        // onClickプロパティが存在する場合、それを実行
-        button.onClick();
-      } else if (button.href) {
-        // hrefプロパティが存在する場合、そのページに遷移
-        router.push(button.href);
-      } else if (button.action === 'checkNewMessage') {
-        // メッセージチェックアクションの実行
-        handleMessageCheck();
-      } else if (button.action === 'reply') {
-        // 返信処理の実行
-        handleReply();
-      }
-      // 他のアクションがある場合、ここに追加できます
+      // actionプロパティが存在する場合、対応する処理を実行
+      handleAction(button.action);
     },
-    [router, handleMessageCheck, handleReply] // この関数が依存する外部の値
+    [router, handleAction] // この関数が依存する外部の値
   );
 
   // 検索入力の変更を処理する関数
