@@ -23,7 +23,7 @@ export const dummyMails: Mail[] = [
     email: 'taro.yamada@example.com',
     subject: '会議の件について',
     body: `FSC会社
-      佐藤　様
+      幸袋　様
 
   お世話になっております。明日の会議の時間と場所についてご案内いたします。
 
@@ -42,7 +42,7 @@ export const dummyMails: Mail[] = [
     email: 'hanako.iizuka@example.com',
     subject: 'プロジェクト進捗報告',
     body: `FSC会社
-      佐藤　様
+      幸袋　様
 
   先週のプロジェクト進捗状況をご報告いたします。
 
@@ -83,9 +83,9 @@ export const dummyMails: Mail[] = [
   {
     id: 4,
     name: '山本 光',
-    email: ' mi-yamamoto@fsc.school. jpe',
+    email: ' mi-yamamoto@fsc.school.jp',
     subject: 'Wordの課題について',
-    body: `パソコン薄記科の皆様、お疲れ様です。講師の山本です。
+    body: `受講生の皆様、お疲れ様です。講師の山本です。
 Word練習問題の「課題3P1」の提出をメールにてお願いいたします。
 
 【ファイル名】 「（出席番号）課題3P1」
@@ -97,11 +97,12 @@ Word練習問題の「課題3P1」の提出をメールにてお願いいたし�
 
 では、よろしくお願いいたします。
 
+ーーーーーーーーーーーーーーーーーーーーーー
 株式会社福岡ソフトウェアセンター
-研修課 山本 光惠
-〒820-0066
-福岡県飯塚市幸袋526番地1
-TEL : 0948-21-1281 FAX:0948-21-0173
+研修課 山本 光
+〒8XX-XXXX
+福岡県飯塚市〇〇一丁目△△番地
+TEL:XXX-XX-XXXX　FAX:XXX-XX-XXXX
 Email : mi-yamamoto@fsc.school.jp
 `,
     icon: faUser, //ユーザーアイコン
@@ -111,26 +112,26 @@ Email : mi-yamamoto@fsc.school.jp
     name: '福岡 才郎',
     email: 'sairou.fukuoka@example.com',
     subject: '株式会社活躍ワークス·面接日のお知らせ化',
-    body: `0O様
+    body: `幸袋様
 お世話になります。株式会社 活躍ワークスの福岡と申します。
 このたびは、数ある企業の中から弊社の求人にご応募いただき誠にありがとうございます。
 
-早連ですが、OO様の面接日の調整をいたしたくご連絡差し上げました。
+早連ですが、幸袋様の面接日の調整をいたしたくご連絡差し上げました。
 お手数ですが、以下の候補日のなかから「第一希望」「第二希望」をご選択いただき、
 メールにてご返信いただけますでしょうか?
 
 【面接候補日】
 
-18月25日(*曜日)
-29月2日(*曜日)
-39月5日(*曜日)
-49月6日(*曜日)
-59月8日(*曜日)
+8月25日(*曜日)
+9月2日(*曜日)
+9月5日(*曜日)
+9月6日(*曜日)
+9月8日(*曜日)
 
 ※いずれも面接時間は30分~1時間を予定しております。1
 
 もし、こちらの日時でご都合がつかないようでしたら、
-〇○様の方で希望日時をご提案くださいますようお願い申し上げます。
+幸袋様の方で希望日時をご提案くださいますようお願い申し上げます。
 また、何かご不明点等ございましたら、ご遠慮なくお問い合わせください。
 ご返信をお待ちいたしております。
 
@@ -140,13 +141,13 @@ Email : mi-yamamoto@fsc.school.jp
 12:30~
 10:00~
 
-株式会社·活躍ワークス←
-人事部口福岡·才郎
+株式会社·活躍ワークス
+人事部　福岡·才郎
 〒8XX-XXXX
 
 福岡県福岡市博多区〇〇一丁目△△番地
-TEL:XXX-XX-XXXXOFAX:XXX-XX-XXXX<
-Emai l:sairo. fukuoka@example. come
+TEL:XXX-XX-XXXX　FAX:XXX-XX-XXXX
+Email:sairo.fukuoka@example.come
 `,
     icon: faUser, //ユーザーアイコン
   },
