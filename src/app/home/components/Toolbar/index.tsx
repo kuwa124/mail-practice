@@ -48,7 +48,10 @@ const Toolbar: React.FC = () => {
       setReplyInfo({
         to: selectedMail.name,
         subject: `Re: ${selectedMail.subject || ''}`,
-        body: `${line}\n\n${selectedMail.body || ''}`,
+        body: `\n${line}\n${selectedMail.date}<${selectedMail.email}>\n\n${
+          selectedMail.body || ''
+        }`,
+        date: selectedMail.date,
       });
 
       // 新しいメール作成ページに遷移

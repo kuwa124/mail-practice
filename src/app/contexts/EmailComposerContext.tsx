@@ -8,6 +8,7 @@ type ReplyInfo = {
   to: string; // 宛先のメールアドレス
   subject: string; // メールの件名
   body: string; // メールの本文
+  date?: string; // メールの送信日時
 };
 
 // EmailComposerContextの型定義

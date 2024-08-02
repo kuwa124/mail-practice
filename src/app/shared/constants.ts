@@ -13,17 +13,46 @@ export type Mail = {
   phone?: string; // 電話番号フィールド
   other?: string; // その他の情報フィールド
   icon: IconDefinition; // メールに表示するアイコン
+  date?: string; // メールの送信日時
+};
+
+// ランダムな日付を生成し、指定された形式で返す関数
+const generateRandomDate = (): string => {
+  // 現在の日時を取得
+  const now = new Date();
+
+  // 今月の初日を設定
+  const startOfMonth = new Date(now.getFullYear(), now.getMonth() - 1, 1);
+
+  // 今月の最終日を設定
+  const endOfMonth = new Date(now.getFullYear(), now.getMonth(), 0);
+
+  // 今月の範囲内でランダムな日時を生成
+  const randomDate = new Date(
+    startOfMonth.getTime() +
+      Math.random() * (endOfMonth.getTime() - startOfMonth.getTime())
+  );
+
+  // 日付を指定された形式（YYYY年MM月DD日 HH:mm）に整形
+  const formattedDate = `${randomDate.getFullYear()}年${String(
+    randomDate.getMonth() + 1
+  )}月${String(randomDate.getDate())}日 ${String(
+    randomDate.getHours()
+  ).padStart(2, '0')}:${String(randomDate.getMinutes()).padStart(2, '0')}`;
+
+  // 整形された日付文字列を返す
+  return formattedDate;
 };
 
 // ダミーのメールデータを定義（表示テスト用）
 export const dummyMails: Mail[] = [
   {
     id: 1,
-    name: '山田 太郎',
+    name: '飯塚 花子',
     email: 'taro.yamada@example.com',
     subject: '会議の件について',
     body: `FSC会社
-      幸袋　様
+      幸袋様
 
   お世話になっております。明日の会議の時間と場所についてご案内いたします。
 
@@ -34,15 +63,16 @@ export const dummyMails: Mail[] = [
 
   お忙しいところ恐縮ですが、どうぞよろしくお願いいたします。
   `,
-    icon: faUser, //ユーザーアイコン
+    icon: faUser, // ユーザーアイコン
+    date: generateRandomDate(), // ランダムな日付を生成
   },
   {
     id: 2,
-    name: '飯塚 花子',
+    name: '福岡 一郎',
     email: 'hanako.iizuka@example.com',
     subject: 'プロジェクト進捗報告',
     body: `FSC会社
-      幸袋　様
+      幸袋様
 
   先週のプロジェクト進捗状況をご報告いたします。
 
@@ -55,11 +85,52 @@ export const dummyMails: Mail[] = [
   ご質問やご不明な点がございましたら、どうぞお気軽にご連絡ください。迅速に対応させていただきます。
 
   今後ともよろしくお願い申し上げます。`,
-    icon: faUser, //ユーザーアイコン
+    icon: faUser, // ユーザーアイコン
+    date: generateRandomDate(), // ランダムな日付を生成
   },
   {
     id: 3,
-    name: '福岡 一郎',
+    name: '福岡 才郎',
+    email: 'sairou.fukuoka@example.com',
+    subject: '株式会社活躍ワークス·面接日のお知らせ',
+    body: `幸袋様
+お世話になります。株式会社 活躍ワークスの福岡と申します。
+このたびは、数ある企業の中から弊社の求人にご応募いただき誠にありがとうございます。
+
+早連ですが、幸袋様の面接日の調整をいたしたくご連絡差し上げました。
+お手数ですが、以下の候補日のなかから「第一希望」 「第二希望」をご選択いただき、
+メールにてご返信いただけますでしょうか?
+
+【面接候補日】
+
+8月25日(*曜日) 11:30~
+9月  2日(*曜日) 13:30~
+9月  5日(*曜日) 10:00~
+9月  6日(*曜日) 12:30~
+9月  8日(*曜日) 10:00~
+
+※いずれも面接時間は30分~1時間を予定しております。
+
+もし、こちらの日時でご都合がつかないようでしたら、
+幸袋様の方で希望日時をご提案くださいますようお願い申し上げます。
+また、何かご不明点等ございましたら、ご遠慮なくお問い合わせください。
+ご返信をお待ちいたしております。
+
+ーーーーーーーーーーーーーーーーーーーーーー
+株式会社·活躍ワークス
+人事部　福岡·才郎
+〒8XX-XXXX
+
+福岡県福岡市博多区〇〇一丁目△△番地
+TEL:XXX-XX-XXXX　FAX:XXX-XX-XXXX
+Email:sairo.fukuoka@example.come
+`,
+    icon: faUser, // ユーザーアイコン
+    date: generateRandomDate(), // ランダムな日付を生成
+  },
+  {
+    id: 4,
+    name: '山田 太郎',
     email: 'ichiro.fukuoka@example.com',
     subject: '新製品ローンチについて',
     body: `チームの皆様
@@ -78,10 +149,11 @@ export const dummyMails: Mail[] = [
 
   福岡一郎
   マーケティング部長`,
-    icon: faUser, //ユーザーアイコン
+    icon: faUser, // ユーザーアイコン
+    date: generateRandomDate(), // ランダムな日付を生成
   },
   {
-    id: 4,
+    id: 5,
     name: '山本 光',
     email: ' mi-yamamoto@fsc.school.jp',
     subject: 'Wordの課題について',
@@ -98,57 +170,14 @@ Word練習問題の「課題3P1」の提出をメールにてお願いいたし�
 では、よろしくお願いいたします。
 
 ーーーーーーーーーーーーーーーーーーーーーー
-株式会社福岡ソフトウェアセンター
+株式会社ソフトウェアセンター
 研修課 山本 光
 〒8XX-XXXX
-福岡県飯塚市〇〇一丁目△△番地
+〇〇県△△市〇〇一丁目△△番地
 TEL:XXX-XX-XXXX　FAX:XXX-XX-XXXX
 Email : mi-yamamoto@fsc.school.jp
 `,
-    icon: faUser, //ユーザーアイコン
-  },
-  {
-    id: 5,
-    name: '福岡 才郎',
-    email: 'sairou.fukuoka@example.com',
-    subject: '株式会社活躍ワークス·面接日のお知らせ化',
-    body: `幸袋様
-お世話になります。株式会社 活躍ワークスの福岡と申します。
-このたびは、数ある企業の中から弊社の求人にご応募いただき誠にありがとうございます。
-
-早連ですが、幸袋様の面接日の調整をいたしたくご連絡差し上げました。
-お手数ですが、以下の候補日のなかから「第一希望」「第二希望」をご選択いただき、
-メールにてご返信いただけますでしょうか?
-
-【面接候補日】
-
-8月25日(*曜日)
-9月2日(*曜日)
-9月5日(*曜日)
-9月6日(*曜日)
-9月8日(*曜日)
-
-※いずれも面接時間は30分~1時間を予定しております。1
-
-もし、こちらの日時でご都合がつかないようでしたら、
-幸袋様の方で希望日時をご提案くださいますようお願い申し上げます。
-また、何かご不明点等ございましたら、ご遠慮なくお問い合わせください。
-ご返信をお待ちいたしております。
-
-11:30~
-13:30~
-10:00~
-12:30~
-10:00~
-
-株式会社·活躍ワークス
-人事部　福岡·才郎
-〒8XX-XXXX
-
-福岡県福岡市博多区〇〇一丁目△△番地
-TEL:XXX-XX-XXXX　FAX:XXX-XX-XXXX
-Email:sairo.fukuoka@example.come
-`,
-    icon: faUser, //ユーザーアイコン
+    icon: faUser, // ユーザーアイコン
+    date: generateRandomDate(), // ランダムな日付を生成
   },
 ];
