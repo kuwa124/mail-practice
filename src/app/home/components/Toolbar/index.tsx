@@ -48,7 +48,7 @@ const Toolbar: React.FC = () => {
       setReplyInfo({
         to: selectedMail.name,
         subject: `Re: ${selectedMail.subject || ''}`,
-        body: `\n${line}\n${selectedMail.date}<${selectedMail.email}>\n\n${
+        body: `\n${line}\n${selectedMail.date}　<${selectedMail.email}> \n\n${
           selectedMail.body || ''
         }`,
         date: selectedMail.date,
