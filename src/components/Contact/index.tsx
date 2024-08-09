@@ -3,13 +3,14 @@
 
 // 必要なモジュールとコンポーネントのインポート
 import { useAddress } from '@/app/contexts/AddressContext';
+import { Mail } from '@/app/shared/constants';
 import {
   faSearch,
   faUser,
   faXmarkCircle,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React from 'react';
+import React, { useMemo } from 'react';
 import useContacts from './useContacts';
 
 // Contactsコンポーネントの定義
@@ -23,9 +24,23 @@ const Contacts: React.FC = () => {
     handleKeyDown, // キー押下時の処理
   } = useContacts();
 
+  // ふりがな順に並び替える関数
+  const sortByNameKana = (addresses: Mail[]): Mail[] => {
+    return [...addresses].sort((a, b) =>
+      a.nameKana.localeCompare(b.nameKana, 'ja')
+    );
+  };
+
+  // ふりがな順にソートされた連絡先リストをメモ化
+  const sortedAddresses = useMemo(() => sortByNameKana(addresses), [addresses]);
+
   // 検索ワードに基づいて連絡先をフィルタリング
-  const filteredContacts = addresses.filter((contact) =>
-    contact.name.toLowerCase().includes(searchTerm.toLowerCase())
+  const filteredContacts = useMemo(
+    () =>
+      sortedAddresses.filter((contact) =>
+        contact.name.toLowerCase().includes(searchTerm.toLowerCase())
+      ),
+    [sortedAddresses, searchTerm]
   );
 
   return (
@@ -70,7 +85,7 @@ const Contacts: React.FC = () => {
           // 横並びに配置し、要素間隔を2単位、上下パディングを2単位、カーソルをポインターに、ホバー時に背景色を薄いグレーに設定
           <li
             key={contact.id}
-            className='flex items-center space-x-2 py-2  pl-2 cursor-pointer hover:bg-gray-200'
+            className='flex items-center space-x-2 py-2 pl-2 cursor-pointer hover:bg-gray-200'
             onClick={() => setSelectedEmail(contact.email)} // クリックで連絡先を選択
           >
             {/* ユーザーアイコン */}
