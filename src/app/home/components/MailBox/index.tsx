@@ -19,8 +19,13 @@ export function MailBox() {
     setSelectedMail(mail); // クリックされたメールを選択状態にする
   };
 
+  // フリガナ順に並び替える関数
+  const sortByOldestDate = (addresses: Mail[]): Mail[] => {
+    return [...addresses].sort((a, b) => a.sortIndex - b.sortIndex);
+  };
+
   // bodyが空でないメールのみをフィルタリング
-  const validMails = addresses.filter(
+  const validMails = sortByOldestDate(addresses).filter(
     (mail) => mail.body && mail.body.trim() !== ''
   );
 

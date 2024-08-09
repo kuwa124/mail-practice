@@ -7,53 +7,23 @@ import { faUser } from '@fortawesome/free-solid-svg-icons';
 export type Mail = {
   id: number; // メールを一意に識別するID
   name: string; // 送信者の名前
+  nameKana: string; // 送信者の名前のフリガナ
   email: string; // 送信者のメールアドレス
   subject?: string; // メールの件名
   body?: string; // メールの本文
   phone?: string; // 電話番号フィールド
   other?: string; // その他の情報フィールド
   icon: IconDefinition; // メールに表示するアイコン
-  date?: string; // メールの送信日時
+  date: string; // メールの送信日時
+  sortIndex: number; // 日付の古い順に並び替えた際のインデックス
 };
-
-// ランダムな日付を生成し、指定された形式で返す関数
-const generateRandomDate = (): string => {
-  // 現在の日時を取得
-  const now = new Date();
-
-  // 今月の初日を設定
-  const startOfMonth = new Date(now.getFullYear(), now.getMonth() - 1, 1);
-
-  // 今月の最終日を設定
-  const endOfMonth = new Date(now.getFullYear(), now.getMonth(), 0);
-
-  // 今月の範囲内でランダムな日時を生成
-  const randomDate = new Date(
-    startOfMonth.getTime() +
-      Math.random() * (endOfMonth.getTime() - startOfMonth.getTime())
-  );
-
-  // 日付を指定された形式（YYYY年MM月DD日 HH:mm）に整形
-  const formattedDate = `${randomDate.getFullYear()}年${String(
-    randomDate.getMonth() + 1
-  )}月${String(randomDate.getDate())}日 ${String(
-    randomDate.getHours()
-  ).padStart(2, '0')}:${String(randomDate.getMinutes()).padStart(2, '0')}`;
-
-  // 整形された日付文字列を返す
-  return formattedDate;
-};
-
-// 固定の日付データを生成
-const fixedDates: string[] = Array.from({ length: 5 }, () =>
-  generateRandomDate()
-);
 
 // ダミーのメールデータを定義（表示テスト用）
 export const dummyMails: Mail[] = [
   {
     id: 1,
     name: '飯塚 花子',
+    nameKana: 'いいづか　はなこ',
     email: 'taro.yamada@example.com',
     subject: '会議の件について',
     body: `FSC会社
@@ -61,19 +31,21 @@ export const dummyMails: Mail[] = [
 
   お世話になっております。明日の会議の時間と場所についてご案内いたします。
 
-  日時：2024年7月19日（金）14:00～16:00
-  場所：本社 会議室A
+  日時： 7月19日（金）14:00～16:00
+  場所： 本社 会議室A
 
   この会議では、今後のプロジェクトの進行状況や重要な課題について話し合う予定です。特に、鈴木様のご意見をお伺いしたく存じますので、ご出席をお願い申し上げます。
 
   お忙しいところ恐縮ですが、どうぞよろしくお願いいたします。
   `,
-    icon: faUser, // ユーザーアイコン
-    date: fixedDates[0], // 固定の日付データを使用
+    icon: faUser,
+    date: '20**/7/18 9:40:02',
+    sortIndex: 4,
   },
   {
     id: 2,
     name: '福岡 一郎',
+    nameKana: 'ふくおか　いちろう',
     email: 'hanako.iizuka@example.com',
     subject: 'プロジェクト進捗報告',
     body: `FSC会社
@@ -90,12 +62,14 @@ export const dummyMails: Mail[] = [
   ご質問やご不明な点がございましたら、どうぞお気軽にご連絡ください。迅速に対応させていただきます。
 
   今後ともよろしくお願い申し上げます。`,
-    icon: faUser, // ユーザーアイコン
-    date: fixedDates[1], // 固定の日付データを使用
+    icon: faUser,
+    date: '20**/7/1 12:50:22',
+    sortIndex: 1,
   },
   {
     id: 3,
     name: '福岡 才郎',
+    nameKana: 'ふくおか　さいろう',
     email: 'sairou.fukuoka@example.com',
     subject: '株式会社活躍ワークス·面接日のお知らせ',
     body: `幸袋様
@@ -130,12 +104,14 @@ export const dummyMails: Mail[] = [
 TEL:XXX-XX-XXXX　FAX:XXX-XX-XXXX
 Email:sairo.fukuoka@example.come
 `,
-    icon: faUser, // ユーザーアイコン
-    date: fixedDates[2], // 固定の日付データを使用
+    icon: faUser,
+    date: '20**/7/31 9:36:28',
+    sortIndex: 5,
   },
   {
     id: 4,
     name: '山田 太郎',
+    nameKana: 'やまだ　たろう',
     email: 'ichiro.fukuoka@example.com',
     subject: '新製品ローンチについて',
     body: `チームの皆様
@@ -154,12 +130,14 @@ Email:sairo.fukuoka@example.come
 
   福岡一郎
   マーケティング部長`,
-    icon: faUser, // ユーザーアイコン
-    date: fixedDates[3], // 固定の日付データを使用
+    icon: faUser,
+    date: '20**/7/16 15:27:51',
+    sortIndex: 3,
   },
   {
     id: 5,
     name: '山本 光',
+    nameKana: 'やまもと　ひかり',
     email: ' mi-yamamoto@fsc.school.jp',
     subject: 'Wordの課題について',
     body: `受講生の皆様、お疲れ様です。講師の山本です。
@@ -182,7 +160,8 @@ Word練習問題の「課題3P1」の提出をメールにてお願いいたし�
 TEL:XXX-XX-XXXX　FAX:XXX-XX-XXXX
 Email : mi-yamamoto@fsc.school.jp
 `,
-    icon: faUser, // ユーザーアイコン
-    date: fixedDates[4], // 固定の日付データを使用
+    icon: faUser,
+    date: '20**/7/10 10:10:10',
+    sortIndex: 2,
   },
 ];
