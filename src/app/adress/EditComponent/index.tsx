@@ -105,7 +105,7 @@ const EditComponent: React.FC<EditComponentProps> = () => {
       {/* 新規連絡先作成モードの場合、AdressEditorコンポーネントを表示 */}
       {isCreating && (
         <AdressEditor
-          contact={null} // 新規作成なのでnullを渡す
+          contact={undefined} // 新規作成なのでnullを渡す
           onClose={() => setIsCreating(false)} // 作成モードを終了する関数
           isNewContact={true} // 新規連絡先作成モードであることを示す
         />
