@@ -25,7 +25,7 @@ export function MailView({ mail }: MailViewProps) {
     // h-full: 親要素の高さいっぱいに広げる
     // overflow-auto: コンテンツがはみ出した場合にスクロール可能にする
     // pb-4: 下部にパディングを追加
-    <div className='h-full space-y-2 my-2  bg-white rounded-lg shadow overflow-auto pb-4'>
+    <div className='h-full space-y-2 my-2 bg-gray-50  rounded-lg shadow overflow-auto pb-4'>
       {/* タイトルと宛名部分 */}
       {/* bg-blue-100: 薄い青色の背景 */}
       {/* p-4: 内側に余白を追加 */}
@@ -41,7 +41,7 @@ export function MailView({ mail }: MailViewProps) {
       {/* bg-gray-50: 薄いグレーの背景 */}
       {/* p-4: 内側に余白を追加 */}
       {/* rounded-b-lg: 下部の角を丸く */}
-      <div className='bg-gray-50 p-4 rounded-b-lg'>
+      <div className=' p-4 rounded-b-lg '>
         <div className='text-gray-800 whitespace-pre-wrap'>{mail.body}</div>
       </div>
     </div>
