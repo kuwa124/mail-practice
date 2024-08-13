@@ -2,12 +2,12 @@
 'use client';
 
 // 必要なReactフックとコンポーネントをインポート
-import React, { useState } from 'react'; // React ライブラリと useState フックをインポート
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'; // FontAwesome アイコンを使用するためのコンポーネントをインポート
-import { faSave, faArrowLeft } from '@fortawesome/free-solid-svg-icons'; // 使用する具体的なアイコン(保存アイコンと戻るアイコン)をインポート
-import Link from 'next/link'; // Next.js のページ間リンクのための Link コンポーネントをインポート
-import { SIGNATURE } from '@/app/createEmail/components/EmailComposer/constants'; // 署名の初期値をインポート
 import { useSignature } from '@/app/contexts/SignatureContext'; // 署名の状態と更新関数を提供するカスタムフックをインポート
+import { SIGNATURE } from '@/app/createEmail/components/EmailComposer/constants'; // 署名の初期値をインポート
+import { faArrowLeft, faSave } from '@fortawesome/free-solid-svg-icons'; // 使用する具体的なアイコン(保存アイコンと戻るアイコン)をインポート
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'; // FontAwesome アイコンを使用するためのコンポーネントをインポート
+import Link from 'next/link'; // Next.js のページ間リンクのための Link コンポーネントをインポート
+import React, { useState } from 'react'; // React ライブラリと useState フックをインポート
 
 // モーダルコンポーネントをインポート
 import Modal from '@/app/Modal';
@@ -48,8 +48,8 @@ const Settings: React.FC = () => {
         <Link
           href='/' // リンク先のURLを指定
           //  青色のテキスト、グレーの背景色、テキストサイズ大きめ、フォントを太字に、ホバー時に濃い青色に
-          // 薄いグレーの背景色に変更、上下左右に余白を設け、角を丸くする、色の変更にアニメーションを適用
-          className='text-blue-500 bg-gray-300 text-lg font-bold  hover:text-blue-700 hover:bg-gray-200 px-4 py-2 rounded-lg transition-colors duration-200'
+          // 背景色を青、テキストカラーを白、上下左右に余白を設け、角を丸くする、色の変更にアニメーションを適用
+          className=' bg-blue-500 text-white text-lg font-bold  hover:bg-blue-600 px-4 py-2 rounded-lg transition-colors duration-200'
           aria-label='Homeのページに戻る' // アクセシビリティのためのラベルを指定
         >
           {/* アイコンの右側にマージンを 2 単位設定 */}
