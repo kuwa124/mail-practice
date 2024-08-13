@@ -4,10 +4,15 @@
 import { useAddress } from '@/app/contexts/AddressContext'; // アドレスコンテキストを使用
 import { useMail } from '@/app/contexts/MailContext'; // 新しく作成したメールコンテキストを使用
 import { Mail } from '@/app/shared/constants'; // Mail型をインポート
+import { useMemo } from 'react';
 import { MailView } from './MailView'; // MailViewコンポーネントをインポート
 
+type MailBoxProps = {
+  searchTerm: string;
+};
+
 // メールボックスコンポーネント
-export function MailBox() {
+export const MailBox: React.FC<MailBoxProps> = ({ searchTerm }) => {
   // useAddressフックを使用してアドレス状態を取得
   const { addresses } = useAddress();
 
@@ -25,9 +30,19 @@ export function MailBox() {
   };
 
   // bodyが空でないメールのみをフィルタリング
-  const validMails = sortByOldestDate(addresses).filter(
-    (mail) => mail.body && mail.body.trim() !== ''
-  );
+  const validMails = useMemo(() => {
+    return sortByOldestDate(addresses).filter(
+      (mail) => mail.body && mail.body.trim() !== ''
+    );
+  }, [addresses]);
+
+  // searchTermを使用してメールをフィルタリング
+  const filteredMails = useMemo(() => {
+    if (!searchTerm) return validMails;
+    return validMails.filter((mail) =>
+      mail.name.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+  }, [validMails, searchTerm]);
 
   // JSXを返す（コンポーネントの見た目を定義）
   return (
@@ -45,7 +60,7 @@ export function MailBox() {
         {/* メールリスト */}
         <ul>
           {/* フィルタリングされたメールの各要素に対してマッピング処理を行う */}
-          {validMails.map((mail: Mail) => (
+          {filteredMails.map((mail: Mail) => (
             <li
               key={mail.id} // リストの各項目を一意に識別するためのキー
               onClick={() => handleMailSelect(mail)} // クリック時のイベントハンドラ
@@ -70,4 +85,4 @@ export function MailBox() {
       </div>
     </div>
   );
-}
+};

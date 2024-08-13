@@ -3,13 +3,12 @@
 
 // 必要なReactフックとコンポーネントをインポート
 import {
-  faChevronDown, // 下向き矢印アイコン
   faSearch, // 検索アイコン
-  faTimes, // バツ印アイコン
+  faTimes,
 } from '@fortawesome/free-solid-svg-icons'; // 使用する具体的なアイコンをインポート
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'; // FontAwesomeのアイコンを使用するためのコンポーネントをインポート
 import { useRouter } from 'next/navigation'; // Next.jsのルーティング機能をインポート
-import React, { useCallback, useState } from 'react'; // React本体とuseState, useCallbackフックをインポート
+import React, { useCallback } from 'react'; // React本体とuseState, useCallbackフックをインポート
 
 // ツールバーボタンの型定義とボタン情報をインポート
 import { useEmailComposer } from '@/app/contexts/EmailComposerContext'; // EmailComposerコンテキストをインポート
@@ -18,20 +17,23 @@ import Modal from '@/app/Modal'; // モーダルコンポーネントをイン�
 import { useModal } from '@/app/Modal/useModal'; // モーダル制御用のカスタムフックをインポート
 import { TOOLBAR_BUTTONS, ToolbarButton } from './constants'; // ツールバーボタンの定数と型をインポート
 
+type ToolbarProps = {
+  searchTerm: string;
+  setSearchTerm: React.Dispatch<React.SetStateAction<string>>;
+};
 // Toolbarコンポーネントを定義
-const Toolbar: React.FC = () => {
+const Toolbar: React.FC<ToolbarProps> = ({ searchTerm, setSearchTerm }) => {
   // useRouterフックを使用してrouterオブジェクトを取得
   const router = useRouter();
 
-  // 検索語の状態を管理
-  const [searchTerm, setSearchTerm] = useState<string>('');
-
-  // フィルター語の状態を管理
-  const [filterTerm, setFilterTerm] = useState<string>('すべて');
-
   // useModalフックを使用して必要な状態と関数を取得
-  const { modalType, handleMessageCheck, closeModal, handleConfirm } =
-    useModal();
+  const {
+    modalType,
+    handleMessageCheck,
+    closeModal,
+    handleConfirm,
+    handlePrepare,
+  } = useModal();
 
   // useMailフックを使用して選択されたメールの状態を取得
   const { selectedMail } = useMail();
@@ -73,16 +75,16 @@ const Toolbar: React.FC = () => {
           handleReply();
           break;
         case 'flag':
-          console.log('マークをつけました');
+          handlePrepare();
           break;
         case 'trash':
-          console.log('ゴミ箱に移動しました');
+          handlePrepare();
           break;
         case 'otherActions':
-          console.log('その他の操作を実行します');
+          handlePrepare();
           break;
         default:
-          console.log('未知のアクションです');
+          handlePrepare();
       }
     },
     [router, handleMessageCheck, handleReply]
@@ -97,23 +99,15 @@ const Toolbar: React.FC = () => {
     [router, handleAction] // この関数が依存する外部の値
   );
 
-  // 検索入力の変更を処理する関数
-  const handleSearchChange = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>): void => {
-      setSearchTerm(e.target.value);
-    },
-    []
-  );
-
   // 検索をクリアする関数
   const clearSearch = useCallback((): void => {
     setSearchTerm('');
   }, []);
 
-  // フィルター入力の変更を処理する関数
+  // 検索入力の変更を処理する関数
   const handleFilterChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>): void => {
-      setFilterTerm(e.target.value);
+      setSearchTerm(e.target.value);
     },
     []
   );
@@ -152,33 +146,6 @@ const Toolbar: React.FC = () => {
       {/* 検索バー部分 */}
       {/* 左マージンを自動設定し、中央揃えのフレックスボックスを作成 */}
       <div className='ml-auto flex items-center'>
-        {/* 'すべて'ドロップダウン */}
-        {/* 相対位置を設定 */}
-        <div className='relative'>
-          {/* フィルター選択入力フィールド */}
-          {/* ボーダーを追加し、左側を角丸にし、パディングを設定し、テキストサイズを大きくする */}
-          <input
-            type='text' // テキスト入力フィールド
-            value={filterTerm} // フィルター語の現在の値
-            onChange={handleFilterChange} // フィルター語が変更されたときの処理
-            placeholder='すべて' // プレースホルダーテキスト
-            className='border rounded-l px-3 py-2 text-lg' // 入力フィールドのスタイル
-            aria-label='フィルター選択' // スクリーンリーダー用のラベル
-          />
-          {/* ドロップダウンボタン */}
-          {/* 絶対位置を設定し、上下中央に配置し、右側にマージンを追加 */}
-          <button
-            className='absolute right-0 top-1/2 transform -translate-y-1/2 mr-3' // ボタンの位置とスタイル
-            aria-label='フィルターオプションを開く' // スクリーンリーダー用のラベル
-          >
-            {/* ドロップダウンアイコン */}
-            {/* アイコンの色とサイズを設定 */}
-            <FontAwesomeIcon
-              icon={faChevronDown} // 下向き矢印アイコン
-              className='text-gray-400 text-xl' // アイコンのスタイル
-            />
-          </button>
-        </div>
         {/* 検索入力フィールド */}
         {/* 相対位置を設定し、左マージンを追加 */}
         <div className='relative ml-2'>
@@ -187,7 +154,7 @@ const Toolbar: React.FC = () => {
           <input
             type='text' // テキスト入力フィールド
             value={searchTerm} // 検索語の現在の値
-            onChange={handleSearchChange} // 検索語が変更されたときの処理
+            onChange={handleFilterChange} // 検索語が変更されたときの処理
             placeholder='検索' // プレースホルダーテキスト
             className='border-t border-b border-r rounded-r px-3 py-2 pl-10 text-lg' // 入力フィールドのスタイル
             aria-label='検索' // スクリーンリーダー用のラベル
