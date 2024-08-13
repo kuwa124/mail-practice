@@ -1,4 +1,9 @@
+// クライアントサイドでの実行を明示的に指定
+'use client';
+
 // React をインポート
+import Modal from '@/app/Modal';
+import { useModal } from '@/app/Modal/useModal';
 import React from 'react';
 
 // AttachmentAreaコンポーネントの型定義
@@ -8,6 +13,9 @@ type AttachmentAreaProps = {
 
 // 添付ファイルエリアを表示するコンポーネント
 const AttachmentArea: React.FC<AttachmentAreaProps> = () => {
+  // useModalフックから準備中モーダルを表示する関数を取得
+  const { handlePrepare, closeModal, modalType, handleConfirm } = useModal();
+
   return (
     // 添付ファイルエリア全体のコンテナ
     <div
@@ -31,6 +39,7 @@ const AttachmentArea: React.FC<AttachmentAreaProps> = () => {
         <button
           // パディング、角丸、白文字、フォーカス時のアウトライン無し、グレーの背景色とホバー時の色変化を設定
           className='py-2 px-5 mx-auto block rounded text-white focus:outline-none bg-gray-500 hover:bg-gray-600'
+          onClick={handlePrepare}
         >
           添付ファイル
         </button>
@@ -49,6 +58,13 @@ const AttachmentArea: React.FC<AttachmentAreaProps> = () => {
           ※練習用の為、添付機能はございません。
         </p>
       </div>
+      {/* モーダルコンポーネント */}
+      <Modal
+        isOpen={modalType !== null} // モーダルタイプがnullでない場合にモーダルを開く
+        onClose={closeModal} // モーダルを閉じる関数
+        onConfirm={handleConfirm} // 確認ボタンが押されたときの処理
+        modalType={modalType} // モーダルの種類
+      />
     </div>
   );
 };

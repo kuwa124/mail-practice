@@ -8,6 +8,7 @@ export type ModalType =
   | 'confirmDelete'
   | 'selectContact'
   | 'checkNewMessage'
+  | 'prepare'
   | null;
 
 // モーダルコンポーネントのプロップスの型定義
@@ -77,5 +78,11 @@ export const modalContents: Record<Exclude<ModalType, null>, ModalContent> = {
     message: '新しいメッセージはありません。',
     confirmButton: 'OK',
     showCancelButton: false,
+  },
+  prepare: {
+    title: '準備中', // タイトル
+    message: 'この機能は未実装です。', // メッセージ
+    confirmButton: 'OK', // 確認ボタン
+    showCancelButton: false, // キャンセルボタンを非表示
   },
 };

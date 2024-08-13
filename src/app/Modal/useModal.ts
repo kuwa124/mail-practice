@@ -1,3 +1,6 @@
+// クライアントサイドでの実行を明示的に指定
+'use client';
+
 // React Hooksをインポート：状態管理のためのuseStateとuseCallbackを使用
 import { useCallback, useState } from 'react';
 
@@ -78,9 +81,13 @@ export const useModal = () => {
   // 連絡先削除確認時の処理
   const confirmDelete = useCallback((): void => {
     closeModal(); // モーダルを閉じる
-    // ここに実際の削除処理を追加
-    console.log('連絡先を削除しました');
   }, [closeModal]);
+
+  // 準備中モーダルの表示処理
+  const handlePrepare = useCallback((): void => {
+    // モーダルタイプを'prepare'に設定して準備中モーダルを表示
+    setModalType('prepare');
+  }, []);
 
   // 確認ボタンがクリックされたときの処理
   // モーダルタイプに応じた処理を実行する関数
@@ -99,6 +106,7 @@ export const useModal = () => {
       confirmDelete: confirmDelete, // 連絡先削除確認用の関数
       selectContact: closeModal, // 連絡先選択用の関数（ここでは単にモーダルを閉じる）
       checkNewMessage: closeModal, // 新着メッセージ確認用の関数（モーダルを閉じる）
+      prepare: closeModal, // 準備中モーダル用の関数（ここでは単にモーダルを閉じる）
     };
 
     // モーダルタイプに対応する関数を実行
@@ -121,6 +129,7 @@ export const useModal = () => {
     closeModal,
     handleConfirm,
     handleSave,
-    handleMessageCheck, // 新しく追加した関数をエクスポート
+    handleMessageCheck,
+    handlePrepare,
   };
 };

@@ -32,6 +32,7 @@ const ActionButtons: React.FC = () => {
     handleDiscardClick,
     closeModal,
     handleConfirm,
+    handlePrepare,
   } = useModal();
 
   return (
@@ -56,6 +57,7 @@ const ActionButtons: React.FC = () => {
             // グレーの背景、角丸、パディング、ホバー効果を適用
             className={`${ACTION_BUTTON_STYLE} text-xl`}
             title={actionIcon.tooltip} // マウスオーバー時にツールチップを表示
+            onClick={handlePrepare} // クリック時にhandlePrepare関数を実行
           >
             <FontAwesomeIcon icon={actionIcon.icon} />
           </button>
@@ -77,6 +79,7 @@ const ActionButtons: React.FC = () => {
         onConfirm={handleConfirm} // 確認ボタンクリック時の処理を指定
         modalType={modalType} // モーダルの種類を指定
       />
+      
     </div>
   );
 };
