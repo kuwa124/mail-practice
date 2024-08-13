@@ -87,7 +87,7 @@ const Toolbar: React.FC<ToolbarProps> = ({ searchTerm, setSearchTerm }) => {
           handlePrepare();
       }
     },
-    [router, handleMessageCheck, handleReply]
+    [router, handleMessageCheck, handleReply, handlePrepare]
   );
 
   // ボタンクリック時の共通処理を行う関数
@@ -102,14 +102,14 @@ const Toolbar: React.FC<ToolbarProps> = ({ searchTerm, setSearchTerm }) => {
   // 検索をクリアする関数
   const clearSearch = useCallback((): void => {
     setSearchTerm('');
-  }, []);
+  }, [setSearchTerm]);
 
   // 検索入力の変更を処理する関数
   const handleFilterChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>): void => {
       setSearchTerm(e.target.value);
     },
-    []
+    [searchTerm]
   );
 
   // コンポーネントのJSXを返す
