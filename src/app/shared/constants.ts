@@ -24,7 +24,7 @@ export const dummyMails: Mail[] = [
     id: 1,
     name: '飯塚 花子',
     nameKana: 'いいづか　はなこ',
-    email: 'taro.yamada@example.com',
+    email: 'hanako.iizuka@example.com',
     subject: '会議の件について',
     body: `FSC会社
       幸袋様
@@ -46,7 +46,7 @@ export const dummyMails: Mail[] = [
     id: 2,
     name: '福岡 一郎',
     nameKana: 'ふくおか　いちろう',
-    email: 'hanako.iizuka@example.com',
+    email: 'ichiro.fukuoka@example.com',
     subject: 'プロジェクト進捗報告',
     body: `FSC会社
       幸袋様
@@ -112,7 +112,7 @@ Email:sairo.fukuoka@example.come
     id: 4,
     name: '山田 太郎',
     nameKana: 'やまだ　たろう',
-    email: 'ichiro.fukuoka@example.com',
+    email: 'taro.yamada@example.com',
     subject: '新製品ローンチについて',
     body: `チームの皆様
 
@@ -138,7 +138,7 @@ Email:sairo.fukuoka@example.come
     id: 5,
     name: '山本 光',
     nameKana: 'やまもと　ひかり',
-    email: ' mi-yamamoto@fsc.school.jp',
+    email: ' hikari-yamamoto@fsc.school.jp',
     subject: 'Wordの課題について',
     body: `受講生の皆様、お疲れ様です。講師の山本です。
 Word練習問題の「課題3P1」の提出をメールにてお願いいたします。
