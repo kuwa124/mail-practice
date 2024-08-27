@@ -19,6 +19,16 @@ const Sidebar: React.FC = () => {
   // useModalフックから準備中モーダルを表示する関数を取得
   const { handlePrepare, closeModal, modalType, handleConfirm } = useModal();
 
+  // ボタンクリック時の処理を関数として定義
+  const handleButtonClick = (buttonName: string) => {
+    if (buttonName === '受信箱') {
+      return setActiveButton(buttonName); // アクティブボタンを設定（早期リターン）
+    }
+    // ボタンがクリックされたときの処理
+    handlePrepare(); // 準備中モーダルを表示
+    setActiveButton(buttonName); // アクティブボタンを設定
+  };
+
   return (
     // サイドバーのコンテナ
     <div className={SIDEBAR_CLASS}>
@@ -27,9 +37,7 @@ const Sidebar: React.FC = () => {
           key={button.name} // ボタンのユニークキーとしてbuttonの名前を使用
           className={getButtonClass(button.name)} // ボタンのクラスを動的に取得
           onClick={() => {
-            // ボタンがクリックされたときの処理
-            handlePrepare(); // 準備中モーダルを表示
-            setActiveButton(button.name); // アクティブボタンを設定
+            handleButtonClick(button.name);
           }}
         >
           {/* 
