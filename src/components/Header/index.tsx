@@ -4,13 +4,13 @@
 'use client';
 
 // 必要なReactフックとコンポーネントをインポート
-import React from 'react'; // Reactをインポート
-import Link from 'next/link'; // Next.jsのページ間リンクのためのLinkコンポーネントをインポート
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'; // FontAwesomeのアイコンを使用するためのコンポーネントをインポート
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons'; // メールアイコンをインポート
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'; // FontAwesomeのアイコンを使用するためのコンポーネントをインポート
+import Link from 'next/link'; // Next.jsのページ間リンクのためのLinkコンポーネントをインポート
+import React from 'react'; // Reactをインポート
 
 // 定数をインポート（ナビゲーションボタン設定、共通スタイル、ホバー背景色）
-import { NAV_BUTTONS, COMMON_STYLES, HOVER_BG } from './constants';
+import { COMMON_STYLES, HOVER_BG, NAV_BUTTONS } from './constants';
 
 // Next.jsの画像最適化コンポーネントをインポート
 import Image from 'next/image';
@@ -32,13 +32,7 @@ const Header: React.FC = () => {
         </div>
         {/* FSCロゴ画像 */}
         {/* Next.jsのImageコンポーネントを使用して最適化された画像を表示 */}
-        <Image
-          src='/fscLogo.WebP'
-          alt='FSCロゴ'
-          width={45}
-          height={25}
-          priority
-        />
+        <Image src='/logo.WebP' alt='メールのロゴ' width={300} height={68} priority />
         {/* アプリ名（'Mail'） */}
         {/* 大きめのフォントサイズ、文字間を広げ、太字 */}
         <span className='text-xl tracking-wider font-bold'>Mail</span>
