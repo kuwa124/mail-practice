@@ -23,19 +23,28 @@ const Header: React.FC = () => {
     <header className='bg-gray-800 text-white p-2 flex items-center justify-between'>
       {/* ロゴとアプリ名の部分 */}
       {/* Flexboxで子要素を横並びに配置し、中央揃え */}
-      <div className={COMMON_STYLES.FLEX_CENTER}>
+      <div className={`${COMMON_STYLES.FLEX_CENTER} mt-2`}>
         {/* ロゴ（メールアイコン） */}
         {/* 青い背景、角丸、右マージン、Flexboxで中央揃え */}
-        <div className='bg-blue-500 p-2 rounded mr-4 flex items-center justify-center'>
+        <div className='bg-blue-500 p-2 rounded flex items-center justify-center mb-2'>
           {/* FontAwesomeIconを使用してメールアイコンを表示 */}
           <FontAwesomeIcon icon={faEnvelope} className='text-xl' />
         </div>
         {/* FSCロゴ画像 */}
         {/* Next.jsのImageコンポーネントを使用して最適化された画像を表示 */}
-        <Image src='/logo.WebP' alt='メールのロゴ' width={300} height={68} priority />
+        <picture className='inline-block'>
+          <source type='image/webp' srcSet='/logo.webp' />
+          <Image
+            src='/logo.png'
+            alt='メールのロゴ'
+            width={250}
+            height={56}
+            priority
+          />
+        </picture>
         {/* アプリ名（'Mail'） */}
         {/* 大きめのフォントサイズ、文字間を広げ、太字 */}
-        <span className='text-xl tracking-wider font-bold'>Mail</span>
+        <span className='text-xl tracking-wider font-bold pb-2'>Mail</span>
       </div>
       {/* ナビゲーションボタンの部分 */}
       {/* Flexboxで子要素を横並びに配置し、間隔を追加 */}
