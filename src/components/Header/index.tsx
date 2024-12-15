@@ -26,25 +26,25 @@ const Header: React.FC = () => {
       <div className={`${COMMON_STYLES.FLEX_CENTER} mt-2`}>
         {/* ロゴ（メールアイコン） */}
         {/* 青い背景、角丸、右マージン、Flexboxで中央揃え */}
-        <div className='bg-blue-500 p-2 rounded flex items-center justify-center mb-2'>
+        <div className='bg-blue-500 p-2 rounded flex items-center justify-center mb-2 mx-2'>
           {/* FontAwesomeIconを使用してメールアイコンを表示 */}
           <FontAwesomeIcon icon={faEnvelope} className='text-xl' />
         </div>
         {/* FSCロゴ画像 */}
         {/* Next.jsのImageコンポーネントを使用して最適化された画像を表示 */}
-        <picture className='inline-block'>
+        <picture className='inline-block filter brightness-200 backdrop-brightness-50'>
           <source type='image/webp' srcSet='/logo.webp' />
           <Image
             src='/logo.png'
             alt='メールのロゴ'
-            width={250}
+            width={150}
             height={56}
             priority
           />
         </picture>
         {/* アプリ名（'Mail'） */}
         {/* 大きめのフォントサイズ、文字間を広げ、太字 */}
-        <span className='text-xl tracking-wider font-bold pb-2'>Mail</span>
+        <span className='text-xl tracking-wider font-bold pt-2'>Mail</span>
       </div>
       {/* ナビゲーションボタンの部分 */}
       {/* Flexboxで子要素を横並びに配置し、間隔を追加 */}
